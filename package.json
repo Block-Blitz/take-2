@@ -1,0 +1,30 @@
+{
+  "name": "final2",
+  "version": "1.0.0",
+  "description": "LHL Final Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarkZsombor/take-2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MarkZsombor/take-2/issues"
+  },
+  "homepage": "https://github.com/MarkZsombor/take-2#readme",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "cookie-session": "^2.0.0-beta.3",
+    "express": "^4.16.2",
+    "jquery": "^3.2.1",
+    "knex": "^0.14.2",
+    "node-sass": "^4.7.2",
+    "pg": "^7.4.0",
+    "socket.io": "^2.0.4"
+  }
+}
