@@ -1,0 +1,17 @@
+const express = require('express');
+const router = express.Router();
+// add back knex when database is set up properly **************
+module.exports = () => {
+
+  router.get('/', (req, res) => {
+    res.render('profile');
+  });
+
+  router.post('/', (req, res) => {
+    console.log('from the logout post');
+    req.session.user_id = null;
+    res.status(200).send({success: true});
+  });
+
+  return router;
+};

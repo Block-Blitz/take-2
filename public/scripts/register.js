@@ -14,9 +14,11 @@ $(document).ready(function(){
       url: '/register',
       method: 'POST',
       data: registerData,
-      success: function(data) {
-        console.log('success');
-        // location.reload();
+      success: function(msg){
+        location.reload();
+      },
+      error: function(err) {
+        location.reload();
       }
     });
   });
