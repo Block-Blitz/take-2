@@ -9,18 +9,26 @@
 </head>
 
 <body>
+  <% include ./partials/_header.ejs %> 
   <header>
-
     <h1>register page</h1>
   </header>
 
   <div>
+    <form id="registerForm">
+      <input id="name" "type="text" name="name" placeholder="Your user name"/>
+      <input id="email" type="email" name="email" placeholder="Email" />
+      <input id="password" type="password" name="password" placeholder="Password"/>
+      <input type="submit"  className="button" value="Submit" />
+    </form>
   </div>
 
   <footer>
   </footer>
 
   <script src=""></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js" type="text/javascript"></script>
+  <script type="text/javascript" src="../public/scripts/register.js"></script>
 </body>
 
 </html>
