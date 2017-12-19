@@ -7,14 +7,17 @@ const express     = require('express');
 const bodyParser  = require('body-parser');
 const sass        = require('node-sass-middleware');
 const app         = express();
-const bcrypt = require('bcrypt');
-const path = require('path');
-const flash = require('connect-flash');
+const bcrypt      = require('bcrypt');
+const path        = require('path');
+const flash       = require('connect-flash');
 
 const knexConfig  = require('./knexfile');
 const knex        = require('knex')(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
+const server      = require('http').Server(app);
+const io          = require('socket.io')(server);
+const newId       = require('uuid/v1');
 
 // Seperated Routes for each Resource
  const profileRoutes = require("./routes/profile");
@@ -24,6 +27,7 @@ const knexLogger  = require('knex-logger');
 // const contributionsRoutes = require("./routes/contributions");
 // const currentMapMarkers = require("./routes/current-map-markers");
 
+server.listen(PORT);
 
 app.set('view engine', 'ejs');
 app.use(morgan('dev'));
@@ -64,9 +68,20 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+io.on('connection', function(socket) {
+  socket.emit('connection', 'socket connected');
+  console.log('a socket has connected');
 
-
-
-app.listen(PORT, () => {
-  console.log('Blitz Block is up and running!' + PORT);
+  socket.on('join-game', function(msg) {
+    console.log('server heard a game request');
+    let room = { id: newId() };
+    console.log(room);
+    socket.join(room.id);
+    console.log(io.sockets.adapter.rooms);
+    io.to(room).emit('room-invite', room );
+    // create room, send room ID to client
+  });
 });
+
+
+
