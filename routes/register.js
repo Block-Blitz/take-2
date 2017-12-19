@@ -9,7 +9,8 @@ module.exports = () => {
   router.get('/', (req, res) => {
     const templateVars = {
       errors: req.flash('error'),
-      success: req.flash('success')
+      success: req.flash('success'),
+      user: req.session.user_id
     };
     res.render('register', templateVars);
   });

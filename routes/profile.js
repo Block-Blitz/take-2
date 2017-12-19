@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const express = require('express');
 const router  = express.Router();
@@ -6,13 +6,16 @@ const router  = express.Router();
 module.exports = () => {
 
   // Gets the current signed in user.
-  router.get("/", (req, res) => {
-  res.render("profile");
-
+  router.get('/', (req, res) => {
+    const templateVars = {
+      user: req.session.user_id
+    };
+    res.render('profile', templateVars);
   });
- // Gets the current signed in user.
-  router.post("/", (req, res) => {
-    res.render("profile");
+
+  // Gets the current signed in user.
+  router.post('/', (req, res) => {
+    res.render('profile');
 
   });
 

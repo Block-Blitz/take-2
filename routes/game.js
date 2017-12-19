@@ -6,11 +6,14 @@ const router  = express.Router();
 module.exports = () => {
 
   // Gets the current signed in user.
-  router.get("/", (req, res) => {
-  res.render("game");
-
+  router.get('/', (req, res) => {
+    const templateVars = {
+      user: req.session.user_id
+    };
+    res.render('game', templateVars);
   });
- // Gets the current signed in user.
+
+   // Gets the current signed in user.
   router.post("/", (req, res) => {
     res.render("game");
 
