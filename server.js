@@ -70,13 +70,7 @@ app.get('/', (req, res) => {
 
 //creating a place to store the games
 
-let gameCollection = {
-
-  gameList: [],
-  totalGameCount: 0
-
-};
-let loopLimit = 0;
+const gameCollection = [];
 
 function buildGame(socket) {
   let gameObject = {};
@@ -84,36 +78,36 @@ function buildGame(socket) {
   //hard coded for now
   gameObject.playerOne = 'Catherine';
   gameObject.playerTwo = null;
-  gameCollection.totalGameCount ++;
-  gameCollection.gameList.push({gameObject});
+  gameCollection.push({gameObject});
 
   console.log("Game created by " + gameObject.playerOne + " w/ " + gameObject.id);
 
   socket.join(gameObject.id);
 }
 
+
 function gameSeeker(socket) {
-  ++loopLimit;
-  if (( gameCollection.totalGameCount == 0) || (loopLimit >= 20)) {
-
+  console.log('number of games', gameCollection.length);
+  if (gameCollection.length == 0) {
     buildGame(socket);
-    loopLimit = 0;
-
   } else {
-    var rndPick = Math.floor(Math.random() * gameCollection.totalGameCount);
-    if (gameCollection.gameList[rndPick]['gameObject']['playerTwo'] == null)
-    {
-      gameCollection.gameList[rndPick]['gameObject']['playerTwo'] = 'Mark';
-      let gameId = gameCollection.gameList[rndPick].gameObject.id
-      socket.join(gameId);
-      console.log("gameId:", gameId);
-      // console.log("adapter", io.sockets.adapter.rooms);
-      console.log( 'Mark' + " has been added to: " + gameCollection.gameList[rndPick]['gameObject']['id']);
-      io.sockets.in(gameId).emit('joinSuccess', 'Room filled');
-
-    } else {
-
-      gameSeeker(socket);
+    //hard coded for now
+    let playerName = "Mark";
+    let availableGame = false;
+    for(let game of gameCollection) {
+      if(!game.gameObject.playerTwo) {
+        console.log('FOUND A GAME');
+        let gameId = game.gameObject.id;
+        game.gameObject.playerTwo = playerName
+        socket.join(gameId);
+        console.log("gameId:", gameId);
+        console.log( 'Mark' + " has been added to: " + game.gameObject.id);
+        io.sockets.in(gameId).emit('joinSuccess', 'Room filled');
+        return;
+      }
+    }
+    if(!availableGame) {
+      buildGame(socket);
     }
   }
 }
