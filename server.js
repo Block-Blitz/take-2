@@ -68,19 +68,45 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+//creating a place to store the games
+
+let gameCollection = {
+
+  gameList: []
+
+};
+
+function buildGame(socket) {
+  let gameObject = {};
+  gameObject.id = newId();
+  //hard coded for now
+  gameObject.playerOne = 'Catherine';
+  gameObject.playerTwo = null;
+  gameCollection.gameList.push({gameObject});
+
+  console.log("Game created by " + gameObject.playerOne + " w/ " + gameObject.id);
+
+  socket.join(gameObject.id);
+}
+
+//on socket connection sending info to the client side
+
 io.on('connection', function(socket) {
   socket.emit('connection', 'socket connected');
   console.log('a socket has connected');
 
   socket.on('join-game', function(msg) {
     console.log('server heard a game request');
-    let room = { id: newId() };
-    console.log(room);
-    socket.join(room.id);
+    //let room = { id: newId() };
+    //console.log(room);
+    // socket.join(room.id);
+    buildGame(socket);
     console.log(io.sockets.adapter.rooms);
-    io.to(room).emit('room-invite', room );
+    //io.to(room).emit('room-invite', room );
     // create room, send room ID to client
   });
+
+
 });
 
 
