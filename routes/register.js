@@ -12,7 +12,12 @@ module.exports = () => {
       success: req.flash('success'),
       user: req.session.user_id
     };
-    res.render('register', templateVars);
+
+    if (req.session.user_id){
+      res.redirect('/');
+    } else {
+      res.render('register', templateVars);
+    }
   });
   // Gets the current signed in user.
   router.post('/', (req, res) => {
