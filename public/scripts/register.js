@@ -1,9 +1,17 @@
 $(document).ready(function(){
+
+// Added security for input, making sure no one can pass scripts as messages
+   function escape(str) {
+     const div = document.createElement('div');
+     div.appendChild(document.createTextNode(str));
+     return div.innerHTML;
+   }
+
   $('#registerForm').on('submit', function(e){
     e.preventDefault();
-    const name = $('#name').val();
-    const email = $('#email').val();
-    const password = $('#password').val();
+    const name = escape($('#name').val());
+    const email = escape($('#email').val());
+    const password = escape($('#password').val());
     console.log('I am the jquery befroe it gets ajexd' + name, email, password);
     registerData = {
       name,
