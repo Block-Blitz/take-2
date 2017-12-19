@@ -41,4 +41,8 @@ socket.on('game-over', function() {
 
 socket.on('leave-queue', function() {
   //need to leave the room somehow
-})
+});
+
+socket.on('joinSuccess', function(msg) {
+  console.log(msg, 'heard the client from the room');
+});

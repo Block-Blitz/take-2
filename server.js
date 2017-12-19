@@ -72,9 +72,11 @@ app.get("/", (req, res) => {
 
 let gameCollection = {
 
-  gameList: []
+  gameList: [],
+  totalGameCount: 0
 
 };
+let loopLimit = 0;
 
 function buildGame(socket) {
   let gameObject = {};
@@ -82,11 +84,38 @@ function buildGame(socket) {
   //hard coded for now
   gameObject.playerOne = 'Catherine';
   gameObject.playerTwo = null;
+  gameCollection.totalGameCount ++;
   gameCollection.gameList.push({gameObject});
 
   console.log("Game created by " + gameObject.playerOne + " w/ " + gameObject.id);
 
   socket.join(gameObject.id);
+}
+
+function gameSeeker(socket) {
+  ++loopLimit;
+  if (( gameCollection.totalGameCount == 0) || (loopLimit >= 20)) {
+
+    buildGame(socket);
+    loopLimit = 0;
+
+  } else {
+    var rndPick = Math.floor(Math.random() * gameCollection.totalGameCount);
+    if (gameCollection.gameList[rndPick]['gameObject']['playerTwo'] == null)
+    {
+      gameCollection.gameList[rndPick]['gameObject']['playerTwo'] = 'Mark';
+      let gameId = gameCollection.gameList[rndPick].gameObject.id
+      socket.join(gameId);
+      console.log("gameId:", gameId);
+      // console.log("adapter", io.sockets.adapter.rooms);
+      console.log( 'Mark' + " has been added to: " + gameCollection.gameList[rndPick]['gameObject']['id']);
+      io.sockets.in(gameId).emit('joinSuccess', 'Room filled');
+
+    } else {
+
+      gameSeeker(socket);
+    }
+  }
 }
 
 //on socket connection sending info to the client side
@@ -97,10 +126,10 @@ io.on('connection', function(socket) {
 
   socket.on('join-game', function(msg) {
     console.log('server heard a game request');
-    //let room = { id: newId() };
+    let room = { id: newId() };
     //console.log(room);
     // socket.join(room.id);
-    buildGame(socket);
+    gameSeeker(socket);
     console.log(io.sockets.adapter.rooms);
     //io.to(room).emit('room-invite', room );
     // create room, send room ID to client
