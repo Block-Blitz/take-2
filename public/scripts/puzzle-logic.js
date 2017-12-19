@@ -1,17 +1,3 @@
-var socket = io.connect('http://localhost:8080')
-var currentPlayer = 'Me'
-
-var inGame = false;
-
-var currentRoom = {
-  roomName: '',
-  playerOne: '',
-  playerTwo: ''
-}
-
-
-// Logic for the Puzzle
-
 var grid = document.querySelector('.grid');
 var pckry = new Packery( grid, {
   itemSelector: '.tile',
@@ -32,7 +18,7 @@ pckry.items.forEach( function( item ) {
   mappedItems[ attr ] = item;
 });
 
-// ( function() {
+( function() {
 
 var orders = [
   'fmgdbalkjihec', //remove later
@@ -76,10 +62,21 @@ function win() {
   showDialog();
 }
 
-function showDialog() {
-  dialog.classList.remove('is-waiting');
-}
 
+// function showDialog() {
+//   dialog.classList.remove('is-waiting');
+// }
+
+// function hideDialog() {
+//   dialog.classList.add('is-waiting');
+// }
+
+// dialog.querySelector('.try-again-button').onclick = function() {
+//   hideDialog();
+//   shuffleTiles();
+// }
+
+// dialog.querySelector('.close-dialog-button').onclick = hideDialog;
 
 document.querySelector('.shuffle-button').onclick = shuffleTiles;
 
@@ -92,50 +89,4 @@ pckry.on( 'dragItemPositioned', function() {
   }
 });
 
-// })();
-
-
-// Socket.io logic
-
-socket.on('connection', function() {
-  console.log('Client connected to socket');
-});
-
-socket.on('start-game', function(data) {
-  inGame = true;
-  //some jquery bullshit to initiate game
-  console.log('Started game ' + data.id);
-  shuffleTiles();
-  $(".grid").css("visibility", 'visible')
-  $(".shuffle-button").css("visibility", 'visible')
-});
-
-socket.on('game-ended', function(data) {
-  inGame = false;
-//need something for when game ends, probably jquery bullshit
-  console.log('client recieved a game over msg', data);
-});
-
-socket.on('leave-queue', function() {
-  //need to leave the room somehow
-});
-
-socket.on('joinSuccess', function(data) {
-  console.log('data returned on room join \n', data);
-  currentRoom.roomName = data.id;
-  currentRoom.playerOne = data.playerOne;
-  currentRoom.playerTwo = data.playerTwo;
-  console.log(currentPlayer, 'is trying to join room', currentRoom.roomName, '(from client side)');
-});
-
-// jQuery for button functionality
-
-$('#join-game').on('click', function() {
-  console.log(currentPlayer, 'wants to join a room');
-  socket.emit('join-game', { player: currentPlayer });
-});
-
-$('#leave-queue').on('click', function() {
-  console.log(currentPlayer, 'left the queue');
-  // add logic to leave room
-});
+})();

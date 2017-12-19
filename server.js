@@ -107,7 +107,8 @@ function gameSeeker(socket) {
         socket.join(gameId);
         console.log("gameId:", gameId);
         console.log( 'Mark' + " has been added to: " + game.gameObject.id);
-        io.sockets.in(gameId).emit('joinSuccess', 'Room filled');
+        io.sockets.in(gameId).emit('joinSuccess', game.gameObject);
+        io.sockets.in(gameId).emit('start-game', game.gameObject);
         return;
       }
     }
@@ -132,6 +133,13 @@ io.on('connection', function(socket) {
     console.log(io.sockets.adapter.rooms);
     //io.to(room).emit('room-invite', room );
     // create room, send room ID to client
+  });
+
+  socket.on('game-over', function(data) {
+    console.log('Game over, someone won');
+    console.log('incoming gameover data', data);
+    console.log('Ended game id', data.room.roomName);
+    io.sockets.in(data.room.roomName).emit('game-ended', data);
   });
 
 
