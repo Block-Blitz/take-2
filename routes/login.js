@@ -8,11 +8,17 @@ module.exports = () => {
   // Gets the current signed in user.
   router.get('/', (req, res) => {
     const templateVars = {
-      errors: req.flash('error'),
-      success: req.flash('success'),
-      user: req.session.user_id
-    };
-    res.render('login', templateVars);
+        errors: req.flash('error'),
+        success: req.flash('success'),
+        user: req.session.user_id
+      };
+
+    if (req.session.user_id){
+      res.redirect('/');
+
+    } else {
+      res.render('login', templateVars);
+    }
   });
 
   // Gets the current signed in user.
@@ -32,8 +38,7 @@ module.exports = () => {
             .then(exists => {
               if (exists) {
                 req.session.user_id = exists;
-                // res.redirect(req.get('referer'));
-                // req.flash('success', 'You were successfuly logged in');
+
                 res.status(200).send({success: true});
               }
               else {
