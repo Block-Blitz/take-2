@@ -1,5 +1,5 @@
 var socket = io.connect('http://localhost:8080')
-var currentPlayer = 'Me'
+var userData = 'Me'
 
 var inGame = false;
 
@@ -14,13 +14,22 @@ var currentRoom = {
   playerTwo: ''
 }
 
-$.getJSON("api/user_data", function(data) {
-    // Make sure the data contains the username as expected before using it
-    if (data.hasOwnProperty('user_id')) {
-      console.log('User ID: ' + data.user_id);
-      // userData.id = data.user_id;
-    }
-});
+// $.getJSON("api/user_data", function(data) {
+//     // Make sure the data contains the username as expected before using it
+//     console.log('api return data'. data);
+//     // if (data.hasOwnProperty('user_id')) {
+//       // console.log('User ID: ' + data.user_id);
+//       // userData.id = data.user_id;
+//     // }
+// });
+
+$.ajax({
+  method: "GET",
+  url: "api/user_data"
+  }).done((user) => {
+    userData.id = user.data.id;
+    userData.name = user.data.name;
+  });
 
 // Logic for the Puzzle
 
@@ -83,7 +92,7 @@ function win() {
   socket.emit('game-over', {
     room: currentRoom,
     msg: 'Game Over!',
-    winner: 'MEME'
+    winner: userData.name
   });
   showDialog();
 }
@@ -137,18 +146,18 @@ socket.on('joinSuccess', function(data) {
   currentRoom.roomName = data.id;
   currentRoom.playerOne = data.playerOne;
   currentRoom.playerTwo = data.playerTwo;
-  console.log(currentPlayer, 'is trying to join room', currentRoom.roomName, '(from client side)');
+  console.log(userData.name, 'is trying to join room', currentRoom.roomName, '(from client side)');
 });
 
 // jQuery for button functionality
 
 $('#join-game').on('click', function() {
-  console.log(currentPlayer, 'wants to join a room');
-  socket.emit('join-game', { player: currentPlayer });
+  console.log(userData.name, 'wants to join a room');
+  socket.emit('join-game', { player: userData });
 });
 
 $('#leave-queue').on('click', function() {
-  console.log(currentPlayer, 'left the queue');
+  console.log(userData.name, 'left the queue');
   console.log("current room:", currentRoom);
   socket.emit('leaveQueue', currentRoom.roomName);
 });
