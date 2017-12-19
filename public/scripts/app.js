@@ -1,29 +1,32 @@
-import openSocket from 'socket.io-client';
-var socket = io('http://localhost')
+var socket = io.connect('http://localhost:8080')
 var currentPlayer = 'Me'
 
 var inGame = false;
 
 var currentRoom = {
-  roomName: nil
+  roomName: ''
 }
 
 
-$('#join-game').onClick(function() {
+$('#join-game').on('click', function() {
   console.log(currentPlayer, 'wants to join a room');
   socket.emit('join-game', { player: currentPlayer });
-})
+});
+
+$('#leave-queue').on('click', function() {
+  console.log(currentPlayer, 'left the queue');
+  // add logic to leave room
+});
 
 // Sockets stuff.
 
-socket.on('connection', function(){
+socket.on('connection', function() {
   console.log('Client connected to socket');
 });
 
 socket.on('room-invite', function(data) {
-  currentRoom.roomName = data.roomId;
-  socket.join(data.roomId);
-  console.log(currentPlayer, 'is trying to join room', data.roomId, 'client side');
+  currentRoom.roomName = data.id;
+  console.log(currentPlayer, 'is trying to join room', currentRoom.roomName, '(from client side)');
 });
 
 socket.on('start-game', function() {
