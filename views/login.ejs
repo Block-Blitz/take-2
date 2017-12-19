@@ -7,10 +7,61 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
   <link rel="stylesheet" href=""/>
 </head>
-
 <body>
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '159990161398122',
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v2.11'
+      });
+        
+      FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+      });  
+        
+    };
 
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "https://connect.facebook.net/en_US/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
 
+    function statusChangeCallback(response) {
+      if(response.status === 'connected') {
+        testAPI();
+        console.log('Logged in and authenticated');
+      } else {
+        console.log('Not authenticated');
+      }
+    }
+
+    function checkLoginState() {
+      FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+      });
+    }
+
+    function setElements(isLoggedIn) {
+      if (isLoggedIn) {
+        document.getElementById
+      } else {
+
+      }
+    }
+
+    function testAPI(){
+      FB.api('/me?fields=email', function(response) {
+        if (response && !response.error) {
+          console.log(response.email);
+        }
+      })
+    }
+  </script>
   <% include ./partials/_header.ejs %>
 
   <header>
@@ -33,6 +84,12 @@
     </form>
   </div>
 
+  <fb:login-button 
+    scope="public_profile,email"
+    onlogin="checkLoginState();">
+  </fb:login-button>
+
+  <fb:login-button autologoutlink="true"></fb:login-button>
   <footer>
   </footer>
 
