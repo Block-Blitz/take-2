@@ -15,7 +15,7 @@ $(document).ready(function(){
       method: 'POST',
       data: registerData,
       success: function(msg){
-        location.reload();
+        location.replace('/');
       },
       error: function(err) {
         location.reload();

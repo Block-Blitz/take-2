@@ -33,7 +33,7 @@ module.exports = () => {
               if (exists) {
                 req.session.user_id = exists;
                 // res.redirect(req.get('referer'));
-                req.flash('success', 'You were successfuly logged in');
+                // req.flash('success', 'You were successfuly logged in');
                 res.status(200).send({success: true});
               }
               else {

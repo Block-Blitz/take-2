@@ -13,7 +13,7 @@ $(document).ready(function(){
       method: 'POST',
       data: loginData,
       success: function(msg){
-        location.reload();
+        location.replace('/');
       },
       error: function(err) {
         location.reload();
