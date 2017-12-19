@@ -4,7 +4,6 @@ $(document).ready(function(){
 
     const email = $('#email').val();
     const password = $('#password').val();
-    console.log('I am the jquery befroe it gets ajexd' +  email, password);
     loginData = {
       email,
       password
@@ -13,10 +12,11 @@ $(document).ready(function(){
       url: '/login',
       method: 'POST',
       data: loginData,
-      success: function(data) {
-        // renderTweets(database);
-        // location.reload();
-        console.log('success');
+      success: function(msg){
+        location.reload();
+      },
+      error: function(err) {
+        location.reload();
       }
     });
   });

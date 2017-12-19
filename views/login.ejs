@@ -14,8 +14,15 @@
 
     <h1>login page</h1>
   </header>
-
   <div>
+  <% if (errors.length) { %>
+    <% errors.forEach((error) => { %>
+      <p><%= error %></p>
+    <% }) %>
+  <% } %>
+  <% if (success) { %>
+    <p><%= success %></p>
+  <% } %>
     <form id="loginForm">
       <input id="email" type="email" name="email" placeholder="Email" />
       <input id="password" type="password" name="password" placeholder="Password"/>
