@@ -16,6 +16,15 @@ const knex        = require('knex')(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
+// Seperated Routes for each Resource
+ const profileRoutes = require("./routes/profile");
+ const gameRoutes = require("./routes/game");
+ const loginRoutes = require("./routes/login");
+ const registerRoutes = require("./routes/register");
+// const contributionsRoutes = require("./routes/contributions");
+// const currentMapMarkers = require("./routes/current-map-markers");
+
+
 app.set('view engine', 'ejs');
 app.use(morgan('dev'));
 
@@ -40,7 +49,20 @@ app.use(cookieSession({
 
 app.use(flash());
 
+// Mount all resource routes
+ app.use("/profile", profileRoutes(knex));
+ app.use("/game", gameRoutes(knex));
+ app.use("/login", loginRoutes(knex));
+ app.use("/register", registerRoutes(knex));
+// app.use("/api/new-favourite", newFavoriteRoutes(knex));
+// app.use("/api/current-map-markers", currentMapMarkers(knex));
 
+
+
+app.get("/", (req, res) => {
+
+  res.render("index");
+});
 
 
 
