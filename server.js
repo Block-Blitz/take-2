@@ -83,10 +83,11 @@ function buildGame(socket) {
   //hard coded for now
   gameObject.playerOne = 'Catherine';
   gameObject.playerTwo = null;
-  gameCollection.push({gameObject});
+  gameCollection.push(gameObject);
 
   console.log("Game created by " + gameObject.playerOne + " w/ " + gameObject.id);
 
+  socket.emit('joinSuccess', gameObject);
   socket.join(gameObject.id);
 }
 
@@ -95,29 +96,36 @@ function gameSeeker(socket) {
   console.log('number of games', gameCollection.length);
   if (gameCollection.length == 0) {
     buildGame(socket);
-  } else {
+    return;
+  }
     //hard coded for now
     let playerName = "Mark";
-    let availableGame = false;
-    for(let game of gameCollection) {
-      if(!game.gameObject.playerTwo) {
+    for(let i = 0; i < gameCollection.length; i++) {
+      if(!gameCollection[i].playerTwo) {
         console.log('FOUND A GAME');
-        let gameId = game.gameObject.id;
-        game.gameObject.playerTwo = playerName
+        let gameId = gameCollection[i].id;
+        gameCollection[i].playerTwo = playerName
         socket.join(gameId);
         console.log("gameId:", gameId);
-        console.log( 'Mark' + " has been added to: " + game.gameObject.id);
-        io.sockets.in(gameId).emit('joinSuccess', game.gameObject);
-        io.sockets.in(gameId).emit('start-game', game.gameObject);
+        console.log( 'Mark' + " has been added to: " + gameCollection[i].id);
+        io.sockets.in(gameId).emit('joinSuccess', gameCollection[i]);
+        io.sockets.in(gameId).emit('start-game', gameCollection[i]);
         return;
       }
     }
-    if(!availableGame) {
-      buildGame(socket);
+  buildGame(socket);
+}
+
+function leaveQueue(socket, gameId) {
+  //get game Id
+  for (let i = 0; i < gameCollection.length; i++) {
+    if (gameCollection[i].id === gameId) {
+      console.log("gameCollection[i].id:", gameCollection[i].id);
+      gameCollection.splice(i, 1);
+      socket.leave(gameId);
     }
   }
 }
-
 //on socket connection sending info to the client side
 
 io.on('connection', function(socket) {
@@ -142,6 +150,13 @@ io.on('connection', function(socket) {
     io.sockets.in(data.room.roomName).emit('game-ended', data);
   });
 
+  socket.on('leaveQueue', function(data){
+    console.log("left queue");
+    console.log("data: ", data)
+    console.log("gameCollection before", gameCollection);
+    leaveQueue(socket, data);
+    console.log("gameCollection after", gameCollection);
+  });
 
 });
 

@@ -137,5 +137,6 @@ $('#join-game').on('click', function() {
 
 $('#leave-queue').on('click', function() {
   console.log(currentPlayer, 'left the queue');
-  // add logic to leave room
+  console.log("current room:", currentRoom);
+  socket.emit('leaveQueue', currentRoom.roomName);
 });
