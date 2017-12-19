@@ -3,12 +3,24 @@ var currentPlayer = 'Me'
 
 var inGame = false;
 
+var userData = {
+  id: '',
+  name: ''
+}
+
 var currentRoom = {
   roomName: '',
   playerOne: '',
   playerTwo: ''
 }
 
+$.getJSON("api/user_data", function(data) {
+    // Make sure the data contains the username as expected before using it
+    if (data.hasOwnProperty('user_id')) {
+      console.log('User ID: ' + data.user_id);
+      // userData.id = data.user_id;
+    }
+});
 
 // Logic for the Puzzle
 
