@@ -1,22 +1,22 @@
 $(document).ready(function(){
-  $('#registerForm').on('submit', function(e){
+  $('#loginForm').on('submit', function(e){
     e.preventDefault();
-    const name = $('#name').val();
+
     const email = $('#email').val();
     const password = $('#password').val();
-    console.log('I am the jquery befroe it gets ajexd' + name, email, password);
-    registerData = {
-      name,
+    console.log('I am the jquery befroe it gets ajexd' +  email, password);
+    loginData = {
       email,
       password
     };
     $.ajax ({
-      url: '/register',
+      url: '/login',
       method: 'POST',
-      data: registerData,
+      data: loginData,
       success: function(data) {
-        console.log('success');
+        // renderTweets(database);
         // location.reload();
+        console.log('success');
       }
     });
   });

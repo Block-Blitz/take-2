@@ -31,7 +31,7 @@ module.exports = () => {
             .then(user_id => {
               req.session.user_id = user_id;
               console.log('registered');
-              // res.redirect(req.get('referer'));
+              res.status(200).send('Test Stuff');
             });
         }
         else {
