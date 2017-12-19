@@ -1,0 +1,134 @@
+* { -webkit-box-sizing: border-box; box-sizing: border-box; }
+
+/* force scroll bar */
+html { overflow-y: scroll; }
+
+body {
+  font-family: sans-serif;
+  background: #DDD;
+  color: #555;
+  text-align: center;
+  padding-bottom: 50px;
+}
+
+a { color: #19F; }
+
+a:hover { color: #C25; }
+
+
+.grid {
+  max-width: 400px;
+  background: #333;
+  margin: 50px auto;
+  min-height: 500px;
+  z-index: 2;
+  visibility: hidden;
+}
+
+.shuffle-button{
+  visibility: hidden;
+}
+
+.tile {
+  float: left;
+  width: 100px;
+  padding-bottom: 100px;
+   /*border: 1px solid;*/
+  background-color: white;
+  background-image: url('http://www.imageleech.net/wp-content/uploads/sites/49/2017/01/Mexican-Cat-400x500.jpg');
+  cursor: move;
+}
+
+.tile.w2 { width: 200px; }
+.tile.h2 { height: 200px; }
+
+.tile.bgx1 { background-position-x: -100px; }
+.tile.bgx2 { background-position-x: -200px; }
+.tile.bgx3 { background-position-x: -300px; }
+
+.tile.bgy1 { background-position-y: -100px; }
+.tile.bgy2 { background-position-y: -200px; }
+.tile.bgy3 { background-position-y: -300px; }
+.tile.bgy4 { background-position-y: -400px; }
+
+.tile:hover {
+  outline: 5px solid hsla(210, 100%, 50%, 0.7);
+  outline-offset: -5px;
+  z-index: 2;
+}
+
+.tile.is-dragging,
+.tile.is-positioning-post-drag {
+  outline: none;
+  z-index: 2;
+  opacity: 0.8;
+}
+
+.packery-drop-placeholder {
+  outline: 3px dashed white;
+  outline-offset: -6px;
+  -webkit-transition: -webkit-transform 0.2s;
+  transition: -webkit-transform 0.2s;
+  transition: transform 0.2s;
+  transition: transform 0.2s, -webkit-transform 0.2s;
+}
+
+/* -------- */
+
+.dialog-container {
+  width: 600px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.dialog {
+  position: absolute;
+  padding: 20px;
+  width: 100%;
+  background: #333;
+  color: white;
+  border-radius: 20px;
+  text-align: center;
+  font-size: 28px;
+  -webkit-box-shadow: 0 5px 10px hsla(0, 0%, 0%, 0.4);
+          box-shadow: 0 5px 10px hsla(0, 0%, 0%, 0.4);
+  z-index: 10;
+  -webkit-transition: opacity 0.2s, -webkit-transform 0.2s;
+  transition: opacity 0.2s, -webkit-transform 0.2s;
+  transition: opacity 0.2s, transform 0.2s;
+  transition: opacity 0.2s, transform 0.2s, -webkit-transform 0.2s;
+}
+
+.dialog.is-waiting {
+  pointer-events: none;
+  opacity: 0;
+  -webkit-transform: translateY(100px);
+          transform: translateY(100px);
+}
+
+
+.dialog b {
+  color: #EA0;
+}
+
+.button {
+  font-size: 20px;
+  background-color: #19F;
+  background-image: -webkit-gradient( linear, left top, left bottom, from(hsla(0, 0%, 0%, 0)), to(hsla(0, 0%, 0%, 0.2)) );
+  background-image: linear-gradient( hsla(0, 0%, 0%, 0), hsla(0, 0%, 0%, 0.2) );
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.button:hover {
+  cursor: pointer;
+  background-color: #3AF;
+}
+
+.button:active {
+  background-color: #C25;
+  -webkit-box-shadow: inset 0 2px 10px hsla(0, 0%, 0%, 0.5);
+          box-shadow: inset 0 2px 10px hsla(0, 0%, 0%, 0.5);
+}
