@@ -2,6 +2,8 @@ import openSocket from 'socket.io-client';
 var socket = io('http://localhost')
 var currentPlayer = 'Me'
 
+var inGame = false;
+
 var currentRoom = {
   roomName: nil
 }
@@ -24,8 +26,16 @@ socket.on('room-invite', function(data) {
   console.log(currentPlayer, 'is trying to join room', data.roomId, 'client side');
 });
 
-socket.on('start-game'), function() {
+socket.on('start-game', function() {
+  inGame = true;
   //some jquery bullshit to initiate game
-}
+});
 
-//need something for when game ends
+socket.on('game-over', function() {
+  inGame = false;
+//need something for when game ends, probably jquery bullshit
+});
+
+socket.on('leave-queue', function() {
+  //need to leave the room somehow
+})
