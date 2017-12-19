@@ -10,7 +10,13 @@ module.exports = () => {
     const templateVars = {
       user: req.session.user_id
     };
-    res.render('profile', templateVars);
+     if (!req.session.user_id){
+      res.redirect('/');
+
+    } else {
+      res.render('profile', templateVars);
+    }
+
   });
 
   // Gets the current signed in user.
