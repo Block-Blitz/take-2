@@ -26,57 +26,72 @@ module.exports = () => {
     const email = req.body.email;
     const password = bcrypt.hashSync(req.body.password, 10);
     if (!req.body.email || !req.body.password || !req.body.name) {
-      req.flash('error', 'Both email and password are required.');
+      req.flash('error', 'Email, name, and password are required.');
       res.status(404).send({success: false});
       return;
     }
-    helpers.checkEmailInDB(email, password)
+
+    helpers.checkNameInDB(name)
       .then(exists => {
-        if (!exists) {
-          return helpers.registerUser(name, email, password)
-            .then(user_id => {
-              req.session.user_id = user_id;
-              req.flash('success', 'Your account was successfuly registered.');
-              res.status(200).send({success: true});
+        if (exists) {
+          helpers.checkEmailInDB(email, password)
+            .then(exists => {
+              if (!exists) {
+                return helpers.registerUser(name, email, password)
+                  .then(user_id => {
+                    req.session.user_id = user_id;
+                    req.flash('success', 'Your account was successfuly registered.');
+                    res.status(200).send({success: true});
+                  });
+              }
+              else {
+                req.flash('error', 'Email has already been registered.');
+                res.status(404).send({success: false});
+              }
             });
         }
         else {
-          req.flash('error', 'Email has already been registered.');
+          req.flash('error', 'Name has already been used, please pick another');
           res.status(404).send({success: false});
         }
       });
+
   });
 
   // Gets the current signed in user.
   router.post('/facebook', (req, res) => {
-    console.log(req.body.name);
-    console.log(req.body.email + 'the email is this on the server.');
-    console.log('hello');
-    // res.status(200).send({success: true});
-
     const email = req.body.email;
     const name = req.body.name;
     if (!req.body.name ) {
-      console.log('CONSOLE!');
       req.flash('facebook-error', 'Must enter name to register');
       res.status(404).send({success: false});
       return;
     }
-    helpers.facebookCheckEmailInDB(email)
+    helpers.checkNameInDB(name)
       .then(exists => {
-         if (!exists) {
-          return helpers.facebookRegisterUser(name, email)
-            .then(user_id => {
-              req.session.user_id = user_id;
-
-              res.status(200).send({success: true});
+        console.log(exists + ' I am after the check name function');
+        if (!exists) {
+          helpers.facebookCheckEmailInDB(email)
+            .then(exists => {
+              console.log(exists + ' I am after the check email function');
+               if (!exists) {
+                  helpers.facebookRegisterUser(name, email)
+                  .then(user_id => {
+                    req.session.user_id = user_id;
+                    res.status(200).send({success: true});
+                 });
+               }
+               else {
+                req.flash('facebook-error', 'This email is already registered please go to login page');
+                res.status(404).send({success: false});
+              }
             });
-        }
-        else {
-          req.flash('facebook-error', 'This email is already registered pleasego to login page');
+        } else {
+          req.flash('facebook-error', 'This name has already been used, please pick another');
           res.status(404).send({success: false});
+
         }
-    });
+  });
     //         .then(exists => {
     //           if (exists) {
     //             req.session.user_id = exists;

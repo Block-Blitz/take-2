@@ -6,8 +6,14 @@ $(document).ready(function(){
       url: '/logout',
       method: 'POST',
       success: function(){
-        location.reload();
+        FB.logout(function(response) {
+                console.log('logging out.');
+                // user is now logged out
+              });
+        location.replace('/');
       }
     });
   });
+
+
 });

@@ -74,13 +74,13 @@
         });
       }
 
-      function setElements(isLoggedIn) {
-        if (isLoggedIn) {
-          document.getElementById
-        } else {
+      // function setElements(isLoggedIn) {
+      //   if (isLoggedIn) {
+      //     document.getElementById
+      //   } else {
 
-        }
-      }
+      //   }
+      // }
 
       // This a global varialbe used because of the callback hell from below.
       let userEmail = '';
@@ -113,10 +113,11 @@
   </div>
 
 
-    <% if (facebook_error) { %>
-
-      <p><%= facebook_error %></p>
-    <% } %>
+    <% if (facebook_error.length) { %>
+    <% facebook_error.forEach((error) => { %>
+      <p><%= error %></p>
+    <% }) %>
+  <% } %>
      <form id="facebookRegisterForm">
 
       <input id="facebook-register-name" "type="text" name="name" style="display: block;"placeholder="Facebook username"/>
