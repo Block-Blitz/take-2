@@ -10,7 +10,8 @@ module.exports = () => {
     const templateVars = {
         errors: req.flash('error'),
         success: req.flash('success'),
-        user: req.session.user_id
+        user: req.session.user_id,
+        facebook_error: req.flash('facebook-error')
       };
 
     if (req.session.user_id){
@@ -34,6 +35,7 @@ module.exports = () => {
     helpers.checkEmailInDB(email, password)
       .then(exists => {
         if (exists) {
+          console.log("check boolean", exists);
           helpers.checkLogin(email, password)
             .then(exists => {
               if (exists) {
@@ -57,7 +59,25 @@ module.exports = () => {
       });
     // res.render('login');
   });
+router.post('/facebook', (req, res) => {
+    const email = req.body.email;
 
+
+    helpers.facebookCheckEmailInDB(email)
+      .then(exists => {
+        if (exists) {
+                req.session.user_id = exists;
+
+                res.status(200).send({success: true});
+        }
+        else {
+          req.flash('facebook-error', 'Please go to register page to register your account');
+          res.status(404).send({success: false});
+          return;
+        }
+      });
+    // res.render('login');
+  });
 
   return router;
 };
