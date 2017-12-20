@@ -33,8 +33,11 @@
 
     function statusChangeCallback(response) {
       if(response.status === 'connected') {
-        testAPI();
         console.log('Logged in and authenticated');
+        // FB.logout(function(response) {
+        //   console.log('logging out.');
+        //   // user is now logged out
+        // });
       } else {
         console.log('Not authenticated');
       }
