@@ -20,8 +20,11 @@ $.ajax({
   method: "GET",
   url: "api/user_data"
   }).done((user) => {
-    userData.id = user.data.id;
-    userData.name = user.data.name;
+    if (user.data) {
+      userData.id = user.data.id;
+      userData.name = user.data.name;
+    }
+
   });
 
 // Logic for the Puzzle
@@ -36,6 +39,10 @@ var pckry = new Packery( grid, {
 pckry.getItemElements().forEach( function( itemElem ) {
   var draggie = new Draggabilly( itemElem );
   pckry.bindDraggabillyEvents( draggie );
+});
+
+$('.close-dialog-button').on('click', function(){
+  $('.dialog').addClass('is-waiting');
 });
 
 // map items by their data-tile
