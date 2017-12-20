@@ -1,37 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-
-    <link rel="stylesheet" href="../app.css">
-
+  <% include ./partials/_head.ejs %>
+  <title>Block Blitz</title>
 </head>
 <body>
+<<<<<<< HEAD
   <% include ./partials/_header.ejs %>
   <header>
     <h1>Block Blitz</h1>
   </header>
 
 
+  <% include ./partials/_header.ejs %>
 
+  <div class="non-game">
 <!-- Some buttons to make a game -->
   <% if(user) { %>
     <div class="game-buttons">
-      <button id="join-game">Join a game</button>
-      <button id="leave-queue">Leave Queue</button>
+      <button id="join-game" class="button">Join a game</button>
+      <button id="leave-queue" class="button">Leave Queue</button>
     </div>
   <% } %>
 <!-- a default explaination of how to play -->
     <div class="how-to-play">
       How to play - link?
     </div>
-
+  </div>
 
 <!-- Loaded puzzle -->
 
     <% include ./partials/_puzzle.ejs %>
 
-
+    <% include ./partials/_footer.ejs %>
 </body>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js" type="text/javascript"></script>
 <script type="text/javascript" src="../public/scripts/renamemelater.js"></script>

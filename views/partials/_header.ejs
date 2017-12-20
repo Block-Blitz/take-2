@@ -1,3 +1,4 @@
+<header>
 <script>
   window.fbAsyncInit = function() {
   FB.init({
@@ -6,8 +7,6 @@
     xfbml      : true,
     version    : 'v2.11'
   });
-
-
 };
 
 (function(d, s, id){
@@ -19,12 +18,23 @@
  }(document, 'script', 'facebook-jssdk'));
 </script>
 
-<a href='/'>Home</a>
-<a href='/game'>Game</a>
-<% if (!user) { %>
-  <a href='/register'>Register</a>
-  <a href='/login'>Login</a>
-<% } else { %>
-  <a href='/profile'>Profile</a>
-  <a class="logout-button" href='/logout'>Logout</a>
-<% } %>
+  <div class="container header-group">
+    <div class="logo">
+    Block Blitz
+    <!-- need logo -->
+    </div>
+
+    <nav class="header-nav">
+      <a href='/'>Home</a>
+      <!-- <a href='/game'>Game</a> -->
+      <% if (!user) { %>
+        <a href='/register'>Register</a>
+        <a href='/login'>Login</a>
+      <% } else { %>
+        <a href='/profile'>Profile</a>
+        <a class="logout-button" href='/logout'>Logout</a>
+      <% } %>
+    </nav>
+
+  </div>
+</header>
