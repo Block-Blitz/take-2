@@ -85,7 +85,7 @@ var didWin = false;
 
 function win() {
   if ( !didWin ) {
-    document.querySelector('.dialog__text').innerHTML = 'Nice work!<br>';
+    document.querySelector('.dialog__text').innerHTML = 'Nice work!';
   }
   //add logic for disconnecting socket, saving the results
   didWin = true;
@@ -133,8 +133,14 @@ socket.on('start-game', function(data) {
 
 socket.on('game-ended', function(data) {
   inGame = false;
-//need something for when game ends, probably jquery bullshit
+  //need something for when game ends, probably jquery bullshit
   console.log('client recieved a game over msg', data);
+  if ( userData.name != data.winner ) {
+    console.log("this guy lost");
+    document.querySelector('.dialog__text').innerHTML = 'You lost!';
+    showDialog();
+  }
+
 });
 
 socket.on('leave-queue', function() {
