@@ -25,8 +25,6 @@ const gameRoutes = require('./routes/game');
 const loginRoutes = require('./routes/login');
 const registerRoutes = require('./routes/register');
 const logoutRoutes = require('./routes/logout');
-// const contributionsRoutes = require('./routes/contributions');
-// const currentMapMarkers = require('./routes/current-map-markers');
 
 server.listen(PORT);
 
@@ -60,9 +58,6 @@ app.use('/game', gameRoutes(knex));
 app.use('/login', loginRoutes(knex));
 app.use('/register', registerRoutes(knex));
 app.use('/logout', logoutRoutes(knex));
-// app.use('/api/new-favourite', newFavoriteRoutes(knex));
-// app.use('/api/current-map-markers', currentMapMarkers(knex));
-
 
 
 app.get('/', (req, res) => {
