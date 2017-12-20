@@ -16,7 +16,8 @@ module.exports = () => {
 
     if (req.session.user_id){
       res.redirect('/');
-    } else {
+    }
+    else {
       res.render('register', templateVars);
     }
   });
@@ -33,7 +34,7 @@ module.exports = () => {
 
     helpers.checkNameInDB(name)
       .then(exists => {
-        if (exists) {
+        if (!exists) {
           helpers.checkEmailInDB(email, password)
             .then(exists => {
               if (!exists) {
@@ -62,7 +63,8 @@ module.exports = () => {
   router.post('/facebook', (req, res) => {
     const email = req.body.email;
     const name = req.body.name;
-    if (!req.body.name ) {
+    console.log(req.body.email + 'I am the email recieved from the server');
+    if (!req.body.name) {
       req.flash('facebook-error', 'Must enter name to register');
       res.status(404).send({success: false});
       return;
@@ -74,45 +76,25 @@ module.exports = () => {
           helpers.facebookCheckEmailInDB(email)
             .then(exists => {
               console.log(exists + ' I am after the check email function');
-               if (!exists) {
-                  helpers.facebookRegisterUser(name, email)
+              if (!exists) {
+                helpers.facebookRegisterUser(name, email)
                   .then(user_id => {
                     req.session.user_id = user_id;
                     res.status(200).send({success: true});
-                 });
-               }
-               else {
+                  });
+              }
+              else {
                 req.flash('facebook-error', 'This email is already registered please go to login page');
                 res.status(404).send({success: false});
               }
             });
-        } else {
+        }
+        else {
           req.flash('facebook-error', 'This name has already been used, please pick another');
           res.status(404).send({success: false});
 
         }
-  });
-    //         .then(exists => {
-    //           if (exists) {
-    //             req.session.user_id = exists;
-
-    //             res.status(200).send({success: true});
-    //           }
-    //           else {
-    //             req.flash('error', 'Email and password do not match');
-    //             // res.redirect(req.get('referer'));
-    //             res.status(404).send({success: false});
-    //             return;
-    //           }
-    //         });
-    //     }
-    //     else {
-    //       req.flash('error', 'Email is not registered');
-    //       res.status(404).send({success: false});
-    //       return;
-    //     }
-    //   });
-    // res.render('login');
+      });
   });
 
 

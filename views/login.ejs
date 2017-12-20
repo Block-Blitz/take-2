@@ -12,7 +12,7 @@
   <script>
       window.fbAsyncInit = function() {
         FB.init({
-          appId      : '1934572656870643',
+          appId      : '159990161398122',
           cookie     : true,
           xfbml      : true,
           version    : 'v2.11'
@@ -34,10 +34,25 @@
       function statusChangeCallback(response) {
         if (response.status === 'connected') {
           getUserEmail();
-          email = userEmail;
-          const loginFacebookData = {
-            email: email
-          };
+          
+        } else {
+          console.log('Not authenticated');
+        }
+      }
+
+      function checkLoginState() {
+        FB.getLoginStatus(function(response) {
+          statusChangeCallback(response);
+        });
+      }
+
+
+      function getUserEmail() {
+        FB.api('/me?fields=email', function(response) {
+          if (response && !response.error) {
+            const loginFacebookData = {
+              email: response.email
+            };
 
           $.ajax ({
             url: '/login/facebook',
@@ -52,37 +67,10 @@
               console.log('I was an unsuccesful call');
               FB.logout(function(response) {
                 console.log('logging out.');
-                // user is now logged out
               });
               location.reload();
             }
           });
-        } else {
-          console.log('Not authenticated');
-        }
-      }
-
-      function checkLoginState() {
-        FB.getLoginStatus(function(response) {
-          statusChangeCallback(response);
-        });
-      }
-
-      // function setElements(isLoggedIn) {
-      //   if (isLoggedIn) {
-      //     document.getElementById
-      //   } else {
-
-      //   }
-      // }
-
-      // This a global varialbe used because of the callback hell from below.
-      let userEmail = '';
-
-      function getUserEmail() {
-        FB.api('/me?fields=email', function(response) {
-          if (response && !response.error) {
-            userEmail = response.email;
           }
         })
       }
@@ -118,7 +106,6 @@
       onlogin="checkLoginState();">
     </fb:login-button>
 
-    <fb:login-button autologoutlink="true"></fb:login-button>
   <footer>
   </footer>
 
