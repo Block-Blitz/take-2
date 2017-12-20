@@ -52,8 +52,8 @@ pckry.items.forEach( function( item ) {
 });
 
 var orders = [
-  'fmgdbalkjihec', //remove later
   'abcdefghijklm',
+  'fmgdbalkjihec', //remove later
   'ecdibmhfajkgl',
   'ilckfgdebhjam'
 ];
@@ -142,8 +142,9 @@ socket.on('start-game', function(data) {
   inGame = true;
   //some jquery bullshit to initiate game
   console.log('Started game ' + data.id);
-  $(".grid").css("visibility", 'visible')
-  $(".shuffle-button").css("visibility", 'visible')
+  $(".game").css("display", "block");
+  // $(".shuffle-button").css("display", "block");
+  $(".non-game").css("display", "none");
   shuffleTiles();
 });
 

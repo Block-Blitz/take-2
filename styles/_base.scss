@@ -1,0 +1,23 @@
+* { box-sizing: border-box; }
+
+/* force scroll bar */
+html { overflow-y: scroll; }
+
+body {
+  font-family: $font-body;
+  background: #DDD;
+  color: #555;
+  text-align: center;
+  padding-bottom: 50px;
+}
+
+a {
+  text-decoration: none;
+  color: #19F;
+
+  &:hover,
+  &:focus {
+    color: #C25;
+  }
+
+}

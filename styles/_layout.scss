@@ -1,0 +1,14 @@
+.container {
+  width: 100%;
+  max-width: $container-width;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $global-padding;
+  padding-right: $global-padding;
+}
+
+.header-group {
+  display: flex;
+  justify-content: space-between;
+}
+
