@@ -34,11 +34,12 @@ app.use(morgan('dev'));
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use(knexLogger(knex));
 app.use(bodyParser.urlencoded({extended: true}));
-app.use('/styles', sass({
-  src: __dirname + '/styles',
-  dest: __dirname + '/public/styles',
-  debug: true,
-  outputStyle: 'compressed'
+app.use(sass({
+ src: "./styles",
+ dest:  "./public/styles",
+ indentedSyntax: false,
+ debug: true,
+ outputStyle: 'expanded'
 }));
 
 // Sets the secure cookie session

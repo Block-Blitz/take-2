@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
 
-    <link rel="stylesheet" href="../public/styles/puzzle.css">
+    <link rel="stylesheet" href="../app.css">
 
 </head>
 <body>
@@ -15,11 +15,12 @@
 
 
 <!-- Some buttons to make a game -->
+  <% if(user) { %>
     <div class="game-buttons">
       <button id="join-game">Join a game</button>
       <button id="leave-queue">Leave Queue</button>
     </div>
-
+  <% } %>
 <!-- a default explaination of how to play -->
     <div class="how-to-play">
       How to play - link?
