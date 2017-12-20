@@ -1,7 +1,7 @@
 var socket = io.connect('http://localhost:8080')
 var userData = 'Me'
 
-var inGame = false;
+var inQueue = false;
 
 var userData = {
   id: '',
@@ -11,17 +11,10 @@ var userData = {
 var currentRoom = {
   roomName: '',
   playerOne: '',
-  playerTwo: ''
+  playerOneId: '',
+  playerTwo: '',
+  playerTwoId: ''
 }
-
-// $.getJSON("api/user_data", function(data) {
-//     // Make sure the data contains the username as expected before using it
-//     console.log('api return data'. data);
-//     // if (data.hasOwnProperty('user_id')) {
-//       // console.log('User ID: ' + data.user_id);
-//       // userData.id = data.user_id;
-//     // }
-// });
 
 $.ajax({
   method: "GET",
@@ -53,8 +46,6 @@ pckry.items.forEach( function( item ) {
   mappedItems[ attr ] = item;
 });
 
-// ( function() {
-
 var orders = [
   'fmgdbalkjihec', //remove later
   'abcdefghijklm',
@@ -62,6 +53,7 @@ var orders = [
   'ilckfgdebhjam'
 ];
 
+var didWin = true;
 var orderIndex = 0;
 
 function shuffleTiles() {
@@ -81,20 +73,42 @@ function shuffleTiles() {
 }
 
 var dialog = document.querySelector('.dialog');
-var didWin = false;
 
 function win() {
-  if ( !didWin ) {
+  if ( didWin ) {
     document.querySelector('.dialog__text').innerHTML = 'Nice work!';
+    //add logic for disconnecting socket, saving the results
+    if (currentRoom.playerOneId === userData.id) {
+      var results = {
+        winner: currentRoom.playerOneId,
+        loser: currentRoom.playerTwoId
+      }
+    } else {
+      var results = {
+        winner: currentRoom.playerTwoId,
+        loser: currentRoom.playerOneId
+      }
+    }
+    socket.emit('game-over', {
+      room: currentRoom,
+      msg: 'Game Over!',
+      winner: userData.name,
+    });
+    $.ajax ({
+      url: '/api/game-log',
+      method: 'POST',
+      data: results,
+      success: function () {
+        console.log('Result saved to database');
+      }
+    });
+
   }
-  //add logic for disconnecting socket, saving the results
-  didWin = true;
-  socket.emit('game-over', {
-    room: currentRoom,
-    msg: 'Game Over!',
-    winner: userData.name
-  });
   showDialog();
+}
+
+function saveResults(winner, loser) {
+  knex
 }
 
 function showDialog() {
@@ -112,9 +126,6 @@ pckry.on( 'dragItemPositioned', function() {
     win();
   }
 });
-
-// })();
-
 
 // Socket.io logic
 
@@ -139,6 +150,7 @@ socket.on('game-ended', function(data) {
     console.log("this guy lost");
     document.querySelector('.dialog__text').innerHTML = 'You lost!';
     showDialog();
+    didWin = false;
   }
 
 });
@@ -151,19 +163,30 @@ socket.on('joinSuccess', function(data) {
   console.log('data returned on room join \n', data);
   currentRoom.roomName = data.id;
   currentRoom.playerOne = data.playerOne;
+  currentRoom.playerOneId = data.playerOneId;
   currentRoom.playerTwo = data.playerTwo;
+  currentRoom.playerTwoId = data.playerTwoId;
   console.log(userData.name, 'is trying to join room', currentRoom.roomName, '(from client side)');
 });
 
 // jQuery for button functionality
 
 $('#join-game').on('click', function() {
+  if (inQueue) {
+    console.log("Already in Queue");
+    return;
+  }
   console.log(userData.name, 'wants to join a room');
   socket.emit('join-game', { player: userData });
+  inQueue = true;
+
 });
 
 $('#leave-queue').on('click', function() {
   console.log(userData.name, 'left the queue');
-  console.log("current room:", currentRoom);
   socket.emit('leaveQueue', currentRoom.roomName);
+  currentRoom.roomName = "";
+  currentRoom.playerOne = "";
+  console.log("current room:", currentRoom);
+  inQueue = false;
 });

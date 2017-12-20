@@ -68,24 +68,39 @@ app.get('/', (req, res) => {
   res.render('index', templateVars);
 });
 
-app.get('/api/user_data', function(req, res) {
+app.get('/api/user_data', (req, res) => {
 
-  if (req.session === undefined) {
+  if (!req.session) {
     // The user is not logged in
     console.log('not logged in');
     res.json({});
   } else {
     console.log(req.session.user_id, 'is logged in');
-    // res.json({user_id: req.session.user_id});
     getUserInfo(req.session.user_id).then((data) => {
-      console.log('data in promise', data);
-      // let JSONdata = res.json(data);
-      // console.log(JSONdata)
       return res.json({data});
 
     });
   }
 });
+
+app.post('/api/game-log', (req, res) => {
+  console.log('input to game log post', req.body);
+  saveGameResult(req.body).then(() => {
+    console.log('results saved');
+    return;
+  });
+});
+
+function saveGameResult(result) {
+  return knex('games')
+    .insert({
+      winner: result.winner,
+      loser: result.loser
+    })
+    .then(() => {
+      return;
+    });
+}
 
 function getUserInfo(id) {
   return knex
@@ -146,12 +161,14 @@ function leaveQueue(socket, gameId) {
   //get game Id
   for (let i = 0; i < gameCollection.length; i++) {
     if (gameCollection[i].id === gameId) {
+      console.log(gameCollection);
       console.log("gameCollection[i].id:", gameCollection[i].id);
       gameCollection.splice(i, 1);
       socket.leave(gameId);
     }
   }
 }
+
 //on socket connection sending info to the client side
 
 io.on('connection', function(socket) {
@@ -162,12 +179,8 @@ io.on('connection', function(socket) {
     console.log('server heard a game request');
     console.log('join game', data.player.name);
     let room = { id: newId() };
-    //console.log(room);
-    // socket.join(room.id);
     gameSeeker(socket, data.player);
     console.log(io.sockets.adapter.rooms);
-    //io.to(room).emit('room-invite', room );
-    // create room, send room ID to client
   });
 
   socket.on('game-over', function(data) {
