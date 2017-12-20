@@ -20,8 +20,10 @@ $.ajax({
   method: "GET",
   url: "api/user_data"
   }).done((user) => {
-    userData.id = user.data.id;
-    userData.name = user.data.name;
+    if(user.data) {
+      userData.id = user.data.id;
+      userData.name = user.data.name;
+    }
   });
 
 // Logic for the Puzzle
@@ -137,9 +139,9 @@ socket.on('start-game', function(data) {
   inGame = true;
   //some jquery bullshit to initiate game
   console.log('Started game ' + data.id);
-  shuffleTiles();
   $(".grid").css("visibility", 'visible')
   $(".shuffle-button").css("visibility", 'visible')
+  shuffleTiles();
 });
 
 socket.on('game-ended', function(data) {
