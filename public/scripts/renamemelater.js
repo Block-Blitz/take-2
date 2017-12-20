@@ -1,4 +1,13 @@
 $(document).ready(function(){
+  function fbLogoutUser() {
+    FB.getLoginStatus(function(response) {
+      if (response && response.status === 'connected') {
+        FB.logout(function(response) {
+          document.location.reload();
+        });
+      }
+    });
+  }
   $('.logout-button').on('click', function(e){
     console.log('hellllo');
     e.preventDefault();
@@ -6,10 +15,7 @@ $(document).ready(function(){
       url: '/logout',
       method: 'POST',
       success: function(){
-        FB.logout(function(response) {
-                console.log('logging out.');
-                // user is now logged out
-              });
+        fbLogoutUser();
         location.replace('/');
       }
     });

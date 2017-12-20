@@ -13,10 +13,11 @@
   <header>
     <h1>register page</h1>
   </header>
+
     <script>
       window.fbAsyncInit = function() {
         FB.init({
-          appId      : '1934572656870643',
+          appId      : '159990161398122',
           cookie     : true,
           xfbml      : true,
           version    : 'v2.11'
@@ -37,32 +38,7 @@
 
       function statusChangeCallback(response) {
         if (response.status === 'connected') {
-          const name = $('#facebook-register-name').val();
           getUserEmail();
-          email = userEmail;
-          const registerFacebookData = {
-            name: name,
-            email: email
-          };
-
-          $.ajax ({
-            url: '/register/facebook',
-            method: 'POST',
-            data: registerFacebookData,
-            success: function(msg){
-              console.log('I was a succesful call', msg);
-              location.replace('/');
-            },
-            error: function(err) {
-
-              console.log('I was an unsuccesful call');
-              FB.logout(function(response) {
-                console.log('logging out.');
-                // user is now logged out
-              });
-              location.reload();
-            }
-          });
         } else {
           console.log('Not authenticated');
         }
@@ -74,26 +50,37 @@
         });
       }
 
-      // function setElements(isLoggedIn) {
-      //   if (isLoggedIn) {
-      //     document.getElementById
-      //   } else {
-
-      //   }
-      // }
-
-      // This a global varialbe used because of the callback hell from below.
-      let userEmail = '';
-
       function getUserEmail() {
         FB.api('/me?fields=email', function(response) {
           if (response && !response.error) {
-            userEmail = response.email;
-          }
-        })
-      }
-
+          const name = $('#facebook-register-name').val();
+          registerFacebookData = {
+            name: name,
+            email: response.email
+          };
+          console.log(registerFacebookData);
+         
+          $.ajax ({
+            url: '/register/facebook',
+            method: 'POST',
+            data: registerFacebookData,
+            success: function(msg){
+              console.log('I was a succesful call', msg);
+              location.replace('/');
+            },
+            error: function(err) {
+              console.log('I was an unsuccesful call');
+              FB.logout(function(response) {
+                console.log('logging out.');
+              });
+              location.reload();
+            }
+          });
+        }
+      });
+    }
     </script>
+    
   <div>
 
   <% if (errors.length) { %>
@@ -125,8 +112,6 @@
         scope="public_profile,email"
         onlogin="checkLoginState();">
       </fb:login-button>
-
-      <fb:login-button autologoutlink="true"></fb:login-button>
 
     </form>
 
