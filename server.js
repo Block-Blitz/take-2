@@ -151,7 +151,7 @@ function gameSeeker(socket, player) {
       gameCollection[i].playerTwoId = player.id;
       socket.join(gameId);
       console.log("gameId:", gameId);
-      console.log( 'Mark' + " has been added to: " + gameCollection[i].id);
+      console.log( player.name + " has been added to: " + gameCollection[i].id);
       io.sockets.in(gameId).emit('joinSuccess', gameCollection[i]);
       io.sockets.in(gameId).emit('start-game', gameCollection[i]);
       return;
