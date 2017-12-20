@@ -73,16 +73,47 @@ app.get('/', (req, res) => {
   res.render('index', templateVars);
 });
 
+app.get('/api/user_data', function(req, res) {
+
+  if (req.session === undefined) {
+    // The user is not logged in
+    console.log('not logged in');
+    res.json({});
+  } else {
+    console.log(req.session.user_id, 'is logged in');
+    // res.json({user_id: req.session.user_id});
+    getUserInfo(req.session.user_id).then((data) => {
+      console.log('data in promise', data);
+      // let JSONdata = res.json(data);
+      // console.log(JSONdata)
+      return res.json({data});
+
+    });
+  }
+});
+
+function getUserInfo(id) {
+  return knex
+    .select('name', 'id')
+    .from('users')
+    .where('id', id)
+    .then((user) => {
+      userInfo = user[0];
+      return userInfo;
+    });
+}
 //creating a place to store the games
 
 const gameCollection = [];
 
-function buildGame(socket) {
+function buildGame(socket, player) {
   let gameObject = {};
   gameObject.id = newId();
   //hard coded for now
-  gameObject.playerOne = 'Catherine';
+  gameObject.playerOne = player.name;
+  gameObject.playerOneId = player.id;
   gameObject.playerTwo = null;
+  gameObject.playerTwoId = 0;
   gameCollection.push(gameObject);
 
   console.log("Game created by " + gameObject.playerOne + " w/ " + gameObject.id);
@@ -92,28 +123,28 @@ function buildGame(socket) {
 }
 
 
-function gameSeeker(socket) {
+function gameSeeker(socket, player) {
   console.log('number of games', gameCollection.length);
   if (gameCollection.length == 0) {
-    buildGame(socket);
+    buildGame(socket, player);
     return;
   }
-    //hard coded for now
-    let playerName = "Mark";
-    for(let i = 0; i < gameCollection.length; i++) {
-      if(!gameCollection[i].playerTwo) {
-        console.log('FOUND A GAME');
-        let gameId = gameCollection[i].id;
-        gameCollection[i].playerTwo = playerName
-        socket.join(gameId);
-        console.log("gameId:", gameId);
-        console.log( 'Mark' + " has been added to: " + gameCollection[i].id);
-        io.sockets.in(gameId).emit('joinSuccess', gameCollection[i]);
-        io.sockets.in(gameId).emit('start-game', gameCollection[i]);
-        return;
-      }
+  //hard coded for now
+  for(let i = 0; i < gameCollection.length; i++) {
+    if(!gameCollection[i].playerTwo) {
+      console.log('FOUND A GAME');
+      let gameId = gameCollection[i].id;
+      gameCollection[i].playerTwo = player.name;
+      gameCollection[i].playerTwoId = player.id;
+      socket.join(gameId);
+      console.log("gameId:", gameId);
+      console.log( 'Mark' + " has been added to: " + gameCollection[i].id);
+      io.sockets.in(gameId).emit('joinSuccess', gameCollection[i]);
+      io.sockets.in(gameId).emit('start-game', gameCollection[i]);
+      return;
     }
-  buildGame(socket);
+  }
+  buildGame(socket, player);
 }
 
 function leaveQueue(socket, gameId) {
@@ -132,12 +163,13 @@ io.on('connection', function(socket) {
   socket.emit('connection', 'socket connected');
   console.log('a socket has connected');
 
-  socket.on('join-game', function(msg) {
+  socket.on('join-game', function(data) {
     console.log('server heard a game request');
+    console.log('join game', data.player.name);
     let room = { id: newId() };
     //console.log(room);
     // socket.join(room.id);
-    gameSeeker(socket);
+    gameSeeker(socket, data.player);
     console.log(io.sockets.adapter.rooms);
     //io.to(room).emit('room-invite', room );
     // create room, send room ID to client
