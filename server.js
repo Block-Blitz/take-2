@@ -34,10 +34,12 @@ app.use(morgan('dev'));
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use(knexLogger(knex));
 app.use(bodyParser.urlencoded({extended: true}));
+
 app.use(sass({
  src: "./styles",
  dest:  "./public/styles",
  indentedSyntax: false,
+ force: true,
  debug: true,
  outputStyle: 'expanded'
 }));
