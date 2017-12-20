@@ -16,15 +16,15 @@
     <script>
       window.fbAsyncInit = function() {
         FB.init({
-          appId      : '159990161398122',
+          appId      : '1934572656870643',
           cookie     : true,
           xfbml      : true,
           version    : 'v2.11'
         });
-          
+
         FB.getLoginStatus(function(response) {
           statusChangeCallback(response);
-        });   
+        });
       };
 
       (function(d, s, id){
@@ -44,24 +44,25 @@
             name: name,
             email: email
           };
-          
+
           $.ajax ({
             url: '/register/facebook',
             method: 'POST',
             data: registerFacebookData,
             success: function(msg){
-              // location.replace('/');
               console.log('I was a succesful call', msg);
+              location.replace('/');
             },
             error: function(err) {
-              // location.reload();
+
               console.log('I was an unsuccesful call');
+              FB.logout(function(response) {
+                console.log('logging out.');
+                // user is now logged out
+              });
+              location.reload();
             }
           });
-          // FB.logout(function(response) {
-          //   console.log('logging out.');
-          //   // user is now logged out
-          // });
         } else {
           console.log('Not authenticated');
         }
@@ -112,16 +113,20 @@
   </div>
 
 
+    <% if (facebook_error) { %>
 
+      <p><%= facebook_error %></p>
+    <% } %>
      <form id="facebookRegisterForm">
+
       <input id="facebook-register-name" "type="text" name="name" style="display: block;"placeholder="Facebook username"/>
-      <fb:login-button 
+      <fb:login-button
         scope="public_profile,email"
         onlogin="checkLoginState();">
       </fb:login-button>
 
       <fb:login-button autologoutlink="true"></fb:login-button>
-      
+
     </form>
 
 

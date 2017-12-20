@@ -10,7 +10,8 @@ module.exports = () => {
     const templateVars = {
       errors: req.flash('error'),
       success: req.flash('success'),
-      user: req.session.user_id
+      user: req.session.user_id,
+      facebook_error: req.flash('facebook-error')
     };
 
     if (req.session.user_id){
@@ -51,19 +52,31 @@ module.exports = () => {
     console.log(req.body.name);
     console.log(req.body.email + 'the email is this on the server.');
     console.log('hello');
-    res.status(200).send({success: true});
-    // const email = req.body.email;
-    // const password = req.body.password;
-    // if (!req.body.email || !req.body.password) {
-    //   console.log('CONSOLE!');
-    //   req.flash('error', 'Both email and password are required');
-    //   res.status(404).send({success: false});
-    //   return;
-    // }
-    // helpers.checkEmailInDB(email, password)
-    //   .then(exists => {
-    //     if (exists) {
-    //       helpers.checkLogin(email, password)
+    // res.status(200).send({success: true});
+
+    const email = req.body.email;
+    const name = req.body.name;
+    if (!req.body.name ) {
+      console.log('CONSOLE!');
+      req.flash('facebook-error', 'Must enter name to register');
+      res.status(404).send({success: false});
+      return;
+    }
+    helpers.facebookCheckEmailInDB(email)
+      .then(exists => {
+         if (!exists) {
+          return helpers.facebookRegisterUser(name, email)
+            .then(user_id => {
+              req.session.user_id = user_id;
+
+              res.status(200).send({success: true});
+            });
+        }
+        else {
+          req.flash('facebook-error', 'This email is already registered pleasego to login page');
+          res.status(404).send({success: false});
+        }
+    });
     //         .then(exists => {
     //           if (exists) {
     //             req.session.user_id = exists;

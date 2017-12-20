@@ -11,16 +11,16 @@
   <script>
     window.fbAsyncInit = function() {
       FB.init({
-        appId      : '159990161398122',
+        appId      : '1934572656870643',
         cookie     : true,
         xfbml      : true,
         version    : 'v2.11'
       });
-        
+
       FB.getLoginStatus(function(response) {
         statusChangeCallback(response);
-      });  
-        
+      });
+
     };
 
     (function(d, s, id){
@@ -87,7 +87,7 @@
     </form>
   </div>
 
-  <fb:login-button 
+  <fb:login-button
     scope="public_profile,email"
     onlogin="checkLoginState();">
   </fb:login-button>
