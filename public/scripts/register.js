@@ -13,7 +13,7 @@ $(document).ready(function(){
     const email = escape($('#email').val());
     const password = escape($('#password').val());
     console.log('I am the jquery befroe it gets ajexd' + name, email, password);
-    registerData = {
+    const registerData = {
       name,
       email,
       password

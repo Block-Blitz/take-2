@@ -13,7 +13,7 @@ $(document).ready(function(){
 
     const email = escape($('#email').val());
     const password = escape($('#password').val());
-    loginData = {
+    const loginData = {
       email,
       password
     };

@@ -46,6 +46,47 @@ module.exports = () => {
       });
   });
 
+  // Gets the current signed in user.
+  router.post('/facebook', (req, res) => {
+    console.log(req.body.name);
+    console.log(req.body.email + 'the email is this on the server.');
+    console.log('hello');
+    res.status(200).send({success: true});
+    // const email = req.body.email;
+    // const password = req.body.password;
+    // if (!req.body.email || !req.body.password) {
+    //   console.log('CONSOLE!');
+    //   req.flash('error', 'Both email and password are required');
+    //   res.status(404).send({success: false});
+    //   return;
+    // }
+    // helpers.checkEmailInDB(email, password)
+    //   .then(exists => {
+    //     if (exists) {
+    //       helpers.checkLogin(email, password)
+    //         .then(exists => {
+    //           if (exists) {
+    //             req.session.user_id = exists;
+
+    //             res.status(200).send({success: true});
+    //           }
+    //           else {
+    //             req.flash('error', 'Email and password do not match');
+    //             // res.redirect(req.get('referer'));
+    //             res.status(404).send({success: false});
+    //             return;
+    //           }
+    //         });
+    //     }
+    //     else {
+    //       req.flash('error', 'Email is not registered');
+    //       res.status(404).send({success: false});
+    //       return;
+    //     }
+    //   });
+    // res.render('login');
+  });
+
 
   return router;
 };
