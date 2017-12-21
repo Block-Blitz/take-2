@@ -54,21 +54,21 @@
 /* -------- */
 
 .dialog-container {
-  width: 600px;
+  max-width: 600px;
   margin: 0 auto;
   position: relative;
 }
 
 .dialog {
   position: absolute;
-  padding: 20px;
+  padding: $global-padding;
   width: 100%;
   background: #333;
   color: white;
   border-radius: 20px;
   text-align: center;
   font-size: 28px;
-          box-shadow: 0 5px 10px hsla(0, 0%, 0%, 0.4);
+  box-shadow: 0 5px 10px hsla(0, 0%, 0%, 0.4);
   z-index: 10;
   transition: opacity 0.2s, transform 0.2s;
 }
@@ -76,6 +76,6 @@
 .dialog.is-waiting {
   pointer-events: none;
   opacity: 0;
-          transform: translateY(100px);
+  transform: translateY(100px);
 }
 
