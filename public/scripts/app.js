@@ -262,16 +262,17 @@ $('#play-solo').on('click', function() {
 
 
 // Toggles Button visibilty depending on if user is in game queue or not
+
 function displayButtonsJoinQueue() {
-  $("#leave-queue").css("display", "block");
-  $("#make-game").css("display", "none");
-  $("#join-game").css("display", "none");
-  $("#play-solo").css("display", "none");
+  $("#leave-queue").removeClass('no-display');
+  $("#make-game").addClass('no-display');
+  $("#join-game").addClass('no-display');
+  $("#play-solo").addClass('no-display');
 }
 
 function displayButtonsDefault() {
-  $("#make-game").css("display", "block");
-  $("#join-game").css("display", "block");
-  $("#play-solo").css("display", "block");
-  $("#leave-queue").css("display", "none");
+  $("#make-game").removeClass('no-display');
+  $("#join-game").removeClass('no-display');
+  $("#play-solo").removeClass('no-display');
+  $("#leave-queue").addClass('no-display');
 }
