@@ -143,7 +143,10 @@ pckry.on( 'dragItemPositioned', function() {
 // Socket.io logic
 
 socket.on('connection', function() {
-  console.log('Client connected to socket');
+  console.log('Client connected to socket', userData.name);
+  if(userData.name) {
+    socket.emit('new-user', userData);
+  }
 });
 
 /*
