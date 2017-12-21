@@ -30,8 +30,9 @@ $.ajax({
 
 var grid = document.querySelector('.grid');
 var pckry = new Packery( grid, {
+  columnWidth: '.grid-sizer',
   itemSelector: '.tile',
-  columnWidth: 100,
+  percentPosition: true,
   transitionDuration: '0.3s'
 });
 
