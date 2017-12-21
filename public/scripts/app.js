@@ -224,7 +224,7 @@ $('#make-game').on('click', function() {
   console.log(userData.name, 'wants to join a room');
   socket.emit('make-game', { player: userData });
   inQueue = true;
-
+  displayButtonsJoinQueue();
 });
 
 $('#join-game').on('click', function() {
@@ -235,7 +235,7 @@ $('#join-game').on('click', function() {
   console.log(userData.name, 'wants to join a room');
   socket.emit('join-game', { player: userData });
   inQueue = true;
-
+  displayButtonsJoinQueue();
 });
 
 $('#leave-queue').on('click', function() {
@@ -246,6 +246,7 @@ $('#leave-queue').on('click', function() {
   currentRoom.playerOneId = "";
   console.log("current room:", currentRoom);
   inQueue = false;
+  displayButtonsDefault();
 });
 
 $('.close-dialog-button').on('click', function(){
@@ -258,3 +259,19 @@ $('#play-solo').on('click', function() {
   $(".non-game").css("display", "none");
   shuffleTiles();
 });
+
+
+// Toggles Button visibilty depending on if user is in game queue or not
+function displayButtonsJoinQueue() {
+  $("#leave-queue").css("display", "block");
+  $("#make-game").css("display", "none");
+  $("#join-game").css("display", "none");
+  $("#play-solo").css("display", "none");
+}
+
+function displayButtonsDefault() {
+  $("#make-game").css("display", "block");
+  $("#join-game").css("display", "block");
+  $("#play-solo").css("display", "block");
+  $("#leave-queue").css("display", "none");
+}
