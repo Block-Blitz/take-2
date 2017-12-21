@@ -251,3 +251,10 @@ $('#leave-queue').on('click', function() {
 $('.close-dialog-button').on('click', function(){
   $('.dialog').addClass('is-waiting');
 });
+
+$('#play-solo').on('click', function() {
+  console.log('Started a single player game');
+  $(".game").css("display", "block");
+  $(".non-game").css("display", "none");
+  shuffleTiles();
+});
