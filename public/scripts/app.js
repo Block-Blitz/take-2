@@ -175,7 +175,17 @@ socket.on('joinSuccess', function(data) {
   console.log(userData.name, 'is trying to join room', currentRoom.roomName, '(from client side)');
 });
 
+socket.on('gameCreated', function(data){
+  currentRoom.playerOne = data.playerOne;
+  $('.games-opened').append(`<div class="games-homepage"><p>Game created by ${data.playerOne}<p><button class="join-game-button" data=${data.id}>Join</button></div>`);
+    $(document).find('.join-game-button').on('click', function(){
+      socket.emit( 'join-game-button', {id: data.id, user: userData});
+    });
+})
+
 // jQuery for button functionality
+
+
 
 $('#join-game').on('click', function() {
   if (inQueue) {
