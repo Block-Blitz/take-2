@@ -92,6 +92,7 @@ function showDialog() {
 function win() {
   if ( didWin ) {
     document.querySelector('.dialog__text').innerHTML = 'Nice work!';
+
     if (currentRoom.playerOneId === userData.id) {
       var results = {
         winner: currentRoom.playerOneId,
@@ -110,15 +111,16 @@ function win() {
       winner: userData.name,
     });
     // Saves the game result to database
-    $.ajax ({
-      url: '/api/game-log',
-      method: 'POST',
-      data: results,
-      success: function () {
-        console.log('Result saved to database');
-      }
-    });
-
+    if (currentRoom.playerOneId != currentRoom.playerTwoId) {
+      $.ajax ({
+        url: '/api/game-log',
+        method: 'POST',
+        data: results,
+        success: function () {
+          console.log('Result saved to database');
+        }
+      });
+    }
   }
   showDialog();
 }
