@@ -144,7 +144,10 @@ pckry.on( 'dragItemPositioned', function() {
 // Socket.io logic
 
 socket.on('connection', function() {
-  console.log('Client connected to socket');
+  console.log('Client connected to socket', userData.name);
+  if(userData.name) {
+    socket.emit('new-user', userData);
+  }
 });
 
 /*
@@ -208,6 +211,12 @@ socket.on('gameCreated', function(data){
 socket.on('game-filled', function(data){
   console.log("heard that the game is filled" , data);
   $(document).find(`[data=${data}]`).css('display', 'none');
+});
+
+$(window).on("unload", function(e) {
+  //works on closing window, not refresh
+  console.log('leaving page');
+    socket.emit('leaving-page', 'user leaving page');
 });
 
 
