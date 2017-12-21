@@ -130,9 +130,9 @@ function getUserInfo(id) {
     });
 }
 
-//creating a place to store the games
+//creating places to store the games and users
 const gameCollection = [];
-
+const onlineUsers = [];
 /*
  * Creates a new game
  *
@@ -146,8 +146,8 @@ function buildGame(socket, player) {
   console.log('player info in the build game function', player);
   gameObject.playerOne = player.name;
   gameObject.playerOneId = player.id;
-  gameObject.playerTwo = null;
-  gameObject.playerTwoId = 0;
+  gameObject.playerTwo = "";
+  gameObject.playerTwoId = "";
   console.log('game created in the build game function', gameObject);
   gameCollection.push(gameObject);
 
@@ -175,6 +175,9 @@ function gameSeeker(socket, player) {
   // Searches through the gameCollection for a game w/o a second player
   for(let game of gameCollection) {
     if(!game.playerTwo) {
+      if(game.playerOneId === player.id) {
+        return;
+      }
       console.log('FOUND A GAME');
       // Updates the game info with user info
       game.playerTwo = player.name;
@@ -202,7 +205,7 @@ function gameSeeker(socket, player) {
  */
 function joinGame(socket, data){
   for( let game of gameCollection){
-    if (game.id === data.id){
+    if (game.id === data.id && game.playerOneId !== data.user.id){
       // Updates game info
       game.playerTwo = data.user.name;
       game.playerTwoId = data.user.id;
