@@ -212,6 +212,12 @@ socket.on('game-filled', function(data){
   $(document).find(`[data=${data}]`).css('display', 'none');
 });
 
+$(window).on("unload", function(e) {
+  //works on closing window, not refresh
+  console.log('leaving page');
+    socket.emit('leaving-page', 'user leaving page');
+});
+
 
 // jQuery for button functionality
 
