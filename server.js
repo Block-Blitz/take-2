@@ -130,24 +130,24 @@ function getUserInfo(id) {
     });
 }
 
-//creating a place to store the games
+//creating places to store the games and users
 const gameCollection = [];
-
+const onlineUsers = [];
 /*
  * Creates a new game
  *
  * @param socket - user's socket
  * @param {object} player - info for the creating user
  */
-function buildGame(socket, player) {
+function buildGame(socket) {
   // Creates a new game object, adds it to gameCollection
   let gameObject = {};
   gameObject.id = newId();
-  console.log('player info in the build game function', player);
-  gameObject.playerOne = player.name;
-  gameObject.playerOneId = player.id;
-  gameObject.playerTwo = null;
-  gameObject.playerTwoId = 0;
+  console.log('player info in the build game function', socket.user_name, socket.user_id);
+  gameObject.playerOne = socket.user_name;
+  gameObject.playerOneId = socket.user_id;
+  gameObject.playerTwo = "";
+  gameObject.playerTwoId = "";
   console.log('game created in the build game function', gameObject);
   gameCollection.push(gameObject);
 
@@ -166,23 +166,27 @@ function buildGame(socket, player) {
  * @param socket - user's socket
  * @param {object} player - info for the searching user
  */
-function gameSeeker(socket, player) {
+function gameSeeker(socket) {
   // If no games exist, create one
   if (gameCollection.length == 0) {
-    buildGame(socket, player);
+    buildGame(socket);
     return;
   }
   // Searches through the gameCollection for a game w/o a second player
   for(let game of gameCollection) {
     if(!game.playerTwo) {
+      if(game.playerOneId === socket.user_id) {
+        //Needs to return error that user is already in the queue
+        return;
+      }
       console.log('FOUND A GAME');
       // Updates the game info with user info
-      game.playerTwo = player.name;
-      game.playerTwoId = player.id;
+      game.playerTwo = socket.user_name;
+      game.playerTwoId = socket.user_id;
       // Joins the room
       socket.join(game.id);
       console.log("game.id:", game.id);
-      console.log( player.name + " has been added to: " + game.id);
+      console.log( socket.user_name + " has been added to: " + game.id);
       // Emits notification that the game is filled, starts the game
       io.sockets.in(game.id).emit('joinSuccess', game);
       io.sockets.in(game.id).emit('start-game', game);
@@ -191,7 +195,7 @@ function gameSeeker(socket, player) {
     }
   }
   // If no games exist w/o a player 2, create a new game
-  buildGame(socket, player);
+  buildGame(socket);
 }
 
 /*
@@ -202,7 +206,7 @@ function gameSeeker(socket, player) {
  */
 function joinGame(socket, data){
   for( let game of gameCollection){
-    if (game.id === data.id){
+    if (game.id === data.id && game.playerOneId !== data.user.id){
       // Updates game info
       game.playerTwo = data.user.name;
       game.playerTwoId = data.user.id;
@@ -248,12 +252,26 @@ io.on('connection', function(socket) {
   socket.emit('connection', 'socket connected');
   console.log('a socket has connected');
 
+  socket.on('new-user', function(data) {
+    // console.log('new user data', data);
+    socket.user_id = data.id;
+    socket.user_name = data.name;
+    // console.log('new socket info', socket.id, socket.name);
+    onlineUsers.push(socket);
+    // for(let i = 0; i < onlineUsers.length; i++) {
+    //   console.log(onlineUsers[i].user_name);
+    // }
+
+    //What to do with this data????
+    //Need for lists on client side
+  });
+
   socket.on('join-game', function(data) {
     console.log('server heard a game request');
     console.log('join game', data.player.name);
     let room = { id: newId() };
-    gameSeeker(socket, data.player);
-    console.log(io.sockets.adapter.rooms);
+    gameSeeker(socket);
+    // console.log(io.sockets.adapter.rooms);
   });
 
   socket.on('join-game-button', function(data){
@@ -263,7 +281,7 @@ io.on('connection', function(socket) {
 
   socket.on('make-game', function(data){
     console.log(data.player, "this is from the make game listener");
-    buildGame(socket, data.player);
+    buildGame(socket);
   });
 
   socket.on('game-over', function(data) {
@@ -279,6 +297,37 @@ io.on('connection', function(socket) {
     console.log("gameCollection before", gameCollection);
     leaveQueue(socket, data);
     console.log("gameCollection after", gameCollection);
+  });
+
+  socket.on('leaving-page', function() {
+    console.log(socket.user_name + ' disconnected');
+    // console.log('online user sockets', onlineUsers);
+    //remove user from db
+    for (let i = 0; i < onlineUsers.length; i++) {
+      // console.log('user in array', onlineUsers[i]);
+      if(onlineUsers[i].user_id === socket.user_id) {
+        console.log('FOUND A MATCH', onlineUsers[i].user_name);
+        onlineUsers.splice(i, 1);
+        // Emit and tell other others that user has left
+      }
+    }
+    //remove all of the users open games in games collection
+    for (let i = 0; i < gameCollection.length; i++) {
+      console.log('individual game ', gameCollection[i]);
+      if(gameCollection[i].playerOneId == socket.user_id) {
+        console.log('found a game match');
+        socket.leave(gameCollection[i].id);
+        // Emit notification that game is no longer available
+        io.emit('game-filled', gameCollection[i].id);
+        gameCollection.splice(i, 1);
+      } else if (gameCollection[i].playerTwoId && gameCollection[i].playerTwoId == socket.user_id) {
+        console.log('found a game match');
+        socket.leave(gameCollection[i].id);
+        // Emit notification that game is no longer available
+        io.emit('game-filled', gameCollection[i].id);
+        gameCollection.splice(i, 1);
+      }
+    }
   });
 
 });
