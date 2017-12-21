@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
   function fbLogoutUser() {
     FB.getLoginStatus(function(response) {
       if (response && response.status === 'connected') {
