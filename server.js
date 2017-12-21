@@ -71,6 +71,8 @@ app.get('/', (req, res) => {
   res.render('index', templateVars);
 });
 
+
+// Returns userdata for logged in user
 app.get('/api/user_data', (req, res) => {
 
   if (!req.session) {
@@ -86,6 +88,7 @@ app.get('/api/user_data', (req, res) => {
   }
 });
 
+// Saves the results of a game
 app.post('/api/game-log', (req, res) => {
   console.log('input to game log post', req.body);
   saveGameResult(req.body).then(() => {
@@ -94,6 +97,11 @@ app.post('/api/game-log', (req, res) => {
   });
 });
 
+/*
+ * saves game result to database
+ *
+ * @param {object} result - results of game
+ */
 function saveGameResult(result) {
   return knex('games')
     .insert({
@@ -105,6 +113,12 @@ function saveGameResult(result) {
     });
 }
 
+/*
+ * retrieves userdata from database
+ *
+ * @param {number} id - user id
+ * @return {object} - user data
+ */
 function getUserInfo(id) {
   return knex
     .select('name', 'id')
@@ -115,11 +129,18 @@ function getUserInfo(id) {
       return userInfo;
     });
 }
-//creating a place to store the games
 
+//creating a place to store the games
 const gameCollection = [];
 
+/*
+ * Creates a new game
+ *
+ * @param socket - user's socket
+ * @param {object} player - info for the creating user
+ */
 function buildGame(socket, player) {
+  // Creates a new game object, adds it to gameCollection
   let gameObject = {};
   gameObject.id = newId();
   console.log('player info in the build game function', player);
@@ -131,46 +152,66 @@ function buildGame(socket, player) {
   gameCollection.push(gameObject);
 
   console.log("Game created by " + gameObject.playerOne + " w/ " + gameObject.id);
+  // Emits to clients that the game has been made
   io.emit("gameCreated", gameObject);
   socket.emit('joinSuccess', gameObject);
+  // Joins room for the new game
   socket.join(gameObject.id);
 }
 
-
+/*
+ * Searches for an available game,
+ * If none found makes a new game
+ *
+ * @param socket - user's socket
+ * @param {object} player - info for the searching user
+ */
 function gameSeeker(socket, player) {
-  console.log('number of games', gameCollection.length);
+  // If no games exist, create one
   if (gameCollection.length == 0) {
     buildGame(socket, player);
     return;
   }
-  //hard coded for now
-  for(let i = 0; i < gameCollection.length; i++) {
-    if(!gameCollection[i].playerTwo) {
+  // Searches through the gameCollection for a game w/o a second player
+  for(let game of gameCollection) {
+    if(!game.playerTwo) {
       console.log('FOUND A GAME');
-      let gameId = gameCollection[i].id;
-      gameCollection[i].playerTwo = player.name;
-      gameCollection[i].playerTwoId = player.id;
-      socket.join(gameId);
-      console.log("gameId:", gameId);
-      console.log( player.name + " has been added to: " + gameCollection[i].id);
-      io.sockets.in(gameId).emit('joinSuccess', gameCollection[i]);
-      io.sockets.in(gameId).emit('start-game', gameCollection[i]);
-      io.emit('game-filled', gameId);
+      // Updates the game info with user info
+      game.playerTwo = player.name;
+      game.playerTwoId = player.id;
+      // Joins the room
+      socket.join(game.id);
+      console.log("game.id:", game.id);
+      console.log( player.name + " has been added to: " + game.id);
+      // Emits notification that the game is filled, starts the game
+      io.sockets.in(game.id).emit('joinSuccess', game);
+      io.sockets.in(game.id).emit('start-game', game);
+      io.emit('game-filled', game.id);
       return;
     }
   }
+  // If no games exist w/o a player 2, create a new game
   buildGame(socket, player);
 }
 
+/*
+ * Join a specific game
+ *
+ * @param socket - user's socket
+ * @param {object} data - info for the user and game
+ */
 function joinGame(socket, data){
   for( let game of gameCollection){
     if (game.id === data.id){
+      // Updates game info
       game.playerTwo = data.user.name;
       game.playerTwoId = data.user.id;
       console.log(game , " this is game inside the function");
+      // Joins Room
       socket.join(game.id);
 
       console.log( data.user.name + " has been added to: " + game.id);
+      // Emits notification that game is filled, starts game
       io.sockets.in(game.id).emit('joinSuccess', game);
       io.sockets.in(game.id).emit('start-game', game);
       io.emit('game-filled', game.id);
@@ -179,20 +220,29 @@ function joinGame(socket, data){
   }
 }
 
+/*
+ * When a user choses to leave the queue deletes their game
+ *
+ * @param socket - user's socket
+ * @param {string} gameId - id of the game
+ */
 function leaveQueue(socket, gameId) {
-  //get game Id
+  // Searches through the gameCollection for a specific game
   for (let i = 0; i < gameCollection.length; i++) {
     if (gameCollection[i].id === gameId) {
       console.log(gameCollection);
       console.log("gameCollection[i].id:", gameCollection[i].id);
+      // Remove game object from gameCollection
       gameCollection.splice(i, 1);
+      // Leave the Room
       socket.leave(gameId);
+      // Emit notification that game is no longer available
       io.emit('game-filled', gameId);
     }
   }
 }
 
-//on socket connection sending info to the client side
+//on socket connection recieving info from the client side
 
 io.on('connection', function(socket) {
   socket.emit('connection', 'socket connected');
@@ -209,16 +259,12 @@ io.on('connection', function(socket) {
   socket.on('join-game-button', function(data){
       joinGame(socket, data);
       console.log(data, " game request Id");
-
   });
 
   socket.on('make-game', function(data){
     console.log(data.player, "this is from the make game listener");
     buildGame(socket, data.player);
-
   });
-
-
 
   socket.on('game-over', function(data) {
     console.log('Game over, someone won');

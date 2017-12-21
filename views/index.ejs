@@ -8,7 +8,9 @@
 
   <% include ./partials/_header.ejs %>
 <main class='content'>
-  <div class="non-game">
+
+<!-- This div will be hidden when game is started -->
+<div class="non-game">
 <!-- Some buttons to make a game -->
   <% if(user) { %>
     <div class="game-buttons">
@@ -21,14 +23,17 @@
     <div class="how-to-play">
       How to play - link?
     </div>
+<!-- List of available games -->
     <div class="games-opened"></div>
 
-  </div>
+</div>
 
 
 <!-- Loaded puzzle -->
-
+<div class="game">
     <% include ./partials/_puzzle.ejs %>
+</div>
+
 </main>
     <% include ./partials/_footer.ejs %>
 </body>
@@ -38,6 +43,5 @@
 <script src='https://unpkg.com/packery@2/dist/packery.pkgd.js'></script>
 <script src='https://unpkg.com/draggabilly@2/dist/draggabilly.pkgd.js'></script>
 <script src="../public/scripts/app.js"></script>
-<!-- <script src="../../public/scripts/puzzle-logic.js"></script>
- -->
+
 </html>
