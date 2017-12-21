@@ -122,11 +122,12 @@ const gameCollection = [];
 function buildGame(socket, player) {
   let gameObject = {};
   gameObject.id = newId();
-  //hard coded for now
+  console.log('player info in the build game function', player);
   gameObject.playerOne = player.name;
   gameObject.playerOneId = player.id;
   gameObject.playerTwo = null;
   gameObject.playerTwoId = 0;
+  console.log('game created in the build game function', gameObject);
   gameCollection.push(gameObject);
 
   console.log("Game created by " + gameObject.playerOne + " w/ " + gameObject.id);
@@ -154,6 +155,7 @@ function gameSeeker(socket, player) {
       console.log( player.name + " has been added to: " + gameCollection[i].id);
       io.sockets.in(gameId).emit('joinSuccess', gameCollection[i]);
       io.sockets.in(gameId).emit('start-game', gameCollection[i]);
+      io.emit('game-filled', gameId);
       return;
     }
   }
@@ -171,7 +173,8 @@ function joinGame(socket, data){
       console.log( data.user.name + " has been added to: " + game.id);
       io.sockets.in(game.id).emit('joinSuccess', game);
       io.sockets.in(game.id).emit('start-game', game);
-     return
+      io.emit('game-filled', game.id);
+     return;
     }
   }
 }
@@ -184,6 +187,7 @@ function leaveQueue(socket, gameId) {
       console.log("gameCollection[i].id:", gameCollection[i].id);
       gameCollection.splice(i, 1);
       socket.leave(gameId);
+      io.emit('game-filled', gameId);
     }
   }
 }
@@ -206,7 +210,15 @@ io.on('connection', function(socket) {
       joinGame(socket, data);
       console.log(data, " game request Id");
 
-  })
+  });
+
+  socket.on('make-game', function(data){
+    console.log(data.player, "this is from the make game listener");
+    buildGame(socket, data.player);
+
+  });
+
+
 
   socket.on('game-over', function(data) {
     console.log('Game over, someone won');

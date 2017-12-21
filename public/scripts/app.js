@@ -112,10 +112,6 @@ function win() {
   showDialog();
 }
 
-function saveResults(winner, loser) {
-  knex
-}
-
 function showDialog() {
   dialog.classList.remove('is-waiting');
 }
@@ -177,14 +173,30 @@ socket.on('joinSuccess', function(data) {
 
 socket.on('gameCreated', function(data){
   currentRoom.playerOne = data.playerOne;
-  $('.games-opened').append(`<div class="games-homepage"><p>Game created by ${data.playerOne}<p><button class="join-game-button" data=${data.id}>Join</button></div>`);
+  $('.games-opened').append(`<div data=${data.id} class="games-homepage"><p>Game created by ${data.playerOne}<p><button class="join-game-button" data=${data.id}>Join</button></div>`);
     $(document).find('.join-game-button').on('click', function(){
       socket.emit( 'join-game-button', {id: data.id, user: userData});
     });
 })
 
+  socket.on('game-filled', function(data){
+
+    console.log("heard that the game is filled" , data);
+    $(document).find(`[data=${data}]`).css('display', 'none');
+
+  })
 // jQuery for button functionality
 
+$('#make-game').on('click', function() {
+  if (inQueue) {
+    console.log("Already in Queue");
+    return;
+  }
+  console.log(userData.name, 'wants to join a room');
+  socket.emit('make-game', { player: userData });
+  inQueue = true;
+
+});
 
 
 $('#join-game').on('click', function() {
@@ -203,6 +215,7 @@ $('#leave-queue').on('click', function() {
   socket.emit('leaveQueue', currentRoom.roomName);
   currentRoom.roomName = "";
   currentRoom.playerOne = "";
+  currentRoom.playerOneId = "";
   console.log("current room:", currentRoom);
   inQueue = false;
 });
