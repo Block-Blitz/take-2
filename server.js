@@ -302,14 +302,30 @@ io.on('connection', function(socket) {
   socket.on('leaving-page', function() {
     console.log(socket.user_name + ' disconnected');
     // console.log('online user sockets', onlineUsers);
-      //remove user from db
+    //remove user from db
     for (let i = 0; i < onlineUsers.length; i++) {
       // console.log('user in array', onlineUsers[i]);
       if(onlineUsers[i].user_id === socket.user_id) {
         console.log('FOUND A MATCH', onlineUsers[i].user_name);
-        console.log(onlineUsers.length, 'pre splice');
         onlineUsers.splice(i, 1);
-        console.log(onlineUsers.length, 'post splice');
+        // Emit and tell other others that user has left
+      }
+    }
+    //remove all of the users open games in games collection
+    for (let i = 0; i < gameCollection.length; i++) {
+      console.log('individual game ', gameCollection[i]);
+      if(gameCollection[i].playerOneId == socket.user_id) {
+        console.log('found a game match');
+        socket.leave(gameCollection[i].id);
+        // Emit notification that game is no longer available
+        io.emit('game-filled', gameCollection[i].id);
+        gameCollection.splice(i, 1);
+      } else if (gameCollection[i].playerTwoId && gameCollection[i].playerTwoId == socket.user_id) {
+        console.log('found a game match');
+        socket.leave(gameCollection[i].id);
+        // Emit notification that game is no longer available
+        io.emit('game-filled', gameCollection[i].id);
+        gameCollection.splice(i, 1);
       }
     }
   });
