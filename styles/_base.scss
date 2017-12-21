@@ -1,23 +1,21 @@
 * { box-sizing: border-box; }
 
 /* force scroll bar */
+html, body {
+  height: 100%;
+}
+
 html { overflow-y: scroll; }
 
 body {
   font-family: $font-body;
-  background: #DDD;
-  color: #555;
+  background: $body-bg-color;
+  color: $body-font-color;
   text-align: center;
-  padding-bottom: 50px;
+  display: flex;
+  flex-direction: column;
 }
 
 a {
   text-decoration: none;
-  color: #19F;
-
-  &:hover,
-  &:focus {
-    color: #C25;
-  }
-
 }
