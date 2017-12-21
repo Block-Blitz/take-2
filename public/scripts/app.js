@@ -136,7 +136,7 @@ pckry.on( 'dragItemPositioned', function() {
   var order = pckry.items.map( function( item ) {
     return item.element.getAttribute('data-tile');
   }).join('');
-  if ( pckry.maxY === 500 && order === 'fmgdbalkjihce' ) {
+  if ( order === 'fmgdbalkjihce' && ( pckry.maxY === 500 || pckry.maxY === 375 )) {
     win();
   }
 });
