@@ -137,7 +137,8 @@
   position: relative;
 }
 
-.dialog {
+.dialog,
+.tutorial {
   position: absolute;
   padding: $global-padding;
   width: 100%;
