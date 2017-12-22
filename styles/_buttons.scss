@@ -26,10 +26,34 @@ body {
 
 }
 
-.button-small {
+.button-small, #register-button {
   font-size: 1rem;
   padding: 0.3em 0.6em 0.4em;
+
 }
+
+#register-button{
+  background-color: #00ffff;
+
+  &:hover{
+    background-color: #9dff00;
+  }
+}
+
+
+
+// .facebook-button-div{
+//     max-width: 484px;
+//     background: linear-gradient(#4c69ba, #3b55a0);
+//     margin: auto;
+//     padding: 10px;
+//     border-radius: 10px;
+
+//     &:hover{
+//       background-color: #5876cd;
+//     }
+// }
+
 
 .no-display {
   display: none;
