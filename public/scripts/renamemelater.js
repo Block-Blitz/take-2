@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
   $('.tutorial-button').on('click', function(){
-    $('.tutorial').toggle();
+    $('.tutorial').toggleClass('is-waiting');
   });
 
   function fbLogoutUser() {
