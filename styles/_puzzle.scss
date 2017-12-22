@@ -31,13 +31,13 @@
   width: 25%;
   padding-bottom: 25%;
   background-color: purple;
-  background-image: url('http://www.berksarl.org/wp-content/uploads/2013/05/ad-Cats-1-400x500.jpg');
+  background-image: url('public/images/cat1-lrg.jpg');
   //background-size: 25% auto;
   //background-position: 25% 20%;
   //background-repeat: no-repeat;
   cursor: move;
   @media screen and (max-width: $breakpoint-small) {
-    background-image: url('public/images/kiii.jpg');
+    background-image: url('public/images/cat1-sm.jpg');
     //width: 75px;
     //padding-bottom: 75px;
     //transform: scale(0.75);
