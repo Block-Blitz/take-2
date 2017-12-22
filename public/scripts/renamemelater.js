@@ -1,5 +1,9 @@
 $(document).ready(function(){
 
+  $('.tutorial-button').on('click', function(){
+    $('.tutorial').toggle();
+  });
+
   function fbLogoutUser() {
     FB.getLoginStatus(function(response) {
       if (response && response.status === 'connected') {
