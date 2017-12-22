@@ -1,6 +1,10 @@
 header {
   background-color: $header-bg-color;
   color: $header-font-color;
+
+  a {
+    color: $header-link-color;
+  }
 }
 
 .header-group {

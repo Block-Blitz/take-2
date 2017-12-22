@@ -1,0 +1,31 @@
+.available-game {
+  background: $game-list-bg-color;
+  color: $game-list-font-color;
+  padding: 0.25em $global-padding;
+  max-width: $max-width;
+  margin-left: auto;
+  margin-right: auto;
+
+  &:nth-child(odd) {
+    background: $game-list-alt-bg-color;
+  }
+
+  p {
+    display: inline-block;
+    margin: 0.3em 0.6em 0.4em;
+  }
+}
+
+.player {
+  background: $game-list-alt-bg-color;
+  color: $game-list-font-color;
+  padding: 0.5em $global-padding;
+  max-width: $max-width;
+  margin-left: auto;
+  margin-right: auto;
+
+  &:nth-child(odd) {
+    background: $game-list-bg-color;
+  }
+}
+
