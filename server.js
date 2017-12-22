@@ -21,7 +21,6 @@ const newId = require('uuid/v1');
 
 // Seperated Routes for each Resource
 const profileRoutes = require('./routes/profile');
-const gameRoutes = require('./routes/game');
 const loginRoutes = require('./routes/login');
 const registerRoutes = require('./routes/register');
 const logoutRoutes = require('./routes/logout');
@@ -57,7 +56,6 @@ app.use(flash());
 
 // Mount all resource routes
 app.use('/profile', profileRoutes(knex));
-app.use('/game', gameRoutes(knex));
 app.use('/login', loginRoutes(knex));
 app.use('/register', registerRoutes(knex));
 app.use('/logout', logoutRoutes(knex));
