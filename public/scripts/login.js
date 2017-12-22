@@ -8,11 +8,13 @@ $(document).ready(function(){
      return div.innerHTML;
    }
 
-  $('#loginForm').on('submit', function(e){
+  $('#login-form').on('submit', function(e){
     e.preventDefault();
 
     const email = escape($('#email').val());
     const password = escape($('#password').val());
+    console.log(email);
+    console.log(password);
     const loginData = {
       email,
       password
