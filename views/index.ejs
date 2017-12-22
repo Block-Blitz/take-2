@@ -21,11 +21,12 @@
       <button id="join-game" class="button">Join Queue</button>
       <button id="leave-queue" class="button no-display">Leave Queue</button>
   <% } else { %>
-    Please login or register!!
+    <p class="login-message">Please <a href="/login">login</a> or <a href="register">register!!</a></p>
   <% } %>
       <button id="play-solo" class="button">Play Solo</button>
     </div>
 <!-- List of available games -->
+  <% if(user) { %>
   <div class="game-list">
     <h2>Available Games</h2>
     <div class="games-opened"></div>
@@ -43,7 +44,7 @@
 <div class="game">
     <% include ./partials/_puzzle.ejs %>
 </div>
-
+<% } %>
 </main>
     <% include ./partials/_footer.ejs %>
 </body>
