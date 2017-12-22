@@ -230,7 +230,7 @@ socket.on('user-gone-offline', function(id) {
  */
 socket.on('game-filled', function(id){
   console.log("heard that the game is filled" , id);
-  $(document).find(`[data=${id}]`).css('display', 'none');
+  $(document).find(`[data=${id}]`).remove();
 });
 
 $(window).on("unload", function(e) {
