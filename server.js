@@ -308,6 +308,7 @@ io.on('connection', function(socket) {
   socket.on('leaving-page', function() {
     console.log(socket.user_name + ' disconnected');
     io.emit('user-gone-offline', socket.user_id);
+    console.log('online user sockets', onlineUsers);
     //remove user from db
     for (let i = 0; i < onlineUsers.length; i++) {
       // console.log('user in array', onlineUsers[i]);
