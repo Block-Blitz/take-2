@@ -9,7 +9,7 @@
   <script>
       window.fbAsyncInit = function() {
         FB.init({
-          appId      : '1934572656870643',
+          appId      : '2454871588072282',
           cookie     : true,
           xfbml      : true,
           version    : 'v2.11'
@@ -72,23 +72,22 @@
         })
       }
 
-    </script>
-  <% include ./partials/_header.ejs %>
+  </script>
 
-  <header>
 
-    <h1>login page</h1>
-  </header>
+<% include ./partials/_header.ejs %>
+
   <div>
-  <% if (errors.length) { %>
-    <% errors.forEach((error) => { %>
-      <p><%= error %></p>
-    <% }) %>
-  <% } %>
-  <% if (success) { %>
-    <p><%= success %></p>
-  <% } %>
-    <form id="loginForm">
+    <h1>login page</h1>
+      <% if (errors.length) { %>
+        <% errors.forEach((error) => { %>
+          <p><%= error %></p>
+        <% }) %>
+      <% } %>
+      <% if (success) { %>
+        <p><%= success %></p>
+      <% } %>
+    <form id="login-form">
       <input id="email" type="email" name="email" placeholder="Email" />
       <input id="password" type="password" name="password" placeholder="Password"/>
       <input type="submit"  className="button" value="Submit" />
