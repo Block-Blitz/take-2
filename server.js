@@ -253,17 +253,22 @@ io.on('connection', function(socket) {
   console.log('a socket has connected');
 
   socket.on('new-user', function(data) {
-    // console.log('new user data', data);
+    console.log('server side new user data: ', data);
     socket.user_id = data.id;
     socket.user_name = data.name;
     // console.log('new socket info', socket.id, socket.name);
     onlineUsers.push(socket);
-    // for(let i = 0; i < onlineUsers.length; i++) {
-    //   console.log(onlineUsers[i].user_name);
-    // }
-
     //What to do with this data????
     //Need for lists on client side
+    const onlineUserData = [];
+    onlineUsers.forEach(function(user){
+      onlineUserData.push({
+        id: user.user_id,
+        name: user.user_name
+      });
+    });
+    socket.emit('all-online-users', onlineUserData);
+    socket.broadcast.emit('new-online-user', data)
   });
 
   socket.on('join-game', function(data) {
@@ -271,6 +276,7 @@ io.on('connection', function(socket) {
     console.log('join game', data.player.name);
     let room = { id: newId() };
     gameSeeker(socket);
+
     // console.log(io.sockets.adapter.rooms);
   });
 
@@ -301,7 +307,7 @@ io.on('connection', function(socket) {
 
   socket.on('leaving-page', function() {
     console.log(socket.user_name + ' disconnected');
-    // console.log('online user sockets', onlineUsers);
+    io.emit('user-gone-offline', socket.user_id);
     //remove user from db
     for (let i = 0; i < onlineUsers.length; i++) {
       // console.log('user in array', onlineUsers[i]);
