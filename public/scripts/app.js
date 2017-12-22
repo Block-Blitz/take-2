@@ -130,7 +130,7 @@ function win() {
 /*
  * Checks when a div is moved if the puzzle is correctly conpleted
  * If yes, loads the win function
- *
+ *500 for large screen 375 for small
  */
 pckry.on( 'dragItemPositioned', function() {
   var order = pckry.items.map( function( item ) {
@@ -179,6 +179,19 @@ socket.on('game-ended', function(data) {
 
 });
 
+//lists online players
+
+socket.on('all-online-users', function(data){
+  console.log(data);
+  data.forEach( function(user){
+    $('.online-players').append(`<div class="player-${user.id}">${user.name}</div>`);
+  });
+});
+
+socket.on('new-online-user', function(data){
+  console.log('new user: ', data);
+  $('.online-players').append(`<div class="player-${data.id}">${data.name}</div>`);
+});
 /*
  * Sets game local variables when a game is joined
  */
@@ -202,6 +215,13 @@ socket.on('gameCreated', function(data){
     $(document).find('.join-game-button').on('click', function(){
       socket.emit( 'join-game-button', {id: data.id, user: userData});
     });
+});
+
+socket.on('user-gone-offline', function(id) {
+  let idString = id.toString();
+  console.log(typeof idString);
+  console.log('looking to remove the id:', id);
+  $(document).find(`.player-${id}`).remove(`.player-${id}`);
 });
 
 /*
