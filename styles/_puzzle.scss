@@ -151,7 +151,7 @@
   transition: opacity 0.2s, transform 0.2s;
 }
 
-.dialog.is-waiting {
+.is-waiting {
   pointer-events: none;
   opacity: 0;
   transform: translateY(100px);
