@@ -8,7 +8,10 @@
 
   <% include ./partials/_header.ejs %>
 <main class='content'>
-
+<!-- This div will be show when how to play is clicked -->
+<div class='tutorial'>
+  <p>Drag and drop the pieces around to complete the puzzle.</p>
+</div>
 <!-- This div will be hidden when game is started -->
 <div class="non-game">
 <!-- Some buttons to make a game -->
@@ -22,10 +25,6 @@
   <% } else { %>
     Please login or register!!
   <% } %>
-<!-- a default explaination of how to play -->
-    <div class="how-to-play">
-      How to play - link?
-    </div>
 <!-- List of available games -->
   <div class="game-list">
     <h2>Available Games</h2>
