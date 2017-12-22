@@ -25,12 +25,12 @@
     </div>
 
     <nav class="header-nav">
-      <button class="tutorial-button">How to play</button>
       <% if (!user) { %>
         <a href='/register'>Register</a>
         <a href='/login'>Login</a>
       <% } else { %>
-        <a href='/profile'>Profile</a>
+        <button class="tutorial-button">How to play</button>
+        <!-- <a href='/profile'>Profile</a> -->
         <a class="logout-button" href='/logout'>Logout</a>
       <% } %>
     </nav>
