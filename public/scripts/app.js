@@ -228,9 +228,9 @@ socket.on('user-gone-offline', function(id) {
  * When a game is either cancelled or filled
  * removes the game from the available games list
  */
-socket.on('game-filled', function(data){
-  console.log("heard that the game is filled" , data);
-  $(document).find(`[data=${data}]`).css('display', 'none');
+socket.on('game-filled', function(id){
+  console.log("heard that the game is filled" , id);
+  $(document).find(`[data=${id}]`).css('display', 'none');
 });
 
 $(window).on("unload", function(e) {
