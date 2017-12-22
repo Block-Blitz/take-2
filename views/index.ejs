@@ -15,16 +15,16 @@
 <!-- This div will be hidden when game is started -->
 <div class="non-game">
 <!-- Some buttons to make a game -->
-  <% if(user) { %>
     <div class="game-buttons">
+  <% if(user) { %>
       <button id="make-game" class="button">Make a game</button>
       <button id="join-game" class="button">Join Queue</button>
-      <button id="play-solo" class="button">Play Solo</button>
       <button id="leave-queue" class="button no-display">Leave Queue</button>
-    </div>
   <% } else { %>
     Please login or register!!
   <% } %>
+      <button id="play-solo" class="button">Play Solo</button>
+    </div>
 <!-- List of available games -->
   <div class="game-list">
     <h2>Available Games</h2>
