@@ -48,7 +48,7 @@ var dialog = document.querySelector('.dialog');
 
 var orders = [
   'abcdefghijklm',
-  'fmgdbalkjihec', //remove later
+  // 'fmgdbalkjihec', //remove later
   'ecdibmhfajkgl',
   'ilckfgdebhjam'
 ];
