@@ -16,14 +16,21 @@ header {
 .header-nav {
   font-size: 1.25rem;
 
-  a {
+  a,
+  button {
     color: $header-link-color;
     margin-left: $global-margin;
     display: inline-block;
+    background: none;
+    border: none;
+    font-size: 1em;
+    font-family: inherit;
+    cursor: pointer;
 
     &:hover,
     &:focus {
       color: $button-hover-color;
+      outline: none;
     }
 
   }
