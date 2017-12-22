@@ -184,13 +184,13 @@ socket.on('game-ended', function(data) {
 socket.on('all-online-users', function(data){
   console.log(data);
   data.forEach( function(user){
-    $('.online-players').append(`<div class="player-${user.id}">${user.name}</div>`);
+    $('.online-players').append(`<div class="player player-${user.id}">${user.name}</div>`);
   });
 });
 
 socket.on('new-online-user', function(data){
   console.log('new user: ', data);
-  $('.online-players').append(`<div class="player-${data.id}">${data.name}</div>`);
+  $('.online-players').append(`<div class="player player-${data.id}">${data.name}</div>`);
 });
 /*
  * Sets game local variables when a game is joined
@@ -211,7 +211,7 @@ socket.on('joinSuccess', function(data) {
  */
 socket.on('gameCreated', function(data){
   currentRoom.playerOne = data.playerOne;
-  $('.games-opened').append(`<div data=${data.id} class="games-homepage"><p>Game created by ${data.playerOne}<p><button class="join-game-button" data=${data.id}>Join</button></div>`);
+  $('.games-opened').append(`<div data=${data.id} class="available-game"><p>Game available against ${data.playerOne}</p><button class="button button-small join-game-button" data=${data.id}>Join</button></div>`);
     $(document).find('.join-game-button').on('click', function(){
       socket.emit( 'join-game-button', {id: data.id, user: userData});
     });

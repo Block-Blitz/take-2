@@ -3,6 +3,7 @@
 $container-width: 64rem;
 $global-padding: 1.25rem;
 $global-margin: 1.25rem;
+$max-width: 750px;
 
 // Fonts
 $font-body: 'Source Sans Pro', sans-serif;
@@ -23,6 +24,10 @@ $button-hover-color: #410B13;
 $header-link-color: #FFF;
 
 $tile-outline-color: hsla(210, 100%, 50%, 0.7);
+
+$game-list-font-color: #eee;
+$game-list-bg-color : #777;
+$game-list-alt-bg-color: #444;
 
 ///breakpoints
 

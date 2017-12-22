@@ -11,6 +11,7 @@ body {
   color: white;
   padding: 0.550em 1.25em 0.7em;
   border-radius: 5px;
+  display: inline-block;
 
   &:hover {
     cursor: pointer;
@@ -25,6 +26,21 @@ body {
 
 }
 
+.button-small {
+  font-size: 1rem;
+  padding: 0.3em 0.6em 0.4em;
+}
+
 .no-display {
   display: none;
+}
+
+.game-buttons {
+  padding: $global-padding;
+  padding-bottom: $global-padding*0.75;
+
+  .button {
+    margin-bottom: $global-padding*0.25;
+    min-width: 158px;
+  }
 }
