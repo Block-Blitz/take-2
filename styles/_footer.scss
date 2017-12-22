@@ -2,3 +2,28 @@ footer {
   background-color: $footer-bg-color;
   color: $footer-font-color;
 }
+
+.footer-group {
+  display: flex;
+  justify-content: space-between;
+  text-align: left;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-top: $global-padding / 2;
+  padding-bottom: 0;
+}
+
+.footer-about {
+  max-width: 25.5rem;
+  font-size: 0.875em;
+  margin-right: $global-margin;
+}
+.footer-about,
+.footer-logo {
+  margin-top: 0;
+  margin-bottom: $global-margin / 2;
+}
+.footer-logo a {
+  color: #fff;
+  font-size: 1.25em;
+}
