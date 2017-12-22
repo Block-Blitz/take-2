@@ -11,15 +11,22 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  text-align: left;
 }
 
 .header-nav {
   font-size: 1.25rem;
+  text-align: right;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 
   a,
   button {
     color: $header-link-color;
     margin-left: $global-margin;
+    margin-right: 0;
+    padding: 0;
     display: inline-block;
     background: none;
     border: none;

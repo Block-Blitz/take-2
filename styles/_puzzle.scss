@@ -137,7 +137,8 @@
   position: relative;
 }
 
-.dialog {
+.dialog,
+.tutorial {
   position: absolute;
   padding: $global-padding;
   width: 100%;
@@ -157,3 +158,6 @@
   transform: translateY(100px);
 }
 
+.puzzle-button-cont {
+  margin-bottom: 50px;
+}

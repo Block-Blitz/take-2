@@ -18,4 +18,10 @@ body {
 
 a {
   text-decoration: none;
+  color: $anchor-color;
+
+  &:hover,
+  &:focus {
+    color: $anchor-color-hover;
+  }
 }

@@ -7,6 +7,7 @@ $max-width: 750px;
 
 // Fonts
 $font-body: 'Source Sans Pro', sans-serif;
+$bold: 600; //use because 700 is really thick
 
 // Colors
 $header-bg-color: #BA1F33;
@@ -21,6 +22,8 @@ $button-color: #91171F;
 $button-click-color: #CD5D67;
 $button-hover-color: #410B13;
 
+$anchor-color: #91171F;
+$anchor-color-hover: #410B13;
 $header-link-color: #FFF;
 
 $tile-outline-color: hsla(210, 100%, 50%, 0.7);
