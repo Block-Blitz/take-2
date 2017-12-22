@@ -24,6 +24,7 @@ const profileRoutes = require('./routes/profile');
 const loginRoutes = require('./routes/login');
 const registerRoutes = require('./routes/register');
 const logoutRoutes = require('./routes/logout');
+const privacyRoutes = require('./routes/privacy');
 
 server.listen(PORT);
 
@@ -59,6 +60,7 @@ app.use('/profile', profileRoutes(knex));
 app.use('/login', loginRoutes(knex));
 app.use('/register', registerRoutes(knex));
 app.use('/logout', logoutRoutes(knex));
+app.use('/privacy', privacyRoutes(knex));
 
 
 app.get('/', (req, res) => {

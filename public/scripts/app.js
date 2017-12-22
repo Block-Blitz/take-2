@@ -48,7 +48,7 @@ var dialog = document.querySelector('.dialog');
 
 var orders = [
   'abcdefghijklm',
-  'fmgdbalkjihec', //remove later
+  // 'fmgdbalkjihec', //remove later
   'ecdibmhfajkgl',
   'ilckfgdebhjam'
 ];
@@ -218,10 +218,12 @@ socket.on('gameCreated', function(data){
 });
 
 socket.on('user-gone-offline', function(id) {
-  let idString = id.toString();
-  console.log(typeof idString);
-  console.log('looking to remove the id:', id);
-  $(document).find(`.player-${id}`).remove(`.player-${id}`);
+  if(id){
+    let idString = id.toString();
+    console.log(typeof idString);
+    console.log('looking to remove the id:', id);
+    $(document).find(`.player-${id}`).remove(`.player-${id}`);
+  }
 });
 
 /*

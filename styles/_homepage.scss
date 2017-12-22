@@ -35,3 +35,11 @@
   margin: auto;
   max-width: 35rem;
 }
+
+///logged out styles
+.login-message {
+  font-size: 1.25em;
+  a {
+    font-weight: $bold;
+  }
+}
