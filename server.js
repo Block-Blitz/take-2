@@ -251,6 +251,16 @@ io.on('connection', function(socket) {
   console.log('a socket has connected');
 
   socket.on('new-user', function(data) {
+
+    //Had a bug where sockets were sometime being added twice
+    for (let i = 0; i < onlineUsers.length; i++) {
+      // console.log('user in array', onlineUsers[i]);
+      if(onlineUsers[i].user_id === data.id) {
+        console.log('FOUND A MATCH ALREADY ONLINE', onlineUsers[i].user_name);
+        return;
+      }
+    }
+
     console.log('server side new user data: ', data);
     socket.user_id = data.id;
     socket.user_name = data.name;
@@ -306,7 +316,7 @@ io.on('connection', function(socket) {
   socket.on('leaving-page', function() {
     console.log(socket.user_name + ' disconnected');
     io.emit('user-gone-offline', socket.user_id);
-    console.log('online user sockets', onlineUsers);
+    // console.log('online user sockets', onlineUsers);
     //remove user from db
     for (let i = 0; i < onlineUsers.length; i++) {
       // console.log('user in array', onlineUsers[i]);
