@@ -113,6 +113,7 @@ socket.on('all-online-users', function(data){
   });
 });
 
+
 socket.on('new-online-user', function(data){
   console.log('new user: ', data);
   $('.online-players').append(`<div class="player player-${data.id}">${data.name}</div>`);
@@ -128,6 +129,19 @@ socket.on('joinSuccess', function(data) {
   currentRoom.playerTwo = data.playerTwo;
   currentRoom.playerTwoId = data.playerTwoId;
   console.log(userData.name, 'is trying to join room', currentRoom.roomName, '(from client side)');
+});
+
+//lists all open games
+
+socket.on('available-games', function(data) {
+  console.log('all available games', data);
+  for (let game of data) {
+    console.log('game object', game);
+    $('.games-opened').append(`<div data=${game.id} class="available-game"><p>Game available against ${game.playerOne}</p><button class="button button-small join-game-button" data=${game.id}>Join</button></div>`);
+      $(document).find('.join-game-button').on('click', function(){
+        socket.emit( 'join-game-button', {id: game.id, user: userData});
+    });
+  }
 });
 
 /*
@@ -160,6 +174,8 @@ socket.on('game-filled', function(id){
   $(document).find(`[data=${id}]`).remove();
 });
 
+// Announces that user is going offline, removes them from the
+// active player list and removes their active games if any
 $(window).on("unload", function(e) {
   //works on closing window, not refresh
   console.log('leaving page');
