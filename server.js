@@ -246,6 +246,19 @@ function leaveQueue(socket, gameId) {
   }
 }
 
+/*
+ * Will return an array of games that have 1 player.
+ */
+function availableGames(allGames) {
+  let openGames = [];
+  for(let i = 0; i < allGames.length; i++) {
+    if (!allGames[i].playerTwo) {
+      openGames.push(allGames[i]);
+    }
+  }
+  return openGames;
+}
+
 //on socket connection recieving info from the client side
 
 io.on('connection', function(socket) {
@@ -277,7 +290,11 @@ io.on('connection', function(socket) {
         name: user.user_name
       });
     });
+    let allOpenGames;
+    allOpenGames = availableGames(gameCollection);
+    console.log('available games object server side', allOpenGames);
     socket.emit('all-online-users', onlineUserData);
+    socket.emit('available-games', allOpenGames);
     socket.broadcast.emit('new-online-user', data)
   });
 
