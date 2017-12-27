@@ -1,7 +1,13 @@
 header {
   background-color: $header-bg-color;
   color: $header-font-color;
-
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 100px;
+  display: flex;
+  align-content: center;
+  position: absolute;
   a {
     color: $header-link-color;
   }
@@ -15,7 +21,7 @@ header {
 }
 
 .header-nav {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   text-align: right;
   display: flex;
   flex-wrap: wrap;
@@ -25,8 +31,7 @@ header {
   button {
     color: $header-link-color;
     margin-left: $global-margin;
-    margin-right: 0;
-    padding: 0;
+    margin-right: 10px;
     display: inline-block;
     background: none;
     border: none;
