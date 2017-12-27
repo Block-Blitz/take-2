@@ -33,10 +33,18 @@ body {
 }
 
 #register-button{
-  background-color: #00ffff;
+  background-color: $button-color;
 
   &:hover{
-    background-color: #9dff00;
+    background-color: $button-hover-color;
+  }
+}
+
+#login-button{
+  background-color: $button-color;
+
+  &:hover{
+    background-color: $button-hover-color;
   }
 }
 

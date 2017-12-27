@@ -1,0 +1,105 @@
+.register-containment {
+  width: 70%;
+  min-width: 375px;
+  margin: auto;
+  padding-bottom: 50px;
+  background-color: #fff;
+  max-width: $container-width;
+
+  h4 {
+    margin-top: 70px;
+    margin-bottom: 40px;
+  }
+}
+
+
+.input {
+  width: 75%;
+  height: 50px;
+  display: block;
+  margin: 0 auto 15px;
+  padding: 0 15px;
+  border: none;
+  border-bottom: 2px solid #ebebeb;
+}
+.input:focus {
+  outline: none;
+  border-bottom-color: #3CC !important;
+}
+.input:hover {
+  border-bottom-color: #dcdcdc;
+}
+.input:invalid {
+  box-shadow: none;
+}
+
+.pass:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px white inset;
+}
+
+.inputButton {
+  position: relative;
+  width: 75%;
+  height: 50px;
+  display: block;
+  margin: 30px auto 30px;
+  color: white;
+  background-color: blue;
+  border: none;
+  -webkit-box-shadow: 0 5px 0 $button-accent-color;
+  -moz-box-shadow: 0 5px 0 $button-accent-color;
+  box-shadow: 0 5px 0 $button-accent-color;
+}
+.inputButton:hover {
+  top: 2px;
+  -webkit-box-shadow: 0 3px 0 $button-accent-color;
+  -moz-box-shadow: 0 3px 0 $button-accent-color;
+  box-shadow: 0 3px 0 $button-accent-color;
+}
+.inputButton:active {
+  top: 5px;
+  box-shadow: none;
+}
+.inputButton:focus {
+  outline: none;
+}
+
+.inputButton-facebook {
+  position: relative;
+  width: 75%;
+  height: 50px;
+  display: block;
+  margin: 30px auto 30px;
+  color: white;
+  background-color: $facebook-color;
+  border: none;
+  -webkit-box-shadow: 0 5px 0 $facebook-accent;
+  -moz-box-shadow: 0 5px 0 $facebook-accent;
+  box-shadow: 0 5px 0 $facebook-accent;
+}
+.inputButton-facebook:hover {
+  top: 2px;
+  background-color:   $facebook-hover;
+  -webkit-box-shadow: 0 3px 0 $facebook-accent;
+  -moz-box-shadow: 0 3px 0 $facebook-accent;
+  box-shadow: 0 3px 0 $facebook-accent;
+}
+.inputButton-facebook:active {
+  top: 5px;
+  box-shadow: none;
+}
+.inputButton-facebook:focus {
+  outline: none;
+}
+
+.error-message {
+  background-color: #ffbac6;
+  padding: 3px;
+  margin-bottom: 15px;
+}
+
+@media screen and (max-width: $breakpoint-small) {
+  .register-containment {
+    width: 100%;
+  }
+}
