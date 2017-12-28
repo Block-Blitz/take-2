@@ -4,6 +4,10 @@ $(document).ready(function(){
     $('.tutorial').toggleClass('is-waiting');
   });
 
+  $('.tutorial').find('.close').on('click', function(){
+      $('.tutorial').addClass('is-waiting');
+  });
+
   function fbLogoutUser() {
     FB.getLoginStatus(function(response) {
       if (response && response.status === 'connected') {
