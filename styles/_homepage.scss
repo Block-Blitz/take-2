@@ -43,3 +43,42 @@
     font-weight: $bold;
   }
 }
+.close::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+.close {
+  position: absolute;
+  top: -0.65em;
+  right: -0.65em;
+  background: #fff;
+  font-size: 1em;
+  width: 1.5em;
+  height: 1.5em;
+  border: 1px solid #000;
+  border-radius: 50%;
+  overflow: hidden;
+  display: inline-block;
+  line-height: 1;
+  cursor: pointer;
+  //hiding the word close in an accessible way
+  color: #fff;
+  text-indent: 999em;
+  padding: 0;
+
+  &::before {
+    line-height: 1;
+    text-indent: 0;
+    content: 'X';
+    color: #000;
+    text-transform: uppercase;
+    font-weight: $bold;
+    position: absolute;
+    top: 0.23em;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 1;
+  }
+}
