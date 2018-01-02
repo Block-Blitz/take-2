@@ -10,12 +10,12 @@ $font-body: 'Source Sans Pro', sans-serif;
 $bold: 600; //use because 700 is really thick
 
 // Colors
-$header-bg-color: #BA1F33;
-$footer-bg-color: #BA1F33;
+$header-bg-color: #FFF;
+$footer-bg-color: #FFF;
 $body-bg-color: #eee;
 
-$header-font-color: #421820;
-$footer-font-color: #FFF;
+$header-font-color: #CD6554;
+$footer-font-color: #000;
 $body-font-color: #555;
 
 $button-color: #91171F;
@@ -25,7 +25,8 @@ $button-hover-color: #721926;
 
 $anchor-color: #91171F;
 $anchor-color-hover: #410B13;
-$header-link-color: #FFF;
+$header-link-color: #000;
+$header-link-hover: #CD6554;
 
 $tile-outline-color: hsla(210, 100%, 50%, 0.7);
 
