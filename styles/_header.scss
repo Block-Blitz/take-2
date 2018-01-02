@@ -41,7 +41,7 @@ header {
 
     &:hover,
     &:focus {
-      color: $button-hover-color;
+      color: $header-link-hover;
       outline: none;
     }
 
@@ -49,7 +49,6 @@ header {
 }
 
 .logo {
-  font-size: 2.25rem;
 }
 
 

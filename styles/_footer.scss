@@ -1,7 +1,8 @@
 footer {
   background-color: $footer-bg-color;
   color: $footer-font-color;
-
+  display: flex;
+  align-content: center;
 }
 
 .footer-group {
@@ -9,22 +10,18 @@ footer {
   justify-content: space-between;
   text-align: left;
   align-items: center;
+  align-content: center;
   flex-wrap: wrap;
-  padding-top: $global-padding / 2;
   padding-bottom: 0;
+  height: 70px;
 }
 
 .footer-about {
   max-width: 25.5rem;
   font-size: 0.875em;
-  margin-right: $global-margin;
+  // margin-right: $global-margin;
 }
 .footer-about,
 .footer-logo {
-  margin-top: 0;
-  margin-bottom: $global-margin / 2;
-}
-.footer-logo a {
-  color: #fff;
-  font-size: 1.25em;
+  // margin-top: 0;
 }
