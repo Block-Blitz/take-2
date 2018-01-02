@@ -23,7 +23,8 @@
       <a href="/"><img src="../../public/images/blockblitzlogo.svg" alt="Block Blitz Logo" width="200"></a>
     </div>
 
-    <nav class="header-nav">
+    <div class="topnav" id="myTopnav">
+      <a href="javascript:void(0);" class="icon" onclick="myFunction()">&#9776;</a>
       <% if (!user) { %>
         <a href='/register'>Register</a>
         <a href='/login'>Login</a>
@@ -32,7 +33,7 @@
         <!-- <a href='/profile'>Profile</a> -->
         <a class="logout-button" href='/logout'>Logout</a>
       <% } %>
-    </nav>
+    </div>
 
   </div>
 </header>

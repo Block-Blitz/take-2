@@ -5,7 +5,7 @@ $(document).ready(function(){
   });
 
   $('.tutorial').find('.close').on('click', function(){
-      $('.tutorial').addClass('is-waiting');
+    $('.tutorial').addClass('is-waiting');
   });
 
   function fbLogoutUser() {
@@ -32,3 +32,14 @@ $(document).ready(function(){
 
 
 });
+
+/* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
+function myFunction() {
+  const x = document.getElementById('myTopnav');
+  if (x.className === 'topnav') {
+    x.className += ' responsive';
+  }
+  else {
+    x.className = 'topnav';
+  }
+}
