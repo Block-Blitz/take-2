@@ -5,7 +5,11 @@ $(document).ready(function(){
   });
 
   $('.tutorial').find('.close').on('click', function(){
-      $('.tutorial').addClass('is-waiting');
+    $('.tutorial').addClass('is-waiting');
+  });
+
+  $('#hamburger').click(function() {
+    $('#mobilemenu').slideToggle();
   });
 
   function fbLogoutUser() {
@@ -29,6 +33,5 @@ $(document).ready(function(){
       }
     });
   });
-
 
 });
