@@ -12,7 +12,8 @@ var currentRoom = {
   playerOne: '',
   playerOneId: '',
   playerTwo: '',
-  playerTwoId: ''
+  playerTwoId: '',
+  pictureId: 1
 };
 
 //Gets the data for the current user from the database
@@ -238,23 +239,22 @@ function displayButtonsDefault() {
 
 //Screwign around with puzzle image
 
-let pictureId = 1;
 $('.change-picture').on('click', function() {
   console.log('Going to change the picture');
-  pictureId = Math.ceil(Math.random() * 5);
-  console.log('loading picture', pictureId);
+  currentRoom.pictureId = Math.ceil(Math.random() * 5);
+  console.log('loading picture', currentRoom.pictureId);
   if ($(window).width() <= 500) {
-    $('.tile').css("background-image", `url('public/images/cat${pictureId}-sm.jpg')`);
+    $('.tile').css("background-image", `url('public/images/cat${currentRoom.pictureId}-sm.jpg')`);
   } else {
-    $('.tile').css("background-image", `url('public/images/cat${pictureId}-lrg.jpg')`);
+    $('.tile').css("background-image", `url('public/images/cat${currentRoom.pictureId}-lrg.jpg')`);
   }
 });
 
 $(window).resize(function() {
   if ($(window).width() <= 500) {
-    $('.tile').css("background-image", `url('public/images/cat${pictureId}-sm.jpg')`);
+    $('.tile').css("background-image", `url('public/images/cat${currentRoom.pictureId}-sm.jpg')`);
   } else {
-    $('.tile').css("background-image", `url('public/images/cat${pictureId}-lrg.jpg')`);
+    $('.tile').css("background-image", `url('public/images/cat${currentRoom.pictureId}-lrg.jpg')`);
   }
 });
 
