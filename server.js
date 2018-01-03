@@ -153,8 +153,7 @@ function buildGame(socket) {
 
   console.log("Game created by " + gameObject.playerOne + " w/ " + gameObject.id);
   // Emits to clients that the game has been made
-  //io.emit("gameCreated", gameObject);
-  socket.emit('joinSuccess', gameObject);
+  socket.emit('join-success', gameObject);
   // Joins room for the new game
   socket.join(gameObject.id);
   io.emit('all-games', availableGames(gameCollection));
@@ -189,9 +188,8 @@ function gameSeeker(socket) {
       console.log("game.id:", game.id);
       console.log( socket.user_name + " has been added to: " + game.id);
       // Emits notification that the game is filled, starts the game
-      io.sockets.in(game.id).emit('joinSuccess', game);
+      io.sockets.in(game.id).emit('join-success', game);
       io.sockets.in(game.id).emit('start-game', game);
-      //io.emit('game-filled', game.id);
       io.emit('all-games', availableGames(gameCollection));
       return;
     }
@@ -218,10 +216,9 @@ function joinGame(socket, data){
 
       console.log( data.user.name + " has been added to: " + game.id);
       // Emits notification that game is filled, starts game
-      io.sockets.in(game.id).emit('joinSuccess', game);
+      io.sockets.in(game.id).emit('join-success', game);
       io.sockets.in(game.id).emit('start-game', game);
       io.emit('all-games', availableGames(gameCollection));
-      //io.emit('game-filled', game.id);
      return;
     }
   }
@@ -244,7 +241,6 @@ function leaveQueue(socket, gameId) {
       // Leave the Room
       socket.leave(gameId);
       // Emit notification that game is no longer available
-      //io.emit('game-filled', gameId);
       io.emit('all-games', availableGames(gameCollection));
     }
   }
@@ -313,22 +309,20 @@ io.on('connection', function(socket) {
     let allOpenGames;
     allOpenGames = availableGames(gameCollection);
     console.log('available games object server side', allOpenGames);
-    //socket.emit('all-online-users', onlineUserData);
     io.emit('list-players', listOnlinePlayers(io.sockets));
     io.emit('available-games', allOpenGames);
-    //socket.broadcast.emit('new-online-user', data)
   });
 
-  socket.on('join-game', function(data) {
+  socket.on('join-queue', function(data) {
     console.log('server heard a game request');
-    console.log('join game', data.player.name);
+    console.log('joined queue', data.player.name);
     let room = { id: newId() };
     gameSeeker(socket);
 
     // console.log(io.sockets.adapter.rooms);
   });
 
-  socket.on('join-game-button', function(data){
+  socket.on('join-game', function(data){
       joinGame(socket, data);
       console.log(data, " game request Id");
   });
@@ -345,7 +339,7 @@ io.on('connection', function(socket) {
     io.sockets.in(data.room.roomName).emit('game-ended', data);
   });
 
-  socket.on('leaveQueue', function(data){
+  socket.on('leave-queue', function(data){
     console.log("left queue");
     console.log("data: ", data)
     console.log("gameCollection before", gameCollection);
@@ -355,7 +349,6 @@ io.on('connection', function(socket) {
 
   socket.on('leaving-page', function() {
     console.log(socket.user_name + ' disconnected');
-    // io.emit('list-players', listOnlinePlayers(io.sockets));
     io.emit('user-gone-offline', socket.user_id);
     // console.log('online user sockets', onlineUsers);
     //remove user from db
@@ -373,14 +366,10 @@ io.on('connection', function(socket) {
       if(gameCollection[i].playerOneId == socket.user_id) {
         console.log('found a game match');
         socket.leave(gameCollection[i].id);
-        // Emit notification that game is no longer available
-        //io.emit('game-filled', gameCollection[i].id);
         gameCollection.splice(i, 1);
       } else if (gameCollection[i].playerTwoId && gameCollection[i].playerTwoId == socket.user_id) {
         console.log('found a game match');
         socket.leave(gameCollection[i].id);
-        // Emit notification that game is no longer available
-        //io.emit('game-filled', gameCollection[i].id);
         gameCollection.splice(i, 1);
       }
       io.emit('all-games', availableGames(gameCollection));
