@@ -143,6 +143,8 @@ function buildGame(socket) {
   // Creates a new game object, adds it to gameCollection
   let gameObject = {};
   gameObject.id = newId();
+  gameObject.pictureId= Math.ceil(Math.random() * 5);
+
   console.log('player info in the build game function', socket.user_name, socket.user_id);
   gameObject.playerOne = socket.user_name;
   gameObject.playerOneId = socket.user_id;
