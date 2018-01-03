@@ -157,6 +157,7 @@ function buildGame(socket) {
   socket.emit('joinSuccess', gameObject);
   // Joins room for the new game
   socket.join(gameObject.id);
+  io.emit('list-players', listOnlinePlayers(io.sockets));
 }
 
 /*
@@ -259,6 +260,23 @@ function availableGames(allGames) {
   return openGames;
 }
 
+// Creates an array of all online players
+function listOnlinePlayers(allSockets) {
+  playerList = [];
+  for (let socket in allSockets.sockets) {
+    console.log('list of sockets', allSockets.sockets[socket].user_name);
+    if(allSockets.sockets[socket].user_name) {
+      playerList.push({
+        userName: allSockets.sockets[socket].user_name,
+        userId: allSockets.sockets[socket].user_id
+      });
+    }
+  }
+  console.log('array of players', playerList);
+  return playerList;
+}
+
+
 //on socket connection recieving info from the client side
 
 io.on('connection', function(socket) {
@@ -293,9 +311,10 @@ io.on('connection', function(socket) {
     let allOpenGames;
     allOpenGames = availableGames(gameCollection);
     console.log('available games object server side', allOpenGames);
-    socket.emit('all-online-users', onlineUserData);
+    //socket.emit('all-online-users', onlineUserData);
+    io.emit('list-players', listOnlinePlayers(io.sockets));
     socket.emit('available-games', allOpenGames);
-    socket.broadcast.emit('new-online-user', data)
+    //socket.broadcast.emit('new-online-user', data)
   });
 
   socket.on('join-game', function(data) {
@@ -334,6 +353,7 @@ io.on('connection', function(socket) {
 
   socket.on('leaving-page', function() {
     console.log(socket.user_name + ' disconnected');
+    // io.emit('list-players', listOnlinePlayers(io.sockets));
     io.emit('user-gone-offline', socket.user_id);
     // console.log('online user sockets', onlineUsers);
     //remove user from db

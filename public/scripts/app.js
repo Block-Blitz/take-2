@@ -106,18 +106,19 @@ socket.on('game-ended', function(data) {
 
 //lists online players
 
-socket.on('all-online-users', function(data){
-  console.log(data);
-  data.forEach( function(user){
-    $('.online-players').append(`<div class="player player-${user.id}">${user.name}</div>`);
-  });
-});
+// socket.on('all-online-users', function(data){
+//   console.log(data);
+//   data.forEach( function(user){
+//     $('.online-players').append(`<div class="player player-${user.id}">${user.name}</div>`);
+//   });
+// });
 
 
-socket.on('new-online-user', function(data){
-  console.log('new user: ', data);
-  $('.online-players').append(`<div class="player player-${data.id}">${data.name}</div>`);
-});
+// socket.on('new-online-user', function(data){
+//   console.log('new user: ', data);
+//   $('.online-players').append(`<div class="player player-${data.id}">${data.name}</div>`);
+// });
+
 /*
  * Sets game local variables when a game is joined
  */
@@ -182,6 +183,18 @@ $(window).on("unload", function(e) {
     socket.emit('leaving-page', 'user leaving page');
 });
 
+//creatss a list of all online players
+socket.on('list-players', function(arrayOfPlayers) {
+  //destroy existing player list
+  $('.player-list').remove();
+  //create a player-list div
+  $('.online-players').append('<div class="player-list"></div');
+  //cycle through array and make list
+  for (let player of arrayOfPlayers) {
+    console.log('each player', player);
+    $('.player-list').append(`<div class="player player-${player.userId}">${player.userName}</div>`);
+  }
+});
 
 // jQuery for button functionality
 
