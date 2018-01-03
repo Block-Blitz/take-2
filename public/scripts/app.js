@@ -12,7 +12,8 @@ var currentRoom = {
   playerOne: '',
   playerOneId: '',
   playerTwo: '',
-  playerTwoId: ''
+  playerTwoId: '',
+  pictureId: 1
 };
 
 //Gets the data for the current user from the database
@@ -214,6 +215,13 @@ $('.close-dialog-button').on('click', function(){
 
 $('#play-solo').on('click', function() {
   console.log('Started a single player game');
+  currentRoom.pictureId = Math.ceil(Math.random() * 5);
+  console.log('loading picture', currentRoom.pictureId);
+  if ($(window).width() <= 500) {
+    $('.tile').css("background-image", `url('public/images/cat${currentRoom.pictureId}-sm.jpg')`);
+  } else {
+    $('.tile').css("background-image", `url('public/images/cat${currentRoom.pictureId}-lrg.jpg')`);
+  }
   $(".game").css("display", "block");
   $(".non-game").css("display", "none");
   shuffleTiles();
@@ -235,3 +243,25 @@ function displayButtonsDefault() {
   $("#play-solo").removeClass('no-display');
   $("#leave-queue").addClass('no-display');
 }
+
+//Screwign around with puzzle image
+
+$('.change-picture').on('click', function() {
+  console.log('Going to change the picture');
+  currentRoom.pictureId = Math.ceil(Math.random() * 5);
+  console.log('loading picture', currentRoom.pictureId);
+  if ($(window).width() <= 500) {
+    $('.tile').css("background-image", `url('public/images/cat${currentRoom.pictureId}-sm.jpg')`);
+  } else {
+    $('.tile').css("background-image", `url('public/images/cat${currentRoom.pictureId}-lrg.jpg')`);
+  }
+});
+
+$(window).resize(function() {
+  if ($(window).width() <= 500) {
+    $('.tile').css("background-image", `url('public/images/cat${currentRoom.pictureId}-sm.jpg')`);
+  } else {
+    $('.tile').css("background-image", `url('public/images/cat${currentRoom.pictureId}-lrg.jpg')`);
+  }
+});
+
