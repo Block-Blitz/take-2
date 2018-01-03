@@ -82,7 +82,9 @@ socket.on('connection', function() {
  */
 socket.on('start-game', function(data) {
   inGame = true;
-  console.log('Started game ' + data.id);
+  console.log('Started game ' + data.pictureId);
+  console.log('currentRoom.pictureId:', currentRoom.pictureId);
+  setPicture(currentRoom);
   $(".game").css("display", "block");
   $(".non-game").css("display", "none");
   shuffleTiles();
@@ -115,6 +117,7 @@ socket.on('join-success', function(data) {
   currentRoom.playerOneId = data.playerOneId;
   currentRoom.playerTwo = data.playerTwo;
   currentRoom.playerTwoId = data.playerTwoId;
+  currentRoom.pictureId = data.pictureId;
   console.log(userData.name, 'is trying to join room', currentRoom.roomName, '(from client side)');
 });
 
@@ -244,24 +247,15 @@ function displayButtonsDefault() {
   $("#leave-queue").addClass('no-display');
 }
 
-//Screwign around with puzzle image
+//setting puzzle image
 
-$('.change-picture').on('click', function() {
-  console.log('Going to change the picture');
-  currentRoom.pictureId = Math.ceil(Math.random() * 5);
-  console.log('loading picture', currentRoom.pictureId);
+function setPicture(currentRoom) {
   if ($(window).width() <= 500) {
     $('.tile').css("background-image", `url('public/images/cat${currentRoom.pictureId}-sm.jpg')`);
   } else {
     $('.tile').css("background-image", `url('public/images/cat${currentRoom.pictureId}-lrg.jpg')`);
   }
-});
+}
 
-$(window).resize(function() {
-  if ($(window).width() <= 500) {
-    $('.tile').css("background-image", `url('public/images/cat${currentRoom.pictureId}-sm.jpg')`);
-  } else {
-    $('.tile').css("background-image", `url('public/images/cat${currentRoom.pictureId}-lrg.jpg')`);
-  }
-});
+$(window).resize(setPicture(currentRoom));
 
