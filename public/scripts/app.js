@@ -134,16 +134,30 @@ socket.on('joinSuccess', function(data) {
 
 //lists all open games
 
-socket.on('available-games', function(data) {
+socket.on('all-games', function(data) {
+  //destroy old list
+  $('.open-games').remove();
+  //create new div
+  $('.games-opened').append('<div class="open-games"></div>');
+  //populate new div
   console.log('all available games', data);
   for (let game of data) {
     console.log('game object', game);
-    $('.games-opened').append(`<div data=${game.id} class="available-game"><p>Game available against ${game.playerOne}</p><button class="button button-small join-game-button" data=${game.id}>Join</button></div>`);
+    $('.open-games').append(`<div data=${game.id} class="available-game"><p>Game available against ${game.playerOne}</p><button class="button button-small join-game-button" data=${game.id}>Join</button></div>`);
       $(document).find('.join-game-button').on('click', function(){
         socket.emit( 'join-game-button', {id: game.id, user: userData});
     });
   }
 });
+
+//creates list of available games
+// socket.on('all-games', function(arrayOfGames) {
+
+//     $('.games-opened').append(`<div data=${data.id} class="available-game"><p>Game available against ${data.playerOne}</p><button class="button button-small join-game-button" data=${data.id}>Join</button></div>`);
+//     $(document).find('.join-game-button').on('click', function(){
+//       socket.emit( 'join-game-button', {id: data.id, user: userData});
+//     });
+// });
 
 /*
  * When an open game is created, adds to the list of available games
@@ -195,6 +209,7 @@ socket.on('list-players', function(arrayOfPlayers) {
     $('.player-list').append(`<div class="player player-${player.userId}">${player.userName}</div>`);
   }
 });
+
 
 // jQuery for button functionality
 

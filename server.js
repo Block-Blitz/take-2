@@ -153,11 +153,11 @@ function buildGame(socket) {
 
   console.log("Game created by " + gameObject.playerOne + " w/ " + gameObject.id);
   // Emits to clients that the game has been made
-  io.emit("gameCreated", gameObject);
+  //io.emit("gameCreated", gameObject);
   socket.emit('joinSuccess', gameObject);
   // Joins room for the new game
   socket.join(gameObject.id);
-  listAvailableGames(gameCollection);
+  io.emit('all-games', availableGames(gameCollection));
 }
 
 /*
@@ -191,7 +191,8 @@ function gameSeeker(socket) {
       // Emits notification that the game is filled, starts the game
       io.sockets.in(game.id).emit('joinSuccess', game);
       io.sockets.in(game.id).emit('start-game', game);
-      io.emit('game-filled', game.id);
+      //io.emit('game-filled', game.id);
+      io.emit('all-games', availableGames(gameCollection));
       return;
     }
   }
@@ -219,7 +220,8 @@ function joinGame(socket, data){
       // Emits notification that game is filled, starts game
       io.sockets.in(game.id).emit('joinSuccess', game);
       io.sockets.in(game.id).emit('start-game', game);
-      io.emit('game-filled', game.id);
+      io.emit('all-games', availableGames(gameCollection));
+      //io.emit('game-filled', game.id);
      return;
     }
   }
@@ -242,7 +244,8 @@ function leaveQueue(socket, gameId) {
       // Leave the Room
       socket.leave(gameId);
       // Emit notification that game is no longer available
-      io.emit('game-filled', gameId);
+      //io.emit('game-filled', gameId);
+      io.emit('all-games', availableGames(gameCollection));
     }
   }
 }
@@ -274,19 +277,6 @@ function listOnlinePlayers(allSockets) {
   }
   console.log('array of players', playerList);
   return playerList;
-}
-
-// Creates an array of open games
-function listAvailableGames(games) {
-  let unfilledGames = [];
-  for (let game of games) {
-    console.log('each game', game);
-    if(!game.playerTwo) {
-      unfilledGames.push(game);
-    }
-  }
-  console.log('unfilled games', unfilledGames);
-  return unfilledGames;
 }
 
 //on socket connection recieving info from the client side
@@ -325,7 +315,7 @@ io.on('connection', function(socket) {
     console.log('available games object server side', allOpenGames);
     //socket.emit('all-online-users', onlineUserData);
     io.emit('list-players', listOnlinePlayers(io.sockets));
-    socket.emit('available-games', allOpenGames);
+    io.emit('available-games', allOpenGames);
     //socket.broadcast.emit('new-online-user', data)
   });
 
@@ -384,15 +374,16 @@ io.on('connection', function(socket) {
         console.log('found a game match');
         socket.leave(gameCollection[i].id);
         // Emit notification that game is no longer available
-        io.emit('game-filled', gameCollection[i].id);
+        //io.emit('game-filled', gameCollection[i].id);
         gameCollection.splice(i, 1);
       } else if (gameCollection[i].playerTwoId && gameCollection[i].playerTwoId == socket.user_id) {
         console.log('found a game match');
         socket.leave(gameCollection[i].id);
         // Emit notification that game is no longer available
-        io.emit('game-filled', gameCollection[i].id);
+        //io.emit('game-filled', gameCollection[i].id);
         gameCollection.splice(i, 1);
       }
+      io.emit('all-games', availableGames(gameCollection));
     }
   });
 
