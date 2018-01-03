@@ -157,7 +157,7 @@ function buildGame(socket) {
   socket.emit('joinSuccess', gameObject);
   // Joins room for the new game
   socket.join(gameObject.id);
-  io.emit('list-players', listOnlinePlayers(io.sockets));
+  listAvailableGames(gameCollection);
 }
 
 /*
@@ -276,6 +276,18 @@ function listOnlinePlayers(allSockets) {
   return playerList;
 }
 
+// Creates an array of open games
+function listAvailableGames(games) {
+  let unfilledGames = [];
+  for (let game of games) {
+    console.log('each game', game);
+    if(!game.playerTwo) {
+      unfilledGames.push(game);
+    }
+  }
+  console.log('unfilled games', unfilledGames);
+  return unfilledGames;
+}
 
 //on socket connection recieving info from the client side
 
