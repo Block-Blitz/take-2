@@ -11,6 +11,9 @@ header {
   a {
     color: $header-link-color;
   }
+  img {
+    width: 200px;
+  }
 }
 
 .header-group {
@@ -75,6 +78,12 @@ header {
   .header-nav a.icon {
     float: right;
     display: block;
+  }
+  header {
+    height: 60px;
+    img {
+      width: 100px;
+    }
   }
 }
 
