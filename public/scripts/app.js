@@ -104,24 +104,10 @@ socket.on('game-ended', function(data) {
 
 });
 
-//lists online players
-
-socket.on('all-online-users', function(data){
-  console.log(data);
-  data.forEach( function(user){
-    $('.online-players').append(`<div class="player player-${user.id}">${user.name}</div>`);
-  });
-});
-
-
-socket.on('new-online-user', function(data){
-  console.log('new user: ', data);
-  $('.online-players').append(`<div class="player player-${data.id}">${data.name}</div>`);
-});
 /*
  * Sets game local variables when a game is joined
  */
-socket.on('joinSuccess', function(data) {
+socket.on('join-success', function(data) {
   console.log('data returned on room join \n', data);
   currentRoom.roomName = data.id;
   currentRoom.playerOne = data.playerOne;
@@ -133,28 +119,23 @@ socket.on('joinSuccess', function(data) {
 
 //lists all open games
 
-socket.on('available-games', function(data) {
+socket.on('all-games', function(data) {
+  //destroy old list
+  $('.open-games').remove();
+  //create new div
+  $('.games-opened').append('<div class="open-games"></div>');
+  //populate new div
   console.log('all available games', data);
   for (let game of data) {
     console.log('game object', game);
-    $('.games-opened').append(`<div data=${game.id} class="available-game"><p>Game available against ${game.playerOne}</p><button class="button button-small join-game-button" data=${game.id}>Join</button></div>`);
+    $('.open-games').append(`<div data=${game.id} class="available-game"><p>Game available against ${game.playerOne}</p><button class="button button-small join-game-button" data=${game.id}>Join</button></div>`);
       $(document).find('.join-game-button').on('click', function(){
-        socket.emit( 'join-game-button', {id: game.id, user: userData});
+        socket.emit( 'join-game', {id: game.id, user: userData});
     });
   }
 });
 
-/*
- * When an open game is created, adds to the list of available games
- *
- */
-socket.on('gameCreated', function(data){
-  currentRoom.playerOne = data.playerOne;
-  $('.games-opened').append(`<div data=${data.id} class="available-game"><p>Game available against ${data.playerOne}</p><button class="button button-small join-game-button" data=${data.id}>Join</button></div>`);
-    $(document).find('.join-game-button').on('click', function(){
-      socket.emit( 'join-game-button', {id: data.id, user: userData});
-    });
-});
+
 
 socket.on('user-gone-offline', function(id) {
   if(id){
@@ -165,14 +146,6 @@ socket.on('user-gone-offline', function(id) {
   }
 });
 
-/*
- * When a game is either cancelled or filled
- * removes the game from the available games list
- */
-socket.on('game-filled', function(id){
-  console.log("heard that the game is filled" , id);
-  $(document).find(`[data=${id}]`).remove();
-});
 
 // Announces that user is going offline, removes them from the
 // active player list and removes their active games if any
@@ -180,6 +153,19 @@ $(window).on("unload", function(e) {
   //works on closing window, not refresh
   console.log('leaving page');
     socket.emit('leaving-page', 'user leaving page');
+});
+
+//creatss a list of all online players
+socket.on('list-players', function(arrayOfPlayers) {
+  //destroy existing player list
+  $('.player-list').remove();
+  //create a player-list div
+  $('.online-players').append('<div class="player-list"></div');
+  //cycle through array and make list
+  for (let player of arrayOfPlayers) {
+    console.log('each player', player);
+    $('.player-list').append(`<div class="player player-${player.userId}">${player.userName}</div>`);
+  }
 });
 
 
@@ -200,20 +186,20 @@ $('#make-game').on('click', function() {
   displayButtonsJoinQueue();
 });
 
-$('#join-game').on('click', function() {
+$('#join-queue').on('click', function() {
   if (inQueue) {
     console.log("Already in Queue");
     return;
   }
   console.log(userData.name, 'wants to join a room');
-  socket.emit('join-game', { player: userData });
+  socket.emit('join-queue', { player: userData });
   inQueue = true;
   displayButtonsJoinQueue();
 });
 
 $('#leave-queue').on('click', function() {
   console.log(userData.name, 'left the queue');
-  socket.emit('leaveQueue', currentRoom.roomName);
+  socket.emit('leave-queue', currentRoom.roomName);
   currentRoom.roomName = "";
   currentRoom.playerOne = "";
   currentRoom.playerOneId = "";
@@ -239,13 +225,13 @@ $('#play-solo').on('click', function() {
 function displayButtonsJoinQueue() {
   $("#leave-queue").removeClass('no-display');
   $("#make-game").addClass('no-display');
-  $("#join-game").addClass('no-display');
+  $("#join-queue").addClass('no-display');
   $("#play-solo").addClass('no-display');
 }
 
 function displayButtonsDefault() {
   $("#make-game").removeClass('no-display');
-  $("#join-game").removeClass('no-display');
+  $("#join-queue").removeClass('no-display');
   $("#play-solo").removeClass('no-display');
   $("#leave-queue").addClass('no-display');
 }
