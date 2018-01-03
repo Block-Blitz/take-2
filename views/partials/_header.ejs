@@ -24,15 +24,27 @@
     </div>
 
     <nav class="header-nav">
+      <a href="javascript:void(0);" class="icon" id="hamburger">&#9776;</a>
       <% if (!user) { %>
         <a href='/register'>Register</a>
         <a href='/login'>Login</a>
       <% } else { %>
-        <button class="tutorial-button">How to play</button>
+        <a class="tutorial-button">How to play</a>
         <!-- <a href='/profile'>Profile</a> -->
         <a class="logout-button" href='/logout'>Logout</a>
       <% } %>
     </nav>
-
   </div>
 </header>
+<div class="mobile-menu" id="mobilemenu"> 
+<div class="test">
+  <% if (!user) { %>
+    <a href='/register'>Register</a>
+    <a href='/login'>Login</a>
+  <% } else { %>
+    <a class="tutorial-button">How to play</a>
+    <!-- <a href='/profile'>Profile</a> -->
+    <a class="logout-button" href='/logout'>Logout</a>
+  <% } %>
+  </div>
+</div>
