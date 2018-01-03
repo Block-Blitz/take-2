@@ -235,3 +235,26 @@ function displayButtonsDefault() {
   $("#play-solo").removeClass('no-display');
   $("#leave-queue").addClass('no-display');
 }
+
+//Screwign around with puzzle image
+
+let pictureId = 1;
+$('.change-picture').on('click', function() {
+  console.log('Going to change the picture');
+  pictureId = Math.ceil(Math.random() * 5);
+  console.log('loading picture', pictureId);
+  if ($(window).width() <= 500) {
+    $('.tile').css("background-image", `url('public/images/cat${pictureId}-sm.jpg')`);
+  } else {
+    $('.tile').css("background-image", `url('public/images/cat${pictureId}-lrg.jpg')`);
+  }
+});
+
+$(window).resize(function() {
+  if ($(window).width() <= 500) {
+    $('.tile').css("background-image", `url('public/images/cat${pictureId}-sm.jpg')`);
+  } else {
+    $('.tile').css("background-image", `url('public/images/cat${pictureId}-lrg.jpg')`);
+  }
+});
+
