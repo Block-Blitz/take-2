@@ -81,12 +81,23 @@ app.get('/api/user_data', (req, res) => {
     res.json({});
   } else {
     console.log(req.session.user_id, 'is logged in');
+    let userInfo = {};
     getUserInfo(req.session.user_id).then((data) => {
-      return res.json({data});
+      userInfo.id = data.id;
+      userInfo.name = data.name;
+      return;
 
+    }).then(() => {
+      calculateWins(req.session.user_id).then((data) => {
+        console.log('this is wins', data);
+        userInfo.wins = data;
+        console.log('user data', userInfo);
+        return res.json(userInfo);
+      });
     });
   }
 });
+
 
 // Saves the results of a game
 app.post('/api/game-log', (req, res) => {
@@ -128,6 +139,17 @@ function getUserInfo(id) {
       userInfo = user[0];
       return userInfo;
     });
+}
+
+//Gets a users carreer wins
+function calculateWins(id) {
+  console.log("got the basics?", id);
+  return knex('games')
+  .count('winner')
+  .where('winner', id)
+  .then((wins) =>{
+    return wins[0].count;
+  });
 }
 
 //creating places to store the games and users
@@ -269,7 +291,8 @@ function listOnlinePlayers(allSockets) {
     if(allSockets.sockets[socket].user_name) {
       playerList.push({
         userName: allSockets.sockets[socket].user_name,
-        userId: allSockets.sockets[socket].user_id
+        userId: allSockets.sockets[socket].user_id,
+        wins: allSockets.sockets[socket].user_wins
       });
     }
   }
@@ -297,6 +320,7 @@ io.on('connection', function(socket) {
     console.log('server side new user data: ', data);
     socket.user_id = data.id;
     socket.user_name = data.name;
+    socket.user_wins = data.wins;
     // console.log('new socket info', socket.id, socket.name);
     onlineUsers.push(socket);
     //What to do with this data????
@@ -305,7 +329,8 @@ io.on('connection', function(socket) {
     onlineUsers.forEach(function(user){
       onlineUserData.push({
         id: user.user_id,
-        name: user.user_name
+        name: user.user_name,
+        wins: user.user_wins
       });
     });
     let allOpenGames;
