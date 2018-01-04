@@ -89,7 +89,6 @@ socket.on('start-game', function(data) {
   $(".non-game").css("display", "none");
   randomLayout();
   $(".versus").append(`<span class="fight"> ${currentRoom.playerOne} <span class="em">VS</span> ${currentRoom.playerTwo}`);
-  shuffleTiles();
 
 });
 

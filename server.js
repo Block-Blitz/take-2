@@ -312,7 +312,7 @@ io.on('connection', function(socket) {
     allOpenGames = availableGames(gameCollection);
     console.log('available games object server side', allOpenGames);
     io.emit('list-players', listOnlinePlayers(io.sockets));
-    io.emit('available-games', allOpenGames);
+    io.emit('all-games', allOpenGames);
   });
 
   socket.on('join-queue', function(data) {
