@@ -87,6 +87,7 @@ socket.on('start-game', function(data) {
   setPicture(currentRoom);
   $(".game").css("display", "block");
   $(".non-game").css("display", "none");
+  $(".versus").append(`<span class="fight"> ${currentRoom.playerOne} <span class="em">VS</span> ${currentRoom.playerTwo}`);
   shuffleTiles();
 });
 
