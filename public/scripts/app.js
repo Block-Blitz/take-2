@@ -5,7 +5,8 @@ var socket = io.connect('http://localhost:8080');
 var inQueue = false;
 var userData = {
   id: '',
-  name: ''
+  name: '',
+  wins: 0
 };
 var currentRoom = {
   roomName: '',
@@ -21,9 +22,11 @@ $.ajax({
   method: "GET",
   url: "api/user_data"
   }).done((user) => {
-    if (user.data) {
-      userData.id = user.data.id;
-      userData.name = user.data.name;
+    console.log('user data', user);
+    if (user.name) {
+      userData.id = user.id;
+      userData.name = user.name;
+      userData.wins = user.wins;
     }
   });
 
@@ -170,7 +173,7 @@ socket.on('list-players', function(arrayOfPlayers) {
   //cycle through array and make list
   for (let player of arrayOfPlayers) {
     console.log('each player', player);
-    $('.player-list').append(`<div class="player player-${player.userId}">${player.userName}</div>`);
+    $('.player-list').append(`<div class="player player-${player.userId}">${player.userName}, total wins ${player.wins}</div>`);
   }
 });
 

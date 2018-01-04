@@ -4,3 +4,4 @@ node_modules/
 public/styles/*.css
 .DS_Store
 Dockerfile
+dummy
