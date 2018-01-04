@@ -52,6 +52,21 @@ function shuffleTiles() {
   });
 }
 
+function randomLayout() {
+  console.log('ran randomLayout function');
+  var orderIndex = Math.floor(Math.random() * orders.length);
+  var order = orders[orderIndex];
+  pckry.items = order.split('').map( function( attr ) {
+    return mappedItems[ attr ];
+  });
+  // stagger transition
+  pckry._resetLayout();
+  pckry.items.forEach( function( item, i ) {
+    setTimeout( function() {
+      pckry.layoutItems( [ item ] );
+    }, i * 34 );
+  });
+}
 /*
  * Loads the dialog box
  */

@@ -87,7 +87,7 @@ socket.on('start-game', function(data) {
   setPicture(currentRoom);
   $(".game").css("display", "block");
   $(".non-game").css("display", "none");
-  shuffleTiles();
+  randomLayout();
 });
 
 /*
@@ -227,7 +227,7 @@ $('#play-solo').on('click', function() {
   }
   $(".game").css("display", "block");
   $(".non-game").css("display", "none");
-  shuffleTiles();
+  randomLayout();
 });
 
 
