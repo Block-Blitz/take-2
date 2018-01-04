@@ -10,6 +10,9 @@
 }
 
 .content {
+  background-image: url("public/images/giphy.gif");
+  background-repeat: no-repeat;
+  background-size: cover;
   flex: 1 0 auto;
   position: relative;
 }
@@ -22,4 +25,8 @@
   margin-left: auto;
   padding: 50px;
 
+}
+
+.content{
+  color:white;
 }
