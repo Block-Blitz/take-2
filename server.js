@@ -98,7 +98,6 @@ app.get('/api/user_data', (req, res) => {
   }
 });
 
-
 // Saves the results of a game
 app.post('/api/game-log', (req, res) => {
   console.log('input to game log post', req.body);
@@ -152,9 +151,8 @@ function calculateWins(id) {
   });
 }
 
-//creating places to store the games and users
+//creating places to store the games
 const gameCollection = [];
-const onlineUsers = [];
 /*
  * Creates a new game
  *
@@ -307,32 +305,10 @@ io.on('connection', function(socket) {
   console.log('a socket has connected');
 
   socket.on('new-user', function(data) {
-
-    //Had a bug where sockets were sometime being added twice
-    for (let i = 0; i < onlineUsers.length; i++) {
-      // console.log('user in array', onlineUsers[i]);
-      if(onlineUsers[i].user_id === data.id) {
-        console.log('FOUND A MATCH ALREADY ONLINE', onlineUsers[i].user_name);
-        return;
-      }
-    }
-
     console.log('server side new user data: ', data);
     socket.user_id = data.id;
     socket.user_name = data.name;
     socket.user_wins = data.wins;
-    // console.log('new socket info', socket.id, socket.name);
-    onlineUsers.push(socket);
-    //What to do with this data????
-    //Need for lists on client side
-    const onlineUserData = [];
-    onlineUsers.forEach(function(user){
-      onlineUserData.push({
-        id: user.user_id,
-        name: user.user_name,
-        wins: user.user_wins
-      });
-    });
     let allOpenGames;
     allOpenGames = availableGames(gameCollection);
     console.log('available games object server side', allOpenGames);
@@ -345,8 +321,6 @@ io.on('connection', function(socket) {
     console.log('joined queue', data.player.name);
     let room = { id: newId() };
     gameSeeker(socket);
-
-    // console.log(io.sockets.adapter.rooms);
   });
 
   socket.on('join-game', function(data){
@@ -377,16 +351,6 @@ io.on('connection', function(socket) {
   socket.on('leaving-page', function() {
     console.log(socket.user_name + ' disconnected');
     io.emit('user-gone-offline', socket.user_id);
-    // console.log('online user sockets', onlineUsers);
-    //remove user from db
-    for (let i = 0; i < onlineUsers.length; i++) {
-      // console.log('user in array', onlineUsers[i]);
-      if(onlineUsers[i].user_id === socket.user_id) {
-        console.log('FOUND A MATCH', onlineUsers[i].user_name);
-        onlineUsers.splice(i, 1);
-        // Emit and tell other others that user has left
-      }
-    }
     //remove all of the users open games in games collection
     for (let i = 0; i < gameCollection.length; i++) {
       console.log('individual game ', gameCollection[i]);
