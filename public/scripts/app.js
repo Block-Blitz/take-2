@@ -27,6 +27,7 @@ $.ajax({
       userData.id = user.id;
       userData.name = user.name;
       userData.wins = user.wins;
+      socket.emit('new-user', userData);
     }
   });
 
@@ -74,9 +75,9 @@ function win() {
 
 socket.on('connection', function() {
   console.log('Client connected to socket', userData.name);
-  if(userData.name) {
-    socket.emit('new-user', userData);
-  }
+  // if(userData.name) {
+  //   socket.emit('new-user', userData);
+  // }
 });
 
 /*
