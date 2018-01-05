@@ -27,6 +27,11 @@
   <% } %>
       <button id="play-solo" class="button">Play Solo</button>
     </div>
+<!-- game intro -->
+  <% if(!user) { %>
+  <p>Block blitz is a puzzle game allowing you to play competitively or solo.</p>
+  <% include ./partials/_carousel.ejs %>
+  <% } %>
 <!-- List of available games -->
   <% if(user) { %>
   <div class="game-list">
@@ -56,6 +61,8 @@
 <script src='https://unpkg.com/packery@2/dist/packery.pkgd.js'></script>
 <script src='https://unpkg.com/draggabilly@2/dist/draggabilly.pkgd.js'></script>
 <script src="../public/scripts/puzzle.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.min.js"></script>
+<script src="../public/scripts/carousel.js"></script>
 <script src="../public/scripts/app.js"></script>
 
 
