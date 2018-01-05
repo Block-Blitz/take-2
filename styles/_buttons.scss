@@ -62,6 +62,9 @@ body {
 //     }
 // }
 
+.carousel .slick-prev:before, .carousel .slick-next:before{
+  color:black;
+}
 
 .no-display {
   display: none;
