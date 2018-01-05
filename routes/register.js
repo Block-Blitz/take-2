@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const helpers = require('../lib/helpers.js');
 const bcrypt = require('bcrypt');
+const swearjar = require('swearjar');
 // add back knex when database is set up properly **************
 module.exports = () => {
 
@@ -28,6 +29,12 @@ module.exports = () => {
     const password = bcrypt.hashSync(req.body.password, 10);
     if (!req.body.email || !req.body.password || !req.body.name) {
       req.flash('error', 'Email, name, and password are required.');
+      res.status(404).send({success: false});
+      return;
+    }
+
+    if (swearjar.profane(req.body.name)) {
+      req.flash('error', 'Your Blitz Block Name must be suitable for players of all ages');
       res.status(404).send({success: false});
       return;
     }
@@ -63,12 +70,19 @@ module.exports = () => {
   router.post('/facebook', (req, res) => {
     const email = req.body.email;
     const name = req.body.name;
+    console.log(req.body.name + 'I AM THE PLAYER NAME');
     console.log(req.body.email + 'I am the email recieved from the server');
     if (!req.body.name) {
       req.flash('facebook-error', 'Must enter name to register');
       res.status(404).send({success: false});
       return;
     }
+    if (swearjar.profane(name)) {
+      req.flash('facebook-error', 'Your Blitz Block Name must be suitable for players of all ages');
+      res.status(404).send({success: false});
+      return;
+    }
+
     helpers.checkNameInDB(name)
       .then(exists => {
         console.log(exists + ' I am after the check name function');
