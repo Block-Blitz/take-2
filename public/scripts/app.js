@@ -125,7 +125,10 @@ socket.on('join-success', function(data) {
   currentRoom.playerTwoId = data.playerTwoId;
   currentRoom.pictureId = data.pictureId;
   console.log(userData.name, 'is trying to join room', currentRoom.roomName, '(from client side)');
+
 });
+
+
 
 //lists all open games
 
@@ -174,9 +177,17 @@ socket.on('list-players', function(arrayOfPlayers) {
   //cycle through array and make list
   for (let player of arrayOfPlayers) {
     console.log('each player', player);
-    $('.player-list').append(`<div class="player player-${player.userId}">${player.userName}, total wins ${player.wins}</div>`);
+    $('.player-list').append(`<div class="player player-${player.userId}"><span class="player-name">${player.userName}, total wins ${player.wins}</span></div>`);
+    if (player.inGame){
+      $(`.player-${player.userId}`).prepend('<span class="ingame"> Currently in a game!  </span>');
+      $('.ingame').parent(`.player-${player.userId}`).css("font-style", "italic").css("text-transform", "uppercase");
+      $('.player-name').css('position', 'relative').css('left', '-11%');
+    }
   }
+
 });
+
+
 
 
 // jQuery for button functionality
@@ -194,6 +205,7 @@ $('#make-game').on('click', function() {
   socket.emit('make-game', { player: userData });
   inQueue = true;
   displayButtonsJoinQueue();
+
 });
 
 $('#join-queue').on('click', function() {
@@ -205,6 +217,7 @@ $('#join-queue').on('click', function() {
   socket.emit('join-queue', { player: userData });
   inQueue = true;
   displayButtonsJoinQueue();
+
 });
 
 $('#leave-queue').on('click', function() {
