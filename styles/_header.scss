@@ -7,7 +7,7 @@ header {
   height: 100px;
   display: flex;
   align-content: center;
-  position: absolute;
+  position: relative;
   a {
     color: $header-link-color;
   }
@@ -63,12 +63,13 @@ header {
   width: 100%;
   background-color: #fff;
   height: auto;
+  padding: 5px 0;
 
   a {
     position: relative;
     display: block;
     width: 100%;
-    margin: 20px 0;
+    padding: 5px 0;
   }
 }
 
