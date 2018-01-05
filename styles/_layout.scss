@@ -24,3 +24,13 @@
 
 }
 
+.intro-paragraph{
+    width: $max-width;
+    margin: auto;
+    background: rgba(0,0,0,.4);
+    padding: $global-padding;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    font-size: 20px;
+    color: white;
+  }
