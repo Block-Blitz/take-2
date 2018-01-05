@@ -207,12 +207,14 @@ function gameSeeker(socket) {
       game.playerTwoId = socket.user_id;
       // Joins the room
       socket.join(game.id);
+      flagUsersInGame(game.id);
       console.log("game.id:", game.id);
       console.log( socket.user_name + " has been added to: " + game.id);
       // Emits notification that the game is filled, starts the game
       io.sockets.in(game.id).emit('join-success', game);
       io.sockets.in(game.id).emit('start-game', game);
       io.emit('all-games', availableGames(gameCollection));
+      io.emit('list-players', listOnlinePlayers(io.sockets));
       return;
     }
   }
@@ -220,6 +222,17 @@ function gameSeeker(socket) {
   buildGame(socket);
 }
 
+
+function flagUsersInGame(roomId){
+  let users_in_room = io.sockets.adapter.rooms[roomId].sockets;
+
+  console.log(users_in_room, " this is USERS_IN_ROOM");
+  for (let userId in users_in_room){
+    io.sockets.sockets[userId].in_game = true;
+
+  }
+
+}
 /*
  * Join a specific game
  *
@@ -235,12 +248,13 @@ function joinGame(socket, data){
       console.log(game , " this is game inside the function");
       // Joins Room
       socket.join(game.id);
-
       console.log( data.user.name + " has been added to: " + game.id);
       // Emits notification that game is filled, starts game
       io.sockets.in(game.id).emit('join-success', game);
       io.sockets.in(game.id).emit('start-game', game);
+      flagUsersInGame(game.id);
       io.emit('all-games', availableGames(gameCollection));
+      io.emit('list-players', listOnlinePlayers(io.sockets));
      return;
     }
   }
@@ -290,7 +304,8 @@ function listOnlinePlayers(allSockets) {
       playerList.push({
         userName: allSockets.sockets[socket].user_name,
         userId: allSockets.sockets[socket].user_id,
-        wins: allSockets.sockets[socket].user_wins
+        wins: allSockets.sockets[socket].user_wins,
+        inGame: allSockets.sockets[socket].in_game
       });
     }
   }
@@ -309,6 +324,7 @@ io.on('connection', function(socket) {
     socket.user_id = data.id;
     socket.user_name = data.name;
     socket.user_wins = data.wins;
+    socket.in_game = false;
     let allOpenGames;
     allOpenGames = availableGames(gameCollection);
     console.log('available games object server side', allOpenGames);
