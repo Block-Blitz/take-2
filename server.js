@@ -107,6 +107,13 @@ app.post('/api/game-log', (req, res) => {
   });
 });
 
+// Retrieves information for leaderboard
+app.get('/api/leaderboard', (req, res) => {
+  getLeaderboard().then((data) => {
+    return res.json(data);
+  });
+});
+
 /*
  * saves game result to database
  *
@@ -150,6 +157,23 @@ function calculateWins(id) {
     return wins[0].count;
   });
 }
+
+//Gets the leaderboard data from DB
+function getLeaderboard() {
+  return knex
+    .select('users.name', 'users.id')
+    .count('winner as wins')
+    .from('games')
+    .innerJoin('users', 'games.winner', 'users.id')
+    .groupBy('users.id')
+    .orderBy('wins', 'desc')
+    .limit(5)
+    .then((data) => {
+      console.log('leaderboard data', data);
+      return data;
+    });
+}
+
 
 //creating places to store the games
 const gameCollection = [];
