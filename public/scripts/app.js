@@ -37,7 +37,7 @@ $.ajax({
  */
 function win() {
   if ( didWin ) {
-    document.querySelector('.dialog__text').innerHTML = 'Nice work!';
+    document.querySelector('.dialog__text').innerHTML = 'Nice work, you won!';
 
     if (currentRoom.playerOneId === userData.id) {
       var results = {
@@ -106,7 +106,7 @@ socket.on('game-ended', function(data) {
   console.log('client recieved a game over msg', data);
   if ( userData.name != data.winner ) {
     console.log("this guy lost");
-    document.querySelector('.dialog__text').innerHTML = 'You lost!';
+    document.querySelector('.dialog__text').innerHTML = 'You lost! '+ data.winner + ' was the winner.';
     showDialog();
     didWin = false;
   }
