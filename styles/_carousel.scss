@@ -1,0 +1,9 @@
+.carousel{
+  max-width: $max-width;
+  margin: 0 auto;
+  text-align: center;
+
+  .item img {
+    margin: 0 auto;
+  }
+}
