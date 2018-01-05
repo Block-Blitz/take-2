@@ -29,7 +29,7 @@ $.ajax({
       userData.wins = user.wins;
       socket.emit('new-user', userData);
     }
-  });
+});
 
 
 /*
