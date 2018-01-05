@@ -39,6 +39,12 @@ module.exports = () => {
       return;
     }
 
+    if (req.body.password.length < 8) {
+      req.flash('error', 'Password must be at least 8 characters long');
+      res.status(404).send({success: false});
+      return;
+    }
+
     helpers.checkNameInDB(name)
       .then(exists => {
         if (!exists) {
