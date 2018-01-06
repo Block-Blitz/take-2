@@ -365,10 +365,10 @@ io.on('connection', function(socket) {
     socket.user_wins = data.wins;
     socket.in_game = false;
 
-    //need to clean out possible existing games of the user on old sockets
+    //need to readd to open games already created
     for (let i = 0; i < gameCollection.length; i++) {
-      if(gameCollection[i].playerOneId == socket.user_id) {
-        gameCollection.splice(i, 1);
+      if((gameCollection[i].playerOneId == socket.user_id) && !gameCollection[i].playerTwoId) {
+        socket.join(gameCollection[i].id);
       }
     }
 
