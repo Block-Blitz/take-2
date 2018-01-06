@@ -6,7 +6,8 @@ var inQueue = false;
 var userData = {
   id: '',
   name: '',
-  wins: 0
+  wins: 0,
+  losses: 0
 };
 var currentRoom = {
   roomName: '',
@@ -27,7 +28,9 @@ $.ajax({
       userData.id = user.id;
       userData.name = user.name;
       userData.wins = user.wins;
+      userData.losses = user.losses;
       socket.emit('new-user', userData);
+      showUserStats(userData);
     }
 });
 
@@ -187,7 +190,9 @@ socket.on('list-players', function(arrayOfPlayers) {
 
 });
 
-
+socket.on('existing-game', function() {
+    displayButtonsJoinQueue();
+});
 
 
 // jQuery for button functionality
@@ -277,4 +282,16 @@ function setPicture(currentRoom) {
 }
 
 $(window).resize(setPicture(currentRoom));
+
+//Generate user stat table
+
+function showUserStats(userData) {
+  let totalGames = parseInt(userData.wins) + parseInt(userData.losses);
+  let winningPercentage = Math.round(userData.wins / totalGames *100);
+  $('.user-stats').append(`<h2>${userData.name}'s Career Stats</h2>`);
+  $('.user-stats').append(`<div class="wins">Wins ${userData.wins}</div>`);
+  $('.user-stats').append(`<div class="losses">Losses ${userData.losses}</div>`);
+  $('.user-stats').append(`<div class="winning-percentage">WP ${winningPercentage}%</div>`);
+  $('.user-stats').append(`<div class="total-games">Total Games Played ${totalGames}</div>`);
+}
 

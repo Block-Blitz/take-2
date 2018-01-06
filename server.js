@@ -92,6 +92,12 @@ app.get('/api/user_data', (req, res) => {
         console.log('this is wins', data);
         userInfo.wins = data;
         console.log('user data', userInfo);
+      });
+    }).then(() => {
+      calculateLosses(req.session.user_id).then((data) => {
+        console.log('this is losses', data);
+        userInfo.losses = data;
+        console.log('user data', userInfo);
         return res.json(userInfo);
       });
     });
@@ -149,12 +155,21 @@ function getUserInfo(id) {
 
 //Gets a users carreer wins
 function calculateWins(id) {
-  console.log("got the basics?", id);
   return knex('games')
   .count('winner')
   .where('winner', id)
   .then((wins) =>{
     return wins[0].count;
+  });
+}
+
+//Gets a users carreer losses
+function calculateLosses(id) {
+  return knex('games')
+  .count('loser')
+  .where('loser', id)
+  .then((losses) =>{
+    return losses[0].count;
   });
 }
 
@@ -349,6 +364,15 @@ io.on('connection', function(socket) {
     socket.user_name = data.name;
     socket.user_wins = data.wins;
     socket.in_game = false;
+
+    //need to readd to open games already created
+    for (let i = 0; i < gameCollection.length; i++) {
+      if((gameCollection[i].playerOneId == socket.user_id) && !gameCollection[i].playerTwoId) {
+        socket.join(gameCollection[i].id);
+        socket.emit('existing-game', gameCollection[i].id)
+      }
+    }
+
     let allOpenGames;
     allOpenGames = availableGames(gameCollection);
     console.log('available games object server side', allOpenGames);
@@ -383,9 +407,18 @@ io.on('connection', function(socket) {
   socket.on('leave-queue', function(data){
     console.log("left queue");
     console.log("data: ", data)
-    console.log("gameCollection before", gameCollection);
-    leaveQueue(socket, data);
-    console.log("gameCollection after", gameCollection);
+    // console.log("gameCollection before", gameCollection);
+    // leaveQueue(socket, data);
+    // console.log("gameCollection after", gameCollection);
+    for (let i = 0; i < gameCollection.length; i++) {
+      console.log('individual game ', gameCollection[i]);
+      if(gameCollection[i].playerOneId == socket.user_id) {
+        gameCollection.splice(i, 1);
+      } else if (gameCollection[i].playerTwoId && gameCollection[i].playerTwoId == socket.user_id) {
+        gameCollection.splice(i, 1);
+      }
+      io.emit('all-games', availableGames(gameCollection));
+    }
   });
 
   socket.on('leaving-page', function() {
