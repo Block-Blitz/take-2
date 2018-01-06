@@ -190,7 +190,9 @@ socket.on('list-players', function(arrayOfPlayers) {
 
 });
 
-
+socket.on('existing-game', function() {
+    displayButtonsJoinQueue();
+});
 
 
 // jQuery for button functionality
