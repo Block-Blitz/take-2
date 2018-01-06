@@ -179,9 +179,7 @@ socket.on('list-players', function(arrayOfPlayers) {
     console.log('each player', player);
     $('.player-list').append(`<div class="player player-${player.userId}"><span class="player-name">${player.userName}, total wins ${player.wins}</span></div>`);
     if (player.inGame){
-      $(`.player-${player.userId}`).prepend('<span class="ingame"> Currently in a game!  </span>');
-      $('.ingame').parent(`.player-${player.userId}`).css("font-style", "italic").css("text-transform", "uppercase");
-      $('.player-name').css('position', 'relative').css('left', '-11%');
+      $(`.player-${player.userId}`).append('<span class="ingame">In Game</span>');
     }
   }
 
