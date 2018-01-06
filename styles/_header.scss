@@ -84,6 +84,9 @@ header {
     float: right;
     display: block;
   }
+}
+
+@media screen and (max-width: $breakpoint-small) {
   header {
     height: 60px;
     img {
