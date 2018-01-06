@@ -40,7 +40,6 @@ $(document).ready(function(){
     }).done((data) => {
       console.log('leadboard data', data);
       for(let user of data) {
-        console.log('leaderboard entry', user.name, user.wins);
         $('.leaderboard-list').append(`<div class="leaderboard-entry">${user.name}: ${user.wins} Total wins</div>`);
       }
   });

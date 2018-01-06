@@ -92,6 +92,12 @@ app.get('/api/user_data', (req, res) => {
         console.log('this is wins', data);
         userInfo.wins = data;
         console.log('user data', userInfo);
+      });
+    }).then(() => {
+      calculateLosses(req.session.user_id).then((data) => {
+        console.log('this is losses', data);
+        userInfo.losses = data;
+        console.log('user data', userInfo);
         return res.json(userInfo);
       });
     });
@@ -149,12 +155,21 @@ function getUserInfo(id) {
 
 //Gets a users carreer wins
 function calculateWins(id) {
-  console.log("got the basics?", id);
   return knex('games')
   .count('winner')
   .where('winner', id)
   .then((wins) =>{
     return wins[0].count;
+  });
+}
+
+//Gets a users carreer losses
+function calculateLosses(id) {
+  return knex('games')
+  .count('loser')
+  .where('loser', id)
+  .then((losses) =>{
+    return losses[0].count;
   });
 }
 
