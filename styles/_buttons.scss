@@ -4,27 +4,64 @@ body {
 
 .button {
   font-family: $font-body;
-  font-size: 1.25rem;
-  background-color: $button-color;
-  background-image: linear-gradient( hsla(0, 0%, 0%, 0), hsla(0, 0%, 0%, 0.2) );
-  border: none;
   color: white;
-  padding: 0.550em 1.25em 0.7em;
-  border-radius: 5px;
+  background-color: $button-color;
+  position: relative;
+  height: 50px;
   display: inline-block;
+  margin: 30px 10px;
+  color: white;
+  border: none;
+  -webkit-box-shadow: 0 5px 0 $button-accent-color;
+  -moz-box-shadow: 0 5px 0 $button-accent-color;
+  box-shadow: 0 5px 0 $button-accent-color;
 
   &:hover {
-    cursor: pointer;
+    top: 2px;
     background-color: $button-hover-color;
-    color: white;
+    -webkit-box-shadow: 0 3px 0 $button-accent-color;
+    -moz-box-shadow: 0 3px 0 $button-accent-color;
+    box-shadow: 0 3px 0 $button-accent-color;
   }
-
   &:active {
-    background-color: $button-click-color;
-    box-shadow: inset 0 2px 10px hsla(0, 0%, 0%, 0.5);
+    top: 5px;
+    box-shadow: none;
   }
-
+  &:focus {
+    outline: none;
+  }
 }
+
+.shuffle-button {
+  width: 40%;
+}
+
+.join-game-button {
+  background-color: $join-game-color;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  position: relative;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 8px 20px 5px 20px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  -webkit-box-shadow: 0 5px 0 $join-game-accent-color;
+  -moz-box-shadow: 0 5px 0 $join-game-accent-color;
+  box-shadow: 0 5px 0 $join-game-accent-color;
+
+  &:hover {
+    top: 2px;
+    background-color: $join-game-hover-color;
+    -webkit-box-shadow: 0 3px 0 $join-game-accent-color;
+    -moz-box-shadow: 0 3px 0 $join-game-accent-color;
+    box-shadow: 0 3px 0 $join-game-accent-color;
+  }
+}
+
+
+
 
 .button-small, #register-button {
   font-size: 1rem;
@@ -49,19 +86,6 @@ body {
 }
 
 
-
-// .facebook-button-div{
-//     max-width: 484px;
-//     background: linear-gradient(#4c69ba, #3b55a0);
-//     margin: auto;
-//     padding: 10px;
-//     border-radius: 10px;
-
-//     &:hover{
-//       background-color: #5876cd;
-//     }
-// }
-
 .carousel .slick-prev:before, .carousel .slick-next:before{
   color:black;
 }
@@ -71,11 +95,11 @@ body {
 }
 
 .game-buttons {
-  padding: $global-padding;
+  // padding: $global-padding;
   padding-bottom: $global-padding*0.75;
 
   .button {
     margin-bottom: $global-padding*0.25;
-    min-width: 158px;
+    min-width: 27%;
   }
 }

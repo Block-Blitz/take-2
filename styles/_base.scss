@@ -9,7 +9,7 @@ html { overflow-y: scroll; }
 
 body {
   font-family: $font-body;
-  background: $body-bg-color;
+  background-image: url("../public/images/bg.png");
   color: $body-font-color;
   text-align: center;
 }

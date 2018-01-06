@@ -1,14 +1,20 @@
-.available-game {
+.available-game-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: blue;
   background: $game-list-bg-color;
   color: $game-list-font-color;
-  padding: 0.25em $global-padding;
+  padding: 0.5em 0.6em;
+  margin: 10px 30px;
+  border-radius: 10px;
+}
+
+.available-game {
+
   max-width: $max-width;
   margin-left: auto;
   margin-right: auto;
-
-  &:nth-child(odd) {
-    background: $game-list-alt-bg-color;
-  }
 
   p {
     display: inline-block;
@@ -17,16 +23,23 @@
 }
 
 .player {
-  background: $game-list-alt-bg-color;
   color: $game-list-font-color;
-  padding: 0.5em $global-padding;
+  padding: 0.2em $global-padding;
   max-width: $max-width;
   margin-left: auto;
   margin-right: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-  &:nth-child(odd) {
-    background: $game-list-bg-color;
-  }
+.ingame {
+  margin-left: 5px;
+  background-color: $join-game-color;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  color: white;
+  padding: 5px;
 }
 
 .tutorial {
@@ -80,5 +93,43 @@
     right: 0;
     margin: auto;
     z-index: 1;
+  }
+}
+
+.board-container {
+  display: flex;
+  justify-content: space-between;
+
+  .left-board {
+    background-color: white;
+    width: 40%;
+    height: 700px;
+    padding: 10px 50px;
+    text-align: left;
+
+    hr {
+      margin: 20px 0;
+      border-bottom: solid 2px $footer-bg-color;
+    }
+
+    .leaderboard-entry {
+      padding: 0.2em $global-padding;
+    }
+    .wins {
+      padding: 0.2em $global-padding;
+    }
+    .losses {
+      padding: 0.2em $global-padding;
+    }
+    .winning-percentage {
+      padding: 0.2em $global-padding;
+    }
+    .total-games {
+      padding: 0.2em $global-padding;
+    }
+  }
+
+  .right-board {
+    width: 60%;
   }
 }
