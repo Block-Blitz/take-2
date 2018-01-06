@@ -91,13 +91,19 @@ app.get('/api/user_data', (req, res) => {
       calculateWins(req.session.user_id).then((data) => {
         console.log('this is wins', data);
         userInfo.wins = data;
+        if(!data) {
+          userInfo.wins = 0;
+        }
         console.log('user data', userInfo);
       });
     }).then(() => {
       calculateLosses(req.session.user_id).then((data) => {
         console.log('this is losses', data);
         userInfo.losses = data;
-        console.log('user data', userInfo);
+        if (!data) {
+          userInfo.losses = 0;
+        }
+        console.log('user data immediately before sending', userInfo);
         return res.json(userInfo);
       });
     });

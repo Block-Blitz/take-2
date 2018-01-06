@@ -29,6 +29,12 @@ $.ajax({
       userData.name = user.name;
       userData.wins = user.wins;
       userData.losses = user.losses;
+      if(!user.wins){
+        userData.wins = 0;
+      }
+      if(!user.losses){
+        userData.losses = 0;
+      }
       socket.emit('new-user', userData);
       showUserStats(userData);
     }
@@ -289,7 +295,9 @@ function showUserStats(userData) {
   $('.user-stats').append(`<h2>${userData.name}'s Career Stats</h2>`);
   $('.user-stats').append(`<div class="wins">Wins ${userData.wins}</div>`);
   $('.user-stats').append(`<div class="losses">Losses ${userData.losses}</div>`);
-  $('.user-stats').append(`<div class="winning-percentage">WP ${winningPercentage}%</div>`);
+  if(winningPercentage) {
+    $('.user-stats').append(`<div class="winning-percentage">WP ${winningPercentage}%</div>`);
+  }
   $('.user-stats').append(`<div class="total-games">Total Games Played ${totalGames}</div>`);
 }
 
