@@ -23,6 +23,20 @@
         <p>Block blitz is a puzzle game allowing you to play competitively or solo. Simply click and drag a piece into position. </p><p>Finish the puzzle before your opponent to raise your stats.</p>
           <p class="login-message">Please <a href="/login">login</a> or <a href="register">register!!</a></p>
       <% } else  { %>
+
+        <!-- User Stats -->
+        <div class='user-stats'></div>
+
+        <hr>
+
+        <!-- Leaderboard -->
+        <div class="leaderboard">
+          <h2>All Time Leaders</h2>
+          <div class="leaderboard-list"></div>
+        </div>
+
+        <hr>
+
         <!-- List of online players -->
         <div class="user-list">
           <h2>Online Users</h2>
@@ -30,11 +44,6 @@
           </div>
         </div>
 
-        <!-- Leaderboard -->
-        <div class="leaderboard">
-          <h2>All Time Leaders</h2>
-          <div class="leaderboard-list"></div>
-        </div>
       <% } %>
     </div>
     <div class="right-board">
@@ -59,6 +68,7 @@
       </div>
     </div>
   </div>
+</div>
 
   <!-- User Stats -->
   <div class='user-stats'></div>
