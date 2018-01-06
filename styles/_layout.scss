@@ -4,7 +4,6 @@
   min-width: 300px;
   margin-left: auto;
   margin-right: auto;
-  // I don't know that we want this padding because it makes the logo not align with the content of the page.
   padding-left: $global-padding;
   padding-right: $global-padding;
 }
@@ -12,8 +11,13 @@
 .content {
   flex: 1 0 auto;
   position: relative;
+  max-width: $container-width;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $global-padding;
+  padding-right: $global-padding;
+  min-height: 700px;
 }
-
 
 .privacy-policy{
   max-width: 900px;

@@ -141,7 +141,7 @@ socket.on('all-games', function(data) {
   console.log('all available games', data);
   for (let game of data) {
     console.log('game object', game);
-    $('.open-games').append(`<div data=${game.id} class="available-game"><p>Game available against ${game.playerOne}</p><button class="button button-small join-game-button" data=${game.id}>Join</button></div>`);
+    $('.open-games').append(`<div class="available-game-container"><div class="available-game-left"><div data=${game.id} class="available-game"><p>Game available against <strong>${game.playerOne}</strong></p></div></div><div class="available-game-right"><button class="join-game-button" data=${game.id}>Join</button></div></div></div>`);
       $(document).find('.join-game-button').on('click', function(){
         socket.emit( 'join-game', {id: game.id, user: userData});
     });

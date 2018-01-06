@@ -10,18 +10,21 @@ $font-body: 'Source Sans Pro', sans-serif;
 $bold: 600; //use because 700 is really thick
 
 // Colors
-$header-bg-color: pink;
-$footer-bg-color: #FFF;
+$header-bg-color: #fff;
+$footer-bg-color: #6e9098;
 $body-bg-color: #eee;
 
 $header-font-color: #CD6554;
 $footer-font-color: #000;
 $body-font-color: #555;
 
-$button-color: #91171F;
+$button-color: #6e9098;
 $button-click-color: #CD5D67;
-$button-accent-color: #5B141F;
-$button-hover-color: #721926;
+$button-accent-color: #536d73;
+$button-hover-color: #5f7d84;
+$join-game-color: #cb6456;
+$join-game-hover-color: #b0594d;
+$join-game-accent-color: #9b4f45;
 
 $anchor-color: #91171F;
 $anchor-color-hover: #410B13;
@@ -30,8 +33,8 @@ $header-link-hover: #CD6554;
 
 $tile-outline-color: hsla(210, 100%, 50%, 0.7);
 
-$game-list-font-color: #eee;
-$game-list-bg-color : #777;
+$game-list-font-color: #000;
+$game-list-bg-color : #fff;
 $game-list-alt-bg-color: #444;
 
 $facebook-color: #3D5A96;

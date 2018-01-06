@@ -1,14 +1,20 @@
-.available-game {
+.available-game-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: blue;
   background: $game-list-bg-color;
   color: $game-list-font-color;
-  padding: 0.25em $global-padding;
+  padding: 0.5em 0.6em;
+  margin: 10px 30px;
+  border-radius: 10px;
+}
+
+.available-game {
+
   max-width: $max-width;
   margin-left: auto;
   margin-right: auto;
-
-  &:nth-child(odd) {
-    background: $game-list-alt-bg-color;
-  }
 
   p {
     display: inline-block;
@@ -80,5 +86,20 @@
     right: 0;
     margin: auto;
     z-index: 1;
+  }
+}
+
+.board-container {
+  display: flex;
+  justify-content: space-between;
+
+  .left-board {
+    background-color: white;
+    width: 40%;
+    height: 700px;
+  }
+
+  .right-board {
+    width: 60%;
   }
 }
