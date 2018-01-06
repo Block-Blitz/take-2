@@ -131,5 +131,12 @@
 
   .right-board {
     width: 60%;
+
+    .how-to-play {
+      height: 520px;
+      width: 420px;
+      margin: 50px auto 0 auto;
+      border: solid 10px white;
+    }
   }
 }
