@@ -364,6 +364,15 @@ io.on('connection', function(socket) {
     socket.user_name = data.name;
     socket.user_wins = data.wins;
     socket.in_game = false;
+
+    //need to readd to open games already created
+    for (let i = 0; i < gameCollection.length; i++) {
+      if((gameCollection[i].playerOneId == socket.user_id) && !gameCollection[i].playerTwoId) {
+        socket.join(gameCollection[i].id);
+        socket.emit('existing-game', gameCollection[i].id)
+      }
+    }
+
     let allOpenGames;
     allOpenGames = availableGames(gameCollection);
     console.log('available games object server side', allOpenGames);
@@ -398,9 +407,18 @@ io.on('connection', function(socket) {
   socket.on('leave-queue', function(data){
     console.log("left queue");
     console.log("data: ", data)
-    console.log("gameCollection before", gameCollection);
-    leaveQueue(socket, data);
-    console.log("gameCollection after", gameCollection);
+    // console.log("gameCollection before", gameCollection);
+    // leaveQueue(socket, data);
+    // console.log("gameCollection after", gameCollection);
+    for (let i = 0; i < gameCollection.length; i++) {
+      console.log('individual game ', gameCollection[i]);
+      if(gameCollection[i].playerOneId == socket.user_id) {
+        gameCollection.splice(i, 1);
+      } else if (gameCollection[i].playerTwoId && gameCollection[i].playerTwoId == socket.user_id) {
+        gameCollection.splice(i, 1);
+      }
+      io.emit('all-games', availableGames(gameCollection));
+    }
   });
 
   socket.on('leaving-page', function() {
