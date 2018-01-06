@@ -364,6 +364,14 @@ io.on('connection', function(socket) {
     socket.user_name = data.name;
     socket.user_wins = data.wins;
     socket.in_game = false;
+
+    //need to clean out possible existing games of the user on old sockets
+    for (let i = 0; i < gameCollection.length; i++) {
+      if(gameCollection[i].playerOneId == socket.user_id) {
+        gameCollection.splice(i, 1);
+      }
+    }
+
     let allOpenGames;
     allOpenGames = availableGames(gameCollection);
     console.log('available games object server side', allOpenGames);
