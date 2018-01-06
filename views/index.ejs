@@ -63,7 +63,10 @@
     <% } %>
   </div>
         <% } else { %>
-          <% include ./partials/_carousel.ejs %>
+          <div class="how-to-play">
+            <video autoplay="autoplay" loop="loop" width="400" height="500">
+              <source src="../public/images/block-blitz-demo.mp4" type="video/mp4" />
+          </div>
         <% } %>
       </div>
     </div>
