@@ -25,6 +25,7 @@ const loginRoutes = require('./routes/login');
 const registerRoutes = require('./routes/register');
 const logoutRoutes = require('./routes/logout');
 const privacyRoutes = require('./routes/privacy');
+const userDataRoutes = require('./routes/user_data');
 
 server.listen(PORT);
 
@@ -61,6 +62,7 @@ app.use('/login', loginRoutes(knex));
 app.use('/register', registerRoutes(knex));
 app.use('/logout', logoutRoutes(knex));
 app.use('/privacy', privacyRoutes(knex));
+app.use('/api/user_data', userDataRoutes(knex));
 
 
 app.get('/', (req, res) => {
@@ -73,37 +75,37 @@ app.get('/', (req, res) => {
 
 
 // Returns userdata for logged in user
-app.get('/api/user_data', (req, res) => {
+// app.get('/api/user_data', (req, res) => {
 
-  if (!req.session) {
-    // The user is not logged in
-    console.log('not logged in');
-    res.json({});
-  } else {
-    console.log(req.session.user_id, 'is logged in');
-    let userInfo = {};
-    getUserInfo(req.session.user_id).then((data) => {
-      userInfo.id = data.id;
-      userInfo.name = data.name;
-      userInfo.wins = data.wins;
-      if(!data.wins) {
-        userInfo.wins = 0;
-      }
-      console.log('user info in callback', userInfo);
-      return;
-    }).then(() => {
-      calculateLosses(req.session.user_id).then((data) => {
-        console.log('this is losses', data);
-        userInfo.losses = data;
-        if (!data) {
-          userInfo.losses = 0;
-        }
-        console.log('user data immediately before sending', userInfo);
-        return res.json(userInfo);
-      });
-    });
-  }
-});
+//   if (!req.session) {
+//     // The user is not logged in
+//     console.log('not logged in');
+//     res.json({});
+//   } else {
+//     console.log(req.session.user_id, 'is logged in');
+//     let userInfo = {};
+//     getUserInfo(req.session.user_id).then((data) => {
+//       userInfo.id = data.id;
+//       userInfo.name = data.name;
+//       userInfo.wins = data.wins;
+//       if(!data.wins) {
+//         userInfo.wins = 0;
+//       }
+//       console.log('user info in callback', userInfo);
+//       return;
+//     }).then(() => {
+//       calculateLosses(req.session.user_id).then((data) => {
+//         console.log('this is losses', data);
+//         userInfo.losses = data;
+//         if (!data) {
+//           userInfo.losses = 0;
+//         }
+//         console.log('user data immediately before sending', userInfo);
+//         return res.json(userInfo);
+//       });
+//     });
+//   }
+// });
 
 // Saves the results of a game
 app.post('/api/game-log', (req, res) => {
@@ -135,36 +137,6 @@ function saveGameResult(result) {
     .then(() => {
       return;
     });
-}
-
-/*
- * retrieves userdata from database
- *
- * @param {number} id - user id
- * @return {object} - user data
- */
-function getUserInfo(id) {
-  return knex
-    .select('users.name', 'users.id')
-    .count('winner as wins')
-    .from('users')
-    .leftJoin('games', 'users.id', 'games.winner')
-    .where('users.id', id)
-    .groupBy('users.id')
-    .then((user) => {
-      userInfo = user[0];
-      return userInfo;
-    });
-}
-
-//Gets a users carreer losses
-function calculateLosses(id) {
-  return knex('games')
-  .count('loser')
-  .where('loser', id)
-  .then((losses) =>{
-    return losses[0].count;
-  });
 }
 
 //Gets the leaderboard data from DB
