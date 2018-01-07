@@ -22,7 +22,6 @@ const newId = require('uuid/v1');
 const socketsio = require('./lib/socket_logic')(io);
 
 // Seperated Routes for each Resource
-const profileRoutes = require('./routes/profile');
 const loginRoutes = require('./routes/login');
 const registerRoutes = require('./routes/register');
 const logoutRoutes = require('./routes/logout');
@@ -61,7 +60,6 @@ app.use(cookieSession({
 app.use(flash());
 
 // Mount all resource routes
-app.use('/profile', profileRoutes(knex));
 app.use('/login', loginRoutes(knex));
 app.use('/register', registerRoutes(knex));
 app.use('/logout', logoutRoutes(knex));
