@@ -18,7 +18,9 @@ var currentRoom = {
 };
 
 /*
- * Implements logic for the first user to finish the puzzle here instead of puzzle.js because it contains player variables
+ * If user is first to complete the puzzle this saves
+ * the game result to the DB and informs the other player
+ * as well as showing the winner a gameover msg
  */
 function win() {
   if ( didWin ) {
@@ -186,5 +188,6 @@ function storeUserData(user) {
       userData.losses = 0;
     }
     socket.emit('new-user', userData);
+    showUserStats(userData);
   }
 }
