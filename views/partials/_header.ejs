@@ -24,7 +24,9 @@
     </div>
 
     <nav class="header-nav">
-      <a href="javascript:void(0);" class="icon" id="hamburger">&#9776;</a>
+      <a href="javascript:void(0);" class="icon" id="hamburger">
+        <span class="hamburger"></span>
+      </a>
       <% if (!user) { %>
         <a href='/register'>Register</a>
         <a href='/login'>Login</a>
@@ -37,7 +39,7 @@
   </div>
 </header>
 <div class="mobile-menu" id="mobilemenu">
-<div class="test">
+<div class="menu">
   <% if (!user) { %>
     <a href='/register'>Register</a>
     <a href='/login'>Login</a>
