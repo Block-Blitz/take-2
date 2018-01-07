@@ -10,6 +10,7 @@ $(document).ready(function(){
 
   $('#hamburger').click(function() {
     $('#mobilemenu').slideToggle();
+    $(this).toggleClass('open');
   });
 
   function fbLogoutUser() {
