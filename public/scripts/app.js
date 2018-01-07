@@ -1,24 +1,11 @@
 var socket = io.connect('http://localhost:8080');
 
+/*
+ *Gets the data for the current user from the database
+ *Emits the data to the server
+ *Generates user stats table
+ */
 
-// Constants
-var inQueue = false;
-var userData = {
-  id: '',
-  name: '',
-  wins: 0,
-  losses: 0
-};
-var currentRoom = {
-  roomName: '',
-  playerOne: '',
-  playerOneId: '',
-  playerTwo: '',
-  playerTwoId: '',
-  pictureId: 1
-};
-
-//Gets the data for the current user from the database
 $.ajax({
   method: "GET",
   url: "api/user_data"
@@ -40,61 +27,21 @@ $.ajax({
     }
 });
 
-
-/*
- * Implements logic for the first user to finish the puzzle here instead of puzzle.js because it contains player variables
- */
-function win() {
-  if ( didWin ) {
-    document.querySelector('.dialog__text').innerHTML = 'Nice work, you won!';
-
-    if (currentRoom.playerOneId === userData.id) {
-      var results = {
-        winner: currentRoom.playerOneId,
-        loser: currentRoom.playerTwoId
-      };
-    } else {
-      var results = {
-        winner: currentRoom.playerTwoId,
-        loser: currentRoom.playerOneId
-      };
-    }
-    // Informs the server that the puzzle is complete
-    socket.emit('game-over', {
-      room: currentRoom,
-      msg: 'Game Over!',
-      winner: userData.name,
-    });
-    // Saves the game result to database
-    if (currentRoom.playerOneId != currentRoom.playerTwoId) {
-      $.ajax ({
-        url: '/api/game-log',
-        method: 'POST',
-        data: results,
-        success: function () {
-          console.log('Result saved to database');
-        }
-      });
-    }
-  }
-  showDialog();
-}
-
 // Socket.io logic
 
+/*
+ * Console logs when the user connects to a socket
+ * Can be removed before going live
+ */
 socket.on('connection', function() {
   console.log('Client connected to socket', userData.name);
-  // if(userData.name) {
-  //   socket.emit('new-user', userData);
-  // }
 });
 
 /*
- * When the client recieves a start game notification from the socket
+ * When the client recieves a start game notification from the server
  * loads the game with jQuery
  */
 socket.on('start-game', function(data) {
-  inGame = true;
   console.log('Started game ' + data.pictureId);
   console.log('currentRoom.pictureId:', currentRoom.pictureId);
   setPicture(currentRoom);
@@ -111,7 +58,6 @@ socket.on('start-game', function(data) {
  * if not, loads the dialog popup and tells the player they have lost.
  */
 socket.on('game-ended', function(data) {
-  inGame = false;
   console.log('client recieved a game over msg', data);
   if ( userData.name != data.winner ) {
     console.log("this guy lost");
@@ -138,8 +84,9 @@ socket.on('join-success', function(data) {
 });
 
 
-
-//lists all open games
+/*
+ * Notifies client to create the available games list
+ */
 
 socket.on('all-games', function(data) {
   //destroy old list
@@ -158,26 +105,19 @@ socket.on('all-games', function(data) {
 });
 
 
-
+/*
+ * When a user goes offline, removes them from the online user list
+ */
 socket.on('user-gone-offline', function(id) {
   if(id){
-    let idString = id.toString();
-    console.log(typeof idString);
     console.log('looking to remove the id:', id);
     $(document).find(`.player-${id}`).remove(`.player-${id}`);
   }
 });
 
-
-// Announces that user is going offline, removes them from the
-// active player list and removes their active games if any
-$(window).on("unload", function(e) {
-  //works on closing window, not refresh
-  console.log('leaving page');
-    socket.emit('leaving-page', 'user leaving page');
-});
-
-//creatss a list of all online players
+/*
+ * Creates the list of all online players
+ */
 socket.on('list-players', function(arrayOfPlayers) {
   //destroy existing player list
   $('.player-list').remove();
@@ -194,10 +134,23 @@ socket.on('list-players', function(arrayOfPlayers) {
 
 });
 
+/*
+ * If a player has an open game when they reload the page
+ * reconnects them to the game
+ */
 socket.on('existing-game', function() {
     displayButtonsJoinQueue();
 });
 
+/*
+ * Announces that user is going offline, so they can be removed from the
+ * active player list and removes their active games if any
+ */
+$(window).on("unload", function(e) {
+  //works on closing window, not refresh
+  console.log('leaving page');
+    socket.emit('leaving-page', 'user leaving page');
+});
 
 // jQuery for button functionality
 
@@ -240,10 +193,6 @@ $('#leave-queue').on('click', function() {
   displayButtonsDefault();
 });
 
-$('.close-dialog-button').on('click', function(){
-  $('.dialog').addClass('is-waiting');
-});
-
 $('#play-solo').on('click', function() {
   console.log('Started a single player game');
   currentRoom.pictureId = Math.ceil(Math.random() * 5);
@@ -259,45 +208,10 @@ $('#play-solo').on('click', function() {
 });
 
 
-// Toggles Button visibilty depending on if user is in game queue or not
+$('.close-dialog-button').on('click', function(){
+  $('.dialog').addClass('is-waiting');
+});
 
-function displayButtonsJoinQueue() {
-  $("#leave-queue").removeClass('no-display');
-  $("#make-game").addClass('no-display');
-  $("#join-queue").addClass('no-display');
-  $("#play-solo").addClass('no-display');
-}
-
-function displayButtonsDefault() {
-  $("#make-game").removeClass('no-display');
-  $("#join-queue").removeClass('no-display');
-  $("#play-solo").removeClass('no-display');
-  $("#leave-queue").addClass('no-display');
-}
-
-//setting puzzle image
-
-function setPicture(currentRoom) {
-  if ($(window).width() <= 500) {
-    $('.tile').css("background-image", `url('public/images/cat${currentRoom.pictureId}-sm.jpg')`);
-  } else {
-    $('.tile').css("background-image", `url('public/images/cat${currentRoom.pictureId}-lrg.jpg')`);
-  }
-}
-
+// When the window is resized this will set the puzzle to the correct picture
 $(window).resize(setPicture(currentRoom));
-
-//Generate user stat table
-
-function showUserStats(userData) {
-  let totalGames = parseInt(userData.wins) + parseInt(userData.losses);
-  let winningPercentage = Math.round(userData.wins / totalGames *100);
-  $('.user-stats').append(`<h2>${userData.name}'s Career Stats</h2>`);
-  $('.user-stats').append(`<div class="wins">Wins ${userData.wins}</div>`);
-  $('.user-stats').append(`<div class="losses">Losses ${userData.losses}</div>`);
-  if(winningPercentage) {
-    $('.user-stats').append(`<div class="winning-percentage">WP ${winningPercentage}%</div>`);
-  }
-  $('.user-stats').append(`<div class="total-games">Total Games Played ${totalGames}</div>`);
-}
 
