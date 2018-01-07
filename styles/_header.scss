@@ -148,14 +148,14 @@ header .icon{
   }
 }
 
-@media screen and (min-width: #{$breakpoint-medium + 1px}) {
+@media screen and (min-width: #{$breakpoint-hamburger + 1px}) {
   //overides inline styles set by jquery so that mobile menu doesn't show on large screens
   #mobilemenu {
     display: none !important;
   }
 }
 
-@media screen and (max-width: $breakpoint-medium) {
+@media screen and (max-width: $breakpoint-hamburger) {
   .header-nav a:not(:first-child) {display: none;}
   .header-nav a.icon {
     float: right;
