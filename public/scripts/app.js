@@ -1,6 +1,11 @@
 var socket = io.connect('http://localhost:8080');
 
-//Gets the data for the current user from the database
+/*
+ *Gets the data for the current user from the database
+ *Emits the data to the server
+ *Generates user stats table
+ */
+
 $.ajax({
   method: "GET",
   url: "api/user_data"
@@ -24,12 +29,16 @@ $.ajax({
 
 // Socket.io logic
 
+/*
+ * Console logs when the user connects to a socket
+ * Can be removed before going live
+ */
 socket.on('connection', function() {
   console.log('Client connected to socket', userData.name);
 });
 
 /*
- * When the client recieves a start game notification from the socket
+ * When the client recieves a start game notification from the server
  * loads the game with jQuery
  */
 socket.on('start-game', function(data) {
@@ -75,8 +84,9 @@ socket.on('join-success', function(data) {
 });
 
 
-
-//lists all open games
+/*
+ * Notifies client to create the available games list
+ */
 
 socket.on('all-games', function(data) {
   //destroy old list
@@ -95,26 +105,19 @@ socket.on('all-games', function(data) {
 });
 
 
-
+/*
+ * When a user goes offline, removes them from the online user list
+ */
 socket.on('user-gone-offline', function(id) {
   if(id){
-    let idString = id.toString();
-    console.log(typeof idString);
     console.log('looking to remove the id:', id);
     $(document).find(`.player-${id}`).remove(`.player-${id}`);
   }
 });
 
-
-// Announces that user is going offline, removes them from the
-// active player list and removes their active games if any
-$(window).on("unload", function(e) {
-  //works on closing window, not refresh
-  console.log('leaving page');
-    socket.emit('leaving-page', 'user leaving page');
-});
-
-//creatss a list of all online players
+/*
+ * Creates the list of all online players
+ */
 socket.on('list-players', function(arrayOfPlayers) {
   //destroy existing player list
   $('.player-list').remove();
@@ -131,10 +134,23 @@ socket.on('list-players', function(arrayOfPlayers) {
 
 });
 
+/*
+ * If a player has an open game when they reload the page
+ * reconnects them to the game
+ */
 socket.on('existing-game', function() {
     displayButtonsJoinQueue();
 });
 
+/*
+ * Announces that user is going offline, so they can be removed from the
+ * active player list and removes their active games if any
+ */
+$(window).on("unload", function(e) {
+  //works on closing window, not refresh
+  console.log('leaving page');
+    socket.emit('leaving-page', 'user leaving page');
+});
 
 // jQuery for button functionality
 

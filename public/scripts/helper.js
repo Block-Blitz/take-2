@@ -1,4 +1,4 @@
-// Constains all the constants and functinons needed for App.js
+// Contains all the constants and functinons needed for App.js
 
 // Constants
 var inQueue = false;
