@@ -29,7 +29,7 @@ footer {
     margin-bottom: 5px;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $breakpoint-medium) {
   .footer-group {
     display: flex;
     justify-content: space-between;

@@ -144,7 +144,7 @@
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: $breakpoint-medium) {
 
 .non-game, .board-container{
   height: auto;
