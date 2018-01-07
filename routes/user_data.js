@@ -14,7 +14,7 @@ module.exports = () => {
 
   // Gets the user data for logged in user
   router.get('/', (req, res) => {
-     if (!req.session) {
+     if (!req.session.user_id) {
     // The user is not logged in
     console.log('not logged in');
     res.json({});
