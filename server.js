@@ -26,7 +26,8 @@ const registerRoutes = require('./routes/register');
 const logoutRoutes = require('./routes/logout');
 const privacyRoutes = require('./routes/privacy');
 const userDataRoutes = require('./routes/user_data');
-const gameLogRoutes = require ('./routes/game_log');
+const gameLogRoutes = require('./routes/game_log');
+const leaderboardRoutes = require('./routes/leaderboard');
 
 server.listen(PORT);
 
@@ -65,6 +66,7 @@ app.use('/logout', logoutRoutes(knex));
 app.use('/privacy', privacyRoutes(knex));
 app.use('/api/user_data', userDataRoutes(knex));
 app.use('/api/game-log', gameLogRoutes(knex));
+app.use('/api/leaderboard', leaderboardRoutes(knex));
 
 
 app.get('/', (req, res) => {
@@ -74,30 +76,6 @@ app.get('/', (req, res) => {
   };
   res.render('index', templateVars);
 });
-
-// Retrieves information for leaderboard
-app.get('/api/leaderboard', (req, res) => {
-  getLeaderboard().then((data) => {
-    return res.json(data);
-  });
-});
-
-//Gets the leaderboard data from DB
-function getLeaderboard() {
-  return knex
-    .select('users.name', 'users.id')
-    .count('winner as wins')
-    .from('games')
-    .innerJoin('users', 'games.winner', 'users.id')
-    .groupBy('users.id')
-    .orderBy('wins', 'desc')
-    .limit(5)
-    .then((data) => {
-      console.log('leaderboard data', data);
-      return data;
-    });
-}
-
 
 //creating places to store the games
 const gameCollection = [];
