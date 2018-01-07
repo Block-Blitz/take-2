@@ -10,22 +10,10 @@ $.ajax({
   method: "GET",
   url: "api/user_data"
   }).done((user) => {
-    console.log('user data', user);
-    if (user.name) {
-      userData.id = user.id;
-      userData.name = user.name;
-      userData.wins = user.wins;
-      userData.losses = user.losses;
-      if(!user.wins){
-        userData.wins = 0;
-      }
-      if(!user.losses){
-        userData.losses = 0;
-      }
-      socket.emit('new-user', userData);
-      showUserStats(userData);
-    }
+    storeUserData(user);
+    showUserStats(userData);
 });
+
 
 // Socket.io logic
 
@@ -42,14 +30,7 @@ socket.on('connection', function() {
  * loads the game with jQuery
  */
 socket.on('start-game', function(data) {
-  console.log('Started game ' + data.pictureId);
-  console.log('currentRoom.pictureId:', currentRoom.pictureId);
-  setPicture(currentRoom);
-  $(".game").css("display", "block");
-  $(".non-game").css("display", "none");
-  randomLayout();
-  $(".versus").append(`<span class="fight"> ${currentRoom.playerOne} <span class="em">VS</span> ${currentRoom.playerTwo}`);
-
+  startGame(data);
 });
 
 /*
@@ -58,80 +39,36 @@ socket.on('start-game', function(data) {
  * if not, loads the dialog popup and tells the player they have lost.
  */
 socket.on('game-ended', function(data) {
-  console.log('client recieved a game over msg', data);
-  if ( userData.name != data.winner ) {
-    console.log("this guy lost");
-    document.querySelector('.dialog__text').innerHTML = 'You lost! '+ data.winner + ' was the winner.';
-    showDialog();
-    didWin = false;
-  }
-
+  gameOver(data);
 });
 
 /*
  * Sets game local variables when a game is joined
  */
 socket.on('join-success', function(data) {
-  console.log('data returned on room join \n', data);
-  currentRoom.roomName = data.id;
-  currentRoom.playerOne = data.playerOne;
-  currentRoom.playerOneId = data.playerOneId;
-  currentRoom.playerTwo = data.playerTwo;
-  currentRoom.playerTwoId = data.playerTwoId;
-  currentRoom.pictureId = data.pictureId;
-  console.log(userData.name, 'is trying to join room', currentRoom.roomName, '(from client side)');
-
+  joinGame(data);
 });
-
 
 /*
  * Notifies client to create the available games list
  */
-
 socket.on('all-games', function(data) {
-  //destroy old list
-  $('.open-games').remove();
-  //create new div
-  $('.games-opened').append('<div class="open-games"></div>');
-  //populate new div
-  console.log('all available games', data);
-  for (let game of data) {
-    console.log('game object', game);
-    $('.open-games').append(`<div class="available-game-container"><div class="available-game-left"><div data=${game.id} class="available-game"><p>Game available against <strong>${game.playerOne}</strong></p></div></div><div class="available-game-right"><button class="join-game-button" data=${game.id}>Join</button></div></div></div>`);
-      $(document).find('.join-game-button').on('click', function(){
-        socket.emit( 'join-game', {id: game.id, user: userData});
-    });
-  }
+  createGameList(data);
 });
 
 
 /*
  * When a user goes offline, removes them from the online user list
  */
-socket.on('user-gone-offline', function(id) {
-  if(id){
-    console.log('looking to remove the id:', id);
-    $(document).find(`.player-${id}`).remove(`.player-${id}`);
-  }
+socket.on('user-gone-offline', function(data) {
+  removeFromUserList(data);
 });
 
 /*
  * Creates the list of all online players
  */
-socket.on('list-players', function(arrayOfPlayers) {
-  //destroy existing player list
-  $('.player-list').remove();
-  //create a player-list div
-  $('.online-players').append('<div class="player-list"></div');
-  //cycle through array and make list
-  for (let player of arrayOfPlayers) {
-    console.log('each player', player);
-    $('.player-list').append(`<div class="player player-${player.userId}"><span class="player-name">${player.userName}, total wins ${player.wins}</span></div>`);
-    if (player.inGame){
-      $(`.player-${player.userId}`).append('<span class="ingame">In Game</span>');
-    }
-  }
-
+socket.on('list-players', function(data) {
+  createUserList(data);
 });
 
 /*
