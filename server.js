@@ -19,6 +19,8 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const newId = require('uuid/v1');
 
+const helpers = require('./lib/helpers.js');
+
 // Seperated Routes for each Resource
 const profileRoutes = require('./routes/profile');
 const loginRoutes = require('./routes/login');
@@ -252,7 +254,7 @@ io.on('connection', function(socket) {
     socket.user_wins = data.wins;
     socket.in_game = false;
 
-    //need to readd to open games already created
+    //need to re-add to open games already created
     for (let i = 0; i < gameCollection.length; i++) {
       if((gameCollection[i].playerOneId == socket.user_id) && !gameCollection[i].playerTwoId) {
         socket.join(gameCollection[i].id);
@@ -275,8 +277,8 @@ io.on('connection', function(socket) {
   });
 
   socket.on('join-game', function(data){
-      joinGame(socket, data);
-      console.log(data, " game request Id");
+    joinGame(socket, data);
+    console.log(data, " game request Id");
   });
 
   socket.on('make-game', function(data){
