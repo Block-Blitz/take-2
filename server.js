@@ -26,6 +26,7 @@ const registerRoutes = require('./routes/register');
 const logoutRoutes = require('./routes/logout');
 const privacyRoutes = require('./routes/privacy');
 const userDataRoutes = require('./routes/user_data');
+const gameLogRoutes = require ('./routes/game_log');
 
 server.listen(PORT);
 
@@ -63,6 +64,7 @@ app.use('/register', registerRoutes(knex));
 app.use('/logout', logoutRoutes(knex));
 app.use('/privacy', privacyRoutes(knex));
 app.use('/api/user_data', userDataRoutes(knex));
+app.use('/api/game-log', gameLogRoutes(knex));
 
 
 app.get('/', (req, res) => {
@@ -73,71 +75,12 @@ app.get('/', (req, res) => {
   res.render('index', templateVars);
 });
 
-
-// Returns userdata for logged in user
-// app.get('/api/user_data', (req, res) => {
-
-//   if (!req.session) {
-//     // The user is not logged in
-//     console.log('not logged in');
-//     res.json({});
-//   } else {
-//     console.log(req.session.user_id, 'is logged in');
-//     let userInfo = {};
-//     getUserInfo(req.session.user_id).then((data) => {
-//       userInfo.id = data.id;
-//       userInfo.name = data.name;
-//       userInfo.wins = data.wins;
-//       if(!data.wins) {
-//         userInfo.wins = 0;
-//       }
-//       console.log('user info in callback', userInfo);
-//       return;
-//     }).then(() => {
-//       calculateLosses(req.session.user_id).then((data) => {
-//         console.log('this is losses', data);
-//         userInfo.losses = data;
-//         if (!data) {
-//           userInfo.losses = 0;
-//         }
-//         console.log('user data immediately before sending', userInfo);
-//         return res.json(userInfo);
-//       });
-//     });
-//   }
-// });
-
-// Saves the results of a game
-app.post('/api/game-log', (req, res) => {
-  console.log('input to game log post', req.body);
-  saveGameResult(req.body).then(() => {
-    console.log('results saved');
-    return;
-  });
-});
-
 // Retrieves information for leaderboard
 app.get('/api/leaderboard', (req, res) => {
   getLeaderboard().then((data) => {
     return res.json(data);
   });
 });
-
-/*
- * saves game result to database
- *
- * @param {object} result - results of game
- */
-function saveGameResult(result) {
-  return knex('games')
-    .insert({
-      winner: result.winner,
-      loser: result.loser
-    })
-    .then(() => {
-      return;
-    });
-}
 
 //Gets the leaderboard data from DB
 function getLeaderboard() {
