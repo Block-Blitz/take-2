@@ -85,17 +85,12 @@ app.get('/api/user_data', (req, res) => {
     getUserInfo(req.session.user_id).then((data) => {
       userInfo.id = data.id;
       userInfo.name = data.name;
+      userInfo.wins = data.wins;
+      if(!data.wins) {
+        userInfo.wins = 0;
+      }
+      console.log('user info in callback', userInfo);
       return;
-
-    }).then(() => {
-      calculateWins(req.session.user_id).then((data) => {
-        console.log('this is wins', data);
-        userInfo.wins = data;
-        if(!data) {
-          userInfo.wins = 0;
-        }
-        console.log('user data', userInfo);
-      });
     }).then(() => {
       calculateLosses(req.session.user_id).then((data) => {
         console.log('this is losses', data);
@@ -150,23 +145,16 @@ function saveGameResult(result) {
  */
 function getUserInfo(id) {
   return knex
-    .select('name', 'id')
+    .select('users.name', 'users.id')
+    .count('winner as wins')
     .from('users')
-    .where('id', id)
+    .leftJoin('games', 'users.id', 'games.winner')
+    .where('users.id', id)
+    .groupBy('users.id')
     .then((user) => {
       userInfo = user[0];
       return userInfo;
     });
-}
-
-//Gets a users carreer wins
-function calculateWins(id) {
-  return knex('games')
-  .count('winner')
-  .where('winner', id)
-  .then((wins) =>{
-    return wins[0].count;
-  });
 }
 
 //Gets a users carreer losses
