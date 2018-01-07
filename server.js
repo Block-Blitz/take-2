@@ -19,12 +19,17 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const newId = require('uuid/v1');
 
+const helpers = require('./lib/helpers.js');
+
 // Seperated Routes for each Resource
 const profileRoutes = require('./routes/profile');
 const loginRoutes = require('./routes/login');
 const registerRoutes = require('./routes/register');
 const logoutRoutes = require('./routes/logout');
 const privacyRoutes = require('./routes/privacy');
+const userDataRoutes = require('./routes/user_data');
+const gameLogRoutes = require('./routes/game_log');
+const leaderboardRoutes = require('./routes/leaderboard');
 
 server.listen(PORT);
 
@@ -61,6 +66,9 @@ app.use('/login', loginRoutes(knex));
 app.use('/register', registerRoutes(knex));
 app.use('/logout', logoutRoutes(knex));
 app.use('/privacy', privacyRoutes(knex));
+app.use('/api/user_data', userDataRoutes(knex));
+app.use('/api/game-log', gameLogRoutes(knex));
+app.use('/api/leaderboard', leaderboardRoutes(knex));
 
 
 app.get('/', (req, res) => {
@@ -70,119 +78,6 @@ app.get('/', (req, res) => {
   };
   res.render('index', templateVars);
 });
-
-
-// Returns userdata for logged in user
-app.get('/api/user_data', (req, res) => {
-
-  if (!req.session) {
-    // The user is not logged in
-    console.log('not logged in');
-    res.json({});
-  } else {
-    console.log(req.session.user_id, 'is logged in');
-    let userInfo = {};
-    getUserInfo(req.session.user_id).then((data) => {
-      userInfo.id = data.id;
-      userInfo.name = data.name;
-      userInfo.wins = data.wins;
-      if(!data.wins) {
-        userInfo.wins = 0;
-      }
-      console.log('user info in callback', userInfo);
-      return;
-    }).then(() => {
-      calculateLosses(req.session.user_id).then((data) => {
-        console.log('this is losses', data);
-        userInfo.losses = data;
-        if (!data) {
-          userInfo.losses = 0;
-        }
-        console.log('user data immediately before sending', userInfo);
-        return res.json(userInfo);
-      });
-    });
-  }
-});
-
-// Saves the results of a game
-app.post('/api/game-log', (req, res) => {
-  console.log('input to game log post', req.body);
-  saveGameResult(req.body).then(() => {
-    console.log('results saved');
-    return;
-  });
-});
-
-// Retrieves information for leaderboard
-app.get('/api/leaderboard', (req, res) => {
-  getLeaderboard().then((data) => {
-    return res.json(data);
-  });
-});
-
-/*
- * saves game result to database
- *
- * @param {object} result - results of game
- */
-function saveGameResult(result) {
-  return knex('games')
-    .insert({
-      winner: result.winner,
-      loser: result.loser
-    })
-    .then(() => {
-      return;
-    });
-}
-
-/*
- * retrieves userdata from database
- *
- * @param {number} id - user id
- * @return {object} - user data
- */
-function getUserInfo(id) {
-  return knex
-    .select('users.name', 'users.id')
-    .count('winner as wins')
-    .from('users')
-    .leftJoin('games', 'users.id', 'games.winner')
-    .where('users.id', id)
-    .groupBy('users.id')
-    .then((user) => {
-      userInfo = user[0];
-      return userInfo;
-    });
-}
-
-//Gets a users carreer losses
-function calculateLosses(id) {
-  return knex('games')
-  .count('loser')
-  .where('loser', id)
-  .then((losses) =>{
-    return losses[0].count;
-  });
-}
-
-//Gets the leaderboard data from DB
-function getLeaderboard() {
-  return knex
-    .select('users.name', 'users.id')
-    .count('winner as wins')
-    .from('games')
-    .innerJoin('users', 'games.winner', 'users.id')
-    .groupBy('users.id')
-    .orderBy('wins', 'desc')
-    .limit(5)
-    .then((data) => {
-      console.log('leaderboard data', data);
-      return data;
-    });
-}
-
 
 //creating places to store the games
 const gameCollection = [];
@@ -359,7 +254,7 @@ io.on('connection', function(socket) {
     socket.user_wins = data.wins;
     socket.in_game = false;
 
-    //need to readd to open games already created
+    //need to re-add to open games already created
     for (let i = 0; i < gameCollection.length; i++) {
       if((gameCollection[i].playerOneId == socket.user_id) && !gameCollection[i].playerTwoId) {
         socket.join(gameCollection[i].id);
@@ -382,8 +277,8 @@ io.on('connection', function(socket) {
   });
 
   socket.on('join-game', function(data){
-      joinGame(socket, data);
-      console.log(data, " game request Id");
+    joinGame(socket, data);
+    console.log(data, " game request Id");
   });
 
   socket.on('make-game', function(data){
