@@ -10,6 +10,7 @@ html { overflow-y: scroll; }
 body {
   font-family: $font-body;
   background-image: url("../public/images/bg.png");
+  background-color: $footer-bg-color;
   color: $body-font-color;
   text-align: center;
 }

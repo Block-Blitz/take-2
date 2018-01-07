@@ -1,8 +1,21 @@
-.register-containment {
+
+// .register-center, .register-containment{
+//   height:100%;
+// }
+
+.vertical-center {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  height: calc(100% - 170px);
   width: 70%;
-  min-width: 375px;
   margin: auto;
-  padding-bottom: 50px;
+}
+
+.register-containment {
+  min-width: 375px;
+  width: 100%;
+  margin: auto;
   background-color: #fff;
   max-width: $container-width;
   padding-top:5px;
@@ -99,7 +112,8 @@
 }
 
 @media screen and (max-width: $breakpoint-small) {
-  .register-containment {
+  .vertical-center{
     width: 100%;
+    height: calc(100% - 120px);
   }
 }

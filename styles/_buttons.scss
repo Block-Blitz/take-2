@@ -103,3 +103,15 @@ body {
     min-width: 27%;
   }
 }
+
+@media screen and (max-width: 600px) {
+  .game-buttons {
+    // padding: $global-padding;
+    padding-bottom: $global-padding*0.75;
+
+    .button {
+      margin: 10px;
+      min-width: 90%;
+    }
+  }
+}

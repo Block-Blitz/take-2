@@ -16,10 +16,11 @@
   margin-right: auto;
   padding-left: $global-padding;
   padding-right: $global-padding;
-  min-height: 700px;
+  // this needs to be changed on mobile because of header height change
+  height: calc(100% - 170px); 
 }
 
-.privacy-policy{
+.privacy-policy {
   max-width: 900px;
   text-align: left;
   margin-right: auto;
@@ -28,13 +29,20 @@
 
 }
 
-.intro-paragraph{
-    width: $max-width;
-    margin: auto;
-    background: rgba(0,0,0,.4);
-    padding: $global-padding;
-    margin-bottom: 10px;
-    border-radius: 20px;
-    font-size: 20px;
-    color: white;
+.intro-paragraph {
+  width: $max-width;
+  margin: auto;
+  background: rgba(0,0,0,.4);
+  padding: $global-padding;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  font-size: 20px;
+  color: white;
+}
+
+@media screen and (max-width: 600px) {
+  .content {
+    height: calc(100% - 120px); 
+    padding: 0;
   }
+}

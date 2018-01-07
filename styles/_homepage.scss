@@ -96,6 +96,10 @@
   }
 }
 
+.non-game, .board-container{
+  height:100%;
+}
+
 .board-container {
   display: flex;
   justify-content: space-between;
@@ -103,7 +107,6 @@
   .left-board {
     background-color: white;
     width: 40%;
-    height: 700px;
     padding: 10px 50px;
     text-align: left;
 
@@ -139,4 +142,36 @@
       border: solid 10px white;
     }
   }
+}
+
+@media screen and (max-width: 600px) {
+
+.non-game, .board-container{
+  height: auto;
+}
+.board-container {
+  display: flex;
+  flex-wrap: wrap;
+
+  .left-board {
+    background-color: white;
+    width: 100%;
+    padding: 50px 50px;
+    text-align: left;
+    order: 2;
+    display: block;
+  }
+
+  .right-board {
+    width: 100%;
+    display: block;
+
+    .how-to-play {
+      height: 520px;
+      width: 420px;
+      margin: 50px auto 0 auto;
+      border: solid 10px white;
+    }
+  }
+}
 }
