@@ -11,7 +11,6 @@ $.ajax({
   url: "api/user_data"
   }).done((user) => {
     storeUserData(user);
-    showUserStats(userData);
 });
 
 
