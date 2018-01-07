@@ -73,34 +73,35 @@
     }
   </script>
   <% include ./partials/_header.ejs %>
+  <div class="vertical-center">
   <div class="register-containment">
-
-    <form id="registerForm">
-      <h4>Register an account to play Block Blitz</h4>
-      <% if (errors.length) { %>
-        <% errors.forEach((error) => { %>
-          <div class="error-message">
-          <p><%= error %></p>
-          </div>
-        <% }) %>
-      <% } %>
-      <input class="input pass" id="name" "type="text" name="name" placeholder="Block Blitz name"/>
-      <input class="input pass" id="email" type="email" name="email" placeholder="Email" />
-      <input class="input pass" id="password" type="password" name="password" placeholder="Password"/>
-      <input type="submit"  class="inputButton" value="Submit" id="register-button"/>
-    </form>
-    <form id="facebookRegisterForm">
-      <h4>Register using Facebook.</h4>
-      <% if (facebook_error.length) { %>
-        <% facebook_error.forEach((error) => { %>
-          <div class="error-message">
+      <form id="registerForm">
+        <h4>Register an account to play Block Blitz</h4>
+        <% if (errors.length) { %>
+          <% errors.forEach((error) => { %>
+            <div class="error-message">
             <p><%= error %></p>
-          </div>
-        <% }) %>
-      <% } %>
-      <input class="input pass" id="facebook-register-name" "type="text" name="name" style="display: block;"placeholder="Block Blitz name"/>
-      <button class="inputButton-facebook" scope="public_profile,email"><img src="../public/images/facebook-icon.svg" width="15"> Register</button>
-    </form>
+            </div>
+          <% }) %>
+        <% } %>
+        <input class="input pass" id="name" "type="text" name="name" placeholder="Block Blitz name"/>
+        <input class="input pass" id="email" type="email" name="email" placeholder="Email" />
+        <input class="input pass" id="password" type="password" name="password" placeholder="Password"/>
+        <input type="submit"  class="inputButton" value="Submit" id="register-button"/>
+      </form>
+      <form id="facebookRegisterForm">
+        <h4>Register using Facebook.</h4>
+        <% if (facebook_error.length) { %>
+          <% facebook_error.forEach((error) => { %>
+            <div class="error-message">
+              <p><%= error %></p>
+            </div>
+          <% }) %>
+        <% } %>
+        <input class="input pass" id="facebook-register-name" "type="text" name="name" style="display: block;"placeholder="Block Blitz name"/>
+        <button class="inputButton-facebook" scope="public_profile,email"><img src="../public/images/facebook-icon.svg" width="15"> Register</button>
+      </form>
+    </div>
   </div>
   
  <% include ./partials/_footer.ejs %>
