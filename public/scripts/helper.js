@@ -95,7 +95,7 @@ function showUserStats(userData) {
   if(winningPercentage) {
     $('.user-stats').append(`<div class="winning-percentage">WP ${winningPercentage}%</div>`);
   }
-  $('.user-stats').append(`<div class="total-games">Total Games Played ${totalGames}</div>`);
+  $('.user-stats').append(`<div class="total-games">Games Played ${totalGames}</div>`);
 }
 
 // Sets the picture and loads the game board
@@ -158,7 +158,7 @@ function createUserList(arrayOfPlayers) {
   //cycle through array and make list
   for (let player of arrayOfPlayers) {
     console.log('each player', player);
-    $('.player-list').append(`<div class="player player-${player.userId}"><span class="player-name">${player.userName}, total wins ${player.wins}</span></div>`);
+    $('.player-list').append(`<div class="player player-${player.userId}"><span class="player-name">${player.userName}: ${player.wins} wins</span></div>`)
     if (player.inGame){
       $(`.player-${player.userId}`).append('<span class="ingame">In Game</span>');
     }
