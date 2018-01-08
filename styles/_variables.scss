@@ -1,3 +1,8 @@
+$green: #6e9098;
+$orange: #CD6554;
+
+$primary-color: $green;
+$secondary-color: $orange;
 
 // Formatting
 $container-width: 64rem;
@@ -31,7 +36,7 @@ $anchor-color-hover: #410B13;
 $header-link-color: #000;
 $header-link-hover: #CD6554;
 
-$tile-outline-color: hsla(210, 100%, 50%, 0.7);
+$tile-outline-color: rgba($secondary-color, 70%);
 
 $game-list-font-color: $body-font-color;
 $game-list-bg-color : #fff;
