@@ -141,9 +141,10 @@
 
     }
 
-    hr {
+    .user-stats, .leaderboard {
       margin: 20px 0;
       border-bottom: solid 2px $footer-bg-color;
+      padding-bottom:20px;
     }
 
     .leaderboard-entry {
