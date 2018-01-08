@@ -27,23 +27,23 @@
 
 ## Dependencies
 
-  -bcrypt
-  -body-parser
-  -concurrently
-  -connect-flash
-  -cookie-session
-  -dotenv
-  -ejs
-  -express
-  -jquery
-  -knex
-  -knex-logger
-  -morgan
-  -node-sass
-  -node-sass-middleware
-  -pg
-  -socket.io
-  -socket.io-client
-  -uuid
-  -swearjar
+  - bcrypt
+  - body-parser
+  - concurrently
+  - connect-flash
+  - cookie-session
+  - dotenv
+  - ejs
+  - express
+  - jquery
+  - knex
+  - knex-logger
+  - morgan
+  - node-sass
+  - node-sass-middleware
+  - pg
+  - socket.io
+  - socket.io-client
+  - uuid
+  - swearjar
 
