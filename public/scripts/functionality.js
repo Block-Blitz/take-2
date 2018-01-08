@@ -35,14 +35,4 @@ $(document).ready(function(){
     });
   });
 
-  $.ajax({
-    method: "GET",
-    url: "api/leaderboard"
-    }).done((data) => {
-      console.log('leadboard data', data);
-      for(let user of data) {
-        $('.leaderboard-list').append(`<div class="leaderboard-entry"><div>${user.name}</div><div> ${user.wins} wins</div></div>`);
-      }
-  });
-
 });
