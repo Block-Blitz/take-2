@@ -3,10 +3,7 @@ footer {
   color: $footer-font-color;
   display: flex;
   align-content: center;
-  position: absolute;
-  right: 0;
-  left: 0;
-  bottom: 0;
+  margin-top: auto;
 }
 
 .footer-group {
