@@ -96,13 +96,18 @@
   }
 }
 
-.non-game, .board-container{
-  height:100%;
+.non-game,
+.board-container{
+  @media screen and (min-width: $breakpoint-medium-up) {
+     display: flex;
+     flex-grow: 2;
+  }
 }
 
 .board-container {
-  display: flex;
-  justify-content: space-between;
+  @media screen and (min-width: $breakpoint-medium-up) {
+    justify-content: space-between;
+  }
 
   .left-board {
     background-color: white;
