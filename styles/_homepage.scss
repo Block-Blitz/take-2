@@ -24,7 +24,7 @@
 
 .player {
   color: $game-list-font-color;
-  padding: 0.2em $global-padding;
+  padding: 0.2em $global-padding*0.5;
   max-width: $max-width;
   margin-left: auto;
   margin-right: auto;
@@ -119,6 +119,12 @@
   }
 }
 
+.bb{
+  text-transform:uppercase;
+  font-size:20px;
+  font-weight:600;
+}
+
 .board-container {
   @media screen and (min-width: $breakpoint-medium-up) {
     justify-content: space-between;
@@ -130,25 +136,30 @@
     padding: 10px 50px;
     text-align: left;
 
+    .intro{
+      font-size:20px;
+
+    }
+
     hr {
       margin: 20px 0;
       border-bottom: solid 2px $footer-bg-color;
     }
 
     .leaderboard-entry {
-      padding: 0.2em $global-padding;
+      padding: 0.2em $global-padding*0.5;
     }
     .wins {
-      padding: 0.2em $global-padding;
+      padding: 0.2em $global-padding*0.5;
     }
     .losses {
-      padding: 0.2em $global-padding;
+      padding: 0.2em $global-padding*0.5;
     }
     .winning-percentage {
-      padding: 0.2em $global-padding;
+      padding: 0.2em $global-padding*0.5;
     }
     .total-games {
-      padding: 0.2em $global-padding;
+      padding: 0.2em $global-padding*0.5;
     }
   }
 

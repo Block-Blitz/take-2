@@ -11,7 +11,7 @@
     <main class='content'>
       <!-- This div will be show when how to play is clicked -->
       <div class='tutorial is-waiting'>
-        <p>Drag and drop the pieces around to complete the puzzle.</p>
+        <p>Drag and drop the pieces to complete the puzzle.</p>
         <button class="close">Close</button>
       </div>
 
@@ -22,8 +22,10 @@
         <div class="left-board">
         <!-- game intro -->
           <% if(!user) { %>
-            <p>Block blitz is a puzzle game allowing you to play competitively or solo. </p><p>Simply click and drag a piece into position. </p><p>Finish the puzzle before your opponent to climb the leaderboard.</p>
-              <p class="login-message">Please <a href="/login">login</a> or <a href="register">register</a> to play competitively!!</p>
+            <p class="intro"><span class="bb">Block blitz</span> is a puzzle game allowing you to play competitively or solo. </p>
+            <p class="intro">Simply click and drag a piece into position. </p>
+            <p class="intro">Finish the puzzle before your opponent to climb the leaderboard.</p>
+            <p class="login-message">Please <a href="/login">login</a> or <a href="register">register</a> to play competitively!!</p>
           <% } else  { %>
 
             <!-- User Stats -->
