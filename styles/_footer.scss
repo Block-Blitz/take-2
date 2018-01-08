@@ -18,12 +18,12 @@ footer {
 }
 
 .footer-about {
-    max-width: 25.5rem;
+    max-width: 30.5rem;
     font-size: 0.875em;
     color: white;
     flex: 1;
     padding: 15px 15px;
-    margin-bottom: 5px;
+    margin: 0;
 }
 
 @media screen and (max-width: $breakpoint-medium) {
