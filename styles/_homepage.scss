@@ -24,7 +24,7 @@
 
 .player {
   color: $game-list-font-color;
-  padding: 0.2em $global-padding;
+  padding: 0.2em $global-padding*0.5;
   max-width: $max-width;
   margin-left: auto;
   margin-right: auto;
@@ -147,19 +147,19 @@
     }
 
     .leaderboard-entry {
-      padding: 0.2em $global-padding;
+      padding: 0.2em $global-padding*0.5;
     }
     .wins {
-      padding: 0.2em $global-padding;
+      padding: 0.2em $global-padding*0.5;
     }
     .losses {
-      padding: 0.2em $global-padding;
+      padding: 0.2em $global-padding*0.5;
     }
     .winning-percentage {
-      padding: 0.2em $global-padding;
+      padding: 0.2em $global-padding*0.5;
     }
     .total-games {
-      padding: 0.2em $global-padding;
+      padding: 0.2em $global-padding*0.5;
     }
   }
 
