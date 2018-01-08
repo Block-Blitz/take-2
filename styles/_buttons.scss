@@ -13,15 +13,11 @@ body {
   color: white;
   border: none;
   border-radius: 10px;
-  -webkit-box-shadow: 0 5px 0 $button-accent-color;
-  -moz-box-shadow: 0 5px 0 $button-accent-color;
   box-shadow: 0 5px 0 $button-accent-color;
 
   &:hover {
     top: 2px;
     background-color: $button-hover-color;
-    -webkit-box-shadow: 0 3px 0 $button-accent-color;
-    -moz-box-shadow: 0 3px 0 $button-accent-color;
     box-shadow: 0 3px 0 $button-accent-color;
   }
   &:active {
@@ -48,20 +44,16 @@ body {
   padding: 8px 20px 5px 20px;
   margin-bottom: 5px;
   cursor: pointer;
-  -webkit-box-shadow: 0 5px 0 $join-game-accent-color;
-  -moz-box-shadow: 0 5px 0 $join-game-accent-color;
   box-shadow: 0 5px 0 $join-game-accent-color;
 
   &:hover {
     top: 2px;
     background-color: $join-game-hover-color;
-    -webkit-box-shadow: 0 3px 0 $join-game-accent-color;
-    -moz-box-shadow: 0 3px 0 $join-game-accent-color;
     box-shadow: 0 3px 0 $join-game-accent-color;
   }
 }
 
-.button-small, #register-button {
+.button-small {
   font-size: 1rem;
   padding: 0.3em 0.6em 0.4em;
 }
@@ -107,6 +99,69 @@ body {
     margin-bottom: $global-padding*0.25;
     min-width: 27%;
   }
+}
+
+.inputButton {
+  position: relative;
+  width: 75%;
+  height: 50px;
+  display: block;
+  margin: 30px auto 30px;
+  color: white;
+  background-color: blue;
+  border-radius: 10px;
+  border: none;
+  padding: 0.45em 0.6em 0.4em;
+  font-size: 1rem;
+  box-shadow: 0 5px 0 $button-accent-color;
+}
+.inputButton:hover {
+  top: 2px;
+  box-shadow: 0 3px 0 $button-accent-color;
+}
+.inputButton:active {
+  top: 5px;
+  box-shadow: none;
+}
+.inputButton:focus {
+  outline: none;
+}
+
+.inputButton-facebook {
+  position: relative;
+  width: 75%;
+  height: 50px;
+  display: block;
+  margin: 30px auto 30px;
+  color: white;
+  background-color: $facebook-color;
+  border-radius: 10px;
+  border: none;
+  -webkit-box-shadow: 0 5px 0 $facebook-accent;
+  -moz-box-shadow: 0 5px 0 $facebook-accent;
+  box-shadow: 0 5px 0 $facebook-accent;
+
+  &::before {
+    content: "";
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    margin-right: 0.4em;
+    vertical-align: top;
+    background: url("../public/images/facebook-icon.svg")
+  }
+}
+.inputButton-facebook:hover {
+  top: 2px;
+  background-color:   $facebook-hover;
+  box-shadow: 0 3px 0 $facebook-accent;
+}
+.inputButton-facebook:active {
+  top: 5px;
+  box-shadow: none;
+}
+.inputButton-facebook:focus {
+  outline: none;
 }
 
 @media screen and (max-width: $breakpoint-medium) {
