@@ -33,7 +33,7 @@ $header-link-hover: #CD6554;
 
 $tile-outline-color: hsla(210, 100%, 50%, 0.7);
 
-$game-list-font-color: #000;
+$game-list-font-color: $body-font-color;
 $game-list-bg-color : #fff;
 $game-list-alt-bg-color: #444;
 
@@ -42,6 +42,9 @@ $facebook-hover: #30466D;
 $facebook-accent: #1F2D42;
 
 ///breakpoints
+
 $breakpoint-medium: 680px;
 $breakpoint-medium-up: $breakpoint-medium + 1px;
+
+$breakpoint-hamburger: $breakpoint-medium;
 $breakpoint-small: 500px;

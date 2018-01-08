@@ -161,7 +161,7 @@ header .icon{
   }
 }
 
-@media screen and (max-width: $breakpoint-medium) {
+@media screen and (max-width: $breakpoint-hamburger) {
   .header-nav a:not(:first-child) {display: none;}
   .header-nav a.icon {
     float: right;
