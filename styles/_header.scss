@@ -138,15 +138,18 @@ header .icon{
 .mobile-menu {
   display: none;
   width: 100%;
-  background-color: #fff;
+  background-color: $header-link-hover;
   height: auto;
-  padding: 5px 0;
+  padding: 15px 0;
+  box-shadow: inset 0px -5px 5px -2px rgba(0,0,0,0.10);
 
   a {
     position: relative;
     display: block;
     width: 100%;
-    padding: 5px 0;
+    padding: 15px 0;
+    font-size: 1.2rem;
+    color: #fff;
   }
 }
 
