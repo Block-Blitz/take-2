@@ -12,6 +12,7 @@ body {
   margin: 15px 10px 30px;
   color: white;
   border: none;
+  border-radius: 10px;
   -webkit-box-shadow: 0 5px 0 $button-accent-color;
   -moz-box-shadow: 0 5px 0 $button-accent-color;
   box-shadow: 0 5px 0 $button-accent-color;
@@ -60,13 +61,17 @@ body {
   }
 }
 
-
-
-
 .button-small, #register-button {
   font-size: 1rem;
   padding: 0.3em 0.6em 0.4em;
+}
 
+.try-again-button {
+  padding: 0 20px;
+}
+
+.close-dialog-button {
+  padding: 0 20px;
 }
 
 #register-button{
