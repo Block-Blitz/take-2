@@ -96,6 +96,21 @@
   }
 }
 
+.leaderboard-entry {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stat {
+  display: flex;
+  justify-content: space-between;
+}
+
+.player {
+  display: flex;
+  justify-content: space-between;
+}
+
 .non-game,
 .board-container{
   @media screen and (min-width: $breakpoint-medium-up) {

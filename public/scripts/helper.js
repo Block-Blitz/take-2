@@ -89,13 +89,13 @@ function setPicture(currentRoom) {
 function showUserStats(userData) {
   let totalGames = parseInt(userData.wins) + parseInt(userData.losses);
   let winningPercentage = Math.round(userData.wins / totalGames *100);
-  $('.user-stats').append(`<h2>${userData.name}'s Career Stats</h2>`);
-  $('.user-stats').append(`<div class="wins">Wins ${userData.wins}</div>`);
-  $('.user-stats').append(`<div class="losses">Losses ${userData.losses}</div>`);
+  $('.user-stats').append(`<h2>${userData.name}'s Totals</h2>`);
+  $('.user-stats').append(`<div class="stat wins"><div>Wins</div> <div>${userData.wins}</div></div>`);
+  $('.user-stats').append(`<div class="stat losses"><div>Losses</div> <div>${userData.losses}</div></div>`);
   if(winningPercentage) {
-    $('.user-stats').append(`<div class="winning-percentage">WP ${winningPercentage}%</div>`);
+    $('.user-stats').append(`<div class="stat winning-percentage"><div>Win%</div> <div>${winningPercentage}</div></div>`);
   }
-  $('.user-stats').append(`<div class="total-games">Games Played ${totalGames}</div>`);
+  $('.user-stats').append(`<div class="stat total-games"><div>Total Games</div> <div>${totalGames}</div></div>`);
 }
 
 // Sets the picture and loads the game board
@@ -147,6 +147,11 @@ function createGameList(data) {
         socket.emit( 'join-game', {id: game.id, user: userData});
     });
   }
+  console.log(data.length, 'games available');
+  if(!data.length) {
+    console.log('No games');
+    $('.open-games').append('<div class="available-game-container"><p>Currently No Open Games</p></div>');
+  }
 }
 
 // Creates a list of online players
@@ -154,13 +159,15 @@ function createUserList(arrayOfPlayers) {
   //destroy existing player list
   $('.player-list').remove();
   //create a player-list div
-  $('.online-players').append('<div class="player-list"></div');
+  $('.online-players').append('<div class="player-list"></div>');
   //cycle through array and make list
   for (let player of arrayOfPlayers) {
     console.log('each player', player);
-    $('.player-list').append(`<div class="player player-${player.userId}"><span class="player-name">${player.userName}: ${player.wins} wins</span></div>`)
+    $('.player-list').append(`<div class="player player-${player.userId}"><span class="player-name">${player.userName}</span></div>`);
     if (player.inGame){
-      $(`.player-${player.userId}`).append('<span class="ingame">In Game</span>');
+      $(`.player-${player.userId}`).append('<span class="ingame">Playing</span>');
+    } else {
+      $(`.player-${player.userId}`).append(`<span> ${player.wins} wins</span>`)
     }
   }
 }
