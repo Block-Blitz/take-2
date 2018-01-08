@@ -13,13 +13,17 @@ body {
   background-color: $footer-bg-color;
   color: $body-font-color;
   text-align: center;
+
+}
+
+.wrapper {
   width: 100%;
   @media screen and (min-width: $breakpoint-medium-up) {
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
   }
 }
-
 a {
   text-decoration: none;
   color: $anchor-color;

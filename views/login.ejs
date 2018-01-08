@@ -73,38 +73,39 @@
       }
 
   </script>
+  <div class="wrapper">
+    <% include ./partials/_header.ejs %>
+    <div class="vertical-center">
+    <div class="register-containment">
 
-  <% include ./partials/_header.ejs %>
-  <div class="vertical-center">
-  <div class="register-containment">
-
-    <form id="login-form">
-      <h4>Login to play Block Blitz</h4>
-    <% if (errors.length) { %>
-      <% errors.forEach((error) => { %>
-        <div class="error-message">
-        <p><%= error %></p>
-        </div>
-      <% }) %>
-    <% } %>
-      <input class="input pass" id="email" type="email" name="email" placeholder="Email" />
-      <input class="input pass" id="password" type="password" name="password" placeholder="Password"/>
-      <input type="submit"  class="inputButton" value="Login" id="login-button"/>
-    </form>
-    <form id="facebookRegisterForm">
-      <h4>Login using Facebook</h4>
-      <% if (facebook_error.length) { %>
-        <% facebook_error.forEach((error) => { %>
+      <form id="login-form">
+        <h4>Login to play Block Blitz</h4>
+      <% if (errors.length) { %>
+        <% errors.forEach((error) => { %>
           <div class="error-message">
-            <p><%= error %></p>
+          <p><%= error %></p>
           </div>
         <% }) %>
       <% } %>
-      <button class="inputButton-facebook" scope="public_profile,email"><img src="../public/images/facebook-icon.svg" width="15"> Login</button>
-    </form>
+        <input class="input pass" id="email" type="email" name="email" placeholder="Email" />
+        <input class="input pass" id="password" type="password" name="password" placeholder="Password"/>
+        <input type="submit"  class="inputButton" value="Login" id="login-button"/>
+      </form>
+      <form id="facebookRegisterForm">
+        <h4>Login using Facebook</h4>
+        <% if (facebook_error.length) { %>
+          <% facebook_error.forEach((error) => { %>
+            <div class="error-message">
+              <p><%= error %></p>
+            </div>
+          <% }) %>
+        <% } %>
+        <button class="inputButton-facebook" scope="public_profile,email"><img src="../public/images/facebook-icon.svg" width="15"> Login</button>
+      </form>
+    </div>
+    </div>
+    <% include ./partials/_footer.ejs %>
   </div>
-  </div>
-  <% include ./partials/_footer.ejs %>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js" type="text/javascript"></script>
   <script type="text/javascript" src="../public/scripts/functionality.js"></script>
   <script type="text/javascript" src="../public/scripts/login.js"></script>
