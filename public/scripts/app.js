@@ -138,8 +138,8 @@ $('#play-solo').on('click', function() {
   } else {
     $('.tile').css("background-image", `url('public/images/puzzle-pics/picture-${currentRoom.pictureId}-big.jpg')`);
   }
-  $(".game").css("display", "block");
-  $(".non-game").css("display", "none");
+  $(".game").toggleClass("visible");
+  $(".non-game").toggleClass("hidden");
   randomLayout();
 });
 
