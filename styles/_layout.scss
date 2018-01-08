@@ -9,15 +9,19 @@
 }
 
 .content {
-  flex: 1 0 auto;
+
   position: relative;
   max-width: $container-width;
   margin-left: auto;
   margin-right: auto;
   padding-left: $global-padding;
   padding-right: $global-padding;
-  // this needs to be changed on mobile because of header height change
-  height: calc(100% - 170px); 
+  width: 100%;
+  @media screen and (min-width: $breakpoint-medium-up) {
+    display: flex;
+    flex-direction: column;
+    flex: 2 0 auto;
+  }
 }
 
 .privacy-policy {
@@ -42,7 +46,7 @@
 
 @media screen and (max-width: 600px) {
   .content {
-    height: calc(100% - 120px); 
+    //height: calc(100% - 120px);
     padding: 0;
   }
 }
