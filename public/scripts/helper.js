@@ -78,9 +78,9 @@ function displayButtonsDefault() {
 
 function setPicture(currentRoom) {
   if ($(window).width() <= 500) {
-    $('.tile').css("background-image", `url('public/images/cat${currentRoom.pictureId}-sm.jpg')`);
+    $('.tile').css("background-image", `url('public/images/puzzle-pics/picture-${currentRoom.pictureId}-small.jpg')`);
   } else {
-    $('.tile').css("background-image", `url('public/images/cat${currentRoom.pictureId}-lrg.jpg')`);
+    $('.tile').css("background-image", `url('public/images/puzzle-pics/picture-${currentRoom.pictureId}-big.jpg')`);
   }
 }
 
