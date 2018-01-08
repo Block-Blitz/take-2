@@ -89,11 +89,11 @@ function setPicture(currentRoom) {
 function showUserStats(userData) {
   let totalGames = parseInt(userData.wins) + parseInt(userData.losses);
   let winningPercentage = Math.round(userData.wins / totalGames *100);
-  $('.user-stats').append(`<h2>${userData.name}'s Career Stats</h2>`);
+  $('.user-stats').append(`<h2>${userData.name}'s Totals</h2>`);
   $('.user-stats').append(`<div class="stat wins"><div>Wins</div> <div>${userData.wins}</div></div>`);
   $('.user-stats').append(`<div class="stat losses"><div>Losses</div> <div>${userData.losses}</div></div>`);
   if(winningPercentage) {
-    $('.user-stats').append(`<div class="stat winning-percentage"><div>WP</div> <div>${winningPercentage}%</div></div>`);
+    $('.user-stats').append(`<div class="stat winning-percentage"><div>Win%</div> <div>${winningPercentage}</div></div>`);
   }
   $('.user-stats').append(`<div class="stat total-games"><div>Total Games</div> <div>${totalGames}</div></div>`);
 }
