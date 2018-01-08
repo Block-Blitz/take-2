@@ -12,6 +12,12 @@
 
   *Clone or download project*
 
+  *Download*
+  - click `Clone or Download` at the top of this page
+  - click `Download Zip`
+
+  ### or
+
   *SSH*
   - `git clone git@github.com:Block-Blitz/take-2.git`
 
