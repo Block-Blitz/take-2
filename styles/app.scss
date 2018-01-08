@@ -9,3 +9,14 @@
 @import 'buttons';
 @import 'carousel';
 @import 'puzzle';
+
+
+//here so that it doesnt' get overidden easily
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
+}
