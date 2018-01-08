@@ -37,7 +37,7 @@
 }
 .input:focus {
   outline: none;
-  border-bottom-color: #3CC !important;
+  border-bottom-color: $primary-color !important;
 }
 .input:hover {
   border-bottom-color: #dcdcdc;
@@ -48,69 +48,6 @@
 
 .pass:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 1000px white inset;
-}
-
-.inputButton {
-  position: relative;
-  width: 75%;
-  height: 50px;
-  display: block;
-  margin: 30px auto 30px;
-  color: white;
-  background-color: blue;
-  border-radius: 10px;
-  border: none;
-  padding-top: 0.45em;
-  padding-bottom: 0.4em;
-  box-shadow: 0 5px 0 $button-accent-color;
-}
-.inputButton:hover {
-  top: 2px;
-  box-shadow: 0 3px 0 $button-accent-color;
-}
-.inputButton:active {
-  top: 5px;
-  box-shadow: none;
-}
-.inputButton:focus {
-  outline: none;
-}
-
-.inputButton-facebook {
-  position: relative;
-  width: 75%;
-  height: 50px;
-  display: block;
-  margin: 30px auto 30px;
-  color: white;
-  background-color: $facebook-color;
-  border-radius: 10px;
-  border: none;
-  -webkit-box-shadow: 0 5px 0 $facebook-accent;
-  -moz-box-shadow: 0 5px 0 $facebook-accent;
-  box-shadow: 0 5px 0 $facebook-accent;
-
-  &::before {
-    content: "";
-    width: 1em;
-    height: 1em;
-    display: inline-block;
-    margin-right: 0.4em;
-    vertical-align: top;
-    background: url("../public/images/facebook-icon.svg")
-  }
-}
-.inputButton-facebook:hover {
-  top: 2px;
-  background-color:   $facebook-hover;
-  box-shadow: 0 3px 0 $facebook-accent;
-}
-.inputButton-facebook:active {
-  top: 5px;
-  box-shadow: none;
-}
-.inputButton-facebook:focus {
-  outline: none;
 }
 
 .error-message {
