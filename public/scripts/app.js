@@ -90,10 +90,6 @@ socket.on('refresh-page', function() {
   window.location.reload();
 });
 
-socket.on('user-data', function(data) {
-  console.log('current socket data', data);
-});
-
 /*
  * Announces that user is going offline, so they can be removed from the
  * active player list and removes their active games if any
