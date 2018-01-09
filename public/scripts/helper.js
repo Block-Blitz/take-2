@@ -135,8 +135,6 @@ function createGameList(data) {
   $('.games-opened').append('<div class="open-games"></div>');
   //populate new div
   for (let game of data) {
-     console.log("user", userData.name);
-     console.log("player one:", game.playerOne)
     if (userData.name === game.playerOne) {
       $('.open-games').append(`<div class="available-game-container"><div class="available-game-left"><div data=${game.id} class="available-game"><p>Waiting for an opponent </p></div></div><div class="available-game-right"><button class="cancel-game-button" data=${game.id}>Cancel</button></div></div>`);
       $(document).find('.cancel-game-button').on('click', function(){
