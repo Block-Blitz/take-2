@@ -14,17 +14,13 @@ Block Blitz a puzzle game allowing you to play competitively or solo. Rearrange 
 
   ## *Clone or download project*
 
-  ## *Download*
+  ### *Download*
 
 
    click `Clone or Download` at the top of this page
 
-
-   click `Download Zip`
-
-
-
   ### or
+
 
   ### *SSH*
 
@@ -32,15 +28,25 @@ Block Blitz a puzzle game allowing you to play competitively or solo. Rearrange 
    In your command line add the next line
 
 
-   `git clone git@github.com:Block-Blitz/take-2.git`
-
+   `git clone git@github.com:Block-Blitz/take-2.git <dir_name>`
+   
+  ### *Install Dependancies*
+  
+   In the program directory type `npm install` 
+   
   ### *Set up database*
 
+   Create a `.env` file by using `.env.example` as a reference: `cp .env.example .env`
+   
+   Create a Postgres database `createdb <db_name>`
+   
+   Update the `.env` file with database name.
 
-   Then add this next line
-
-
-   `knex migrate:latest`
+   Run migrations `knex migrate:latest`
+   
+  ### Start server
+  
+   Type `npm start` in your command line.
 
   ### *Open application in your browser*
 
@@ -59,6 +65,7 @@ Block Blitz a puzzle game allowing you to play competitively or solo. Rearrange 
   - connect-flash
   - cookie-session
   - dotenv
+  - draggabilly
   - ejs
   - express
   - jquery
@@ -67,6 +74,7 @@ Block Blitz a puzzle game allowing you to play competitively or solo. Rearrange 
   - morgan
   - node-sass
   - node-sass-middleware
+  - packery
   - pg
   - socket.io
   - socket.io-client
