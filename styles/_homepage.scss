@@ -70,8 +70,8 @@
 }
 .close {
   position: absolute;
-  top: -0.65em;
-  right: -0.65em;
+  top: 0.2em;
+  right: 0.2em;
   background: #fff;
   font-size: 1em;
   width: 1.5em;
@@ -181,32 +181,37 @@
 
 @media screen and (max-width: $breakpoint-medium) {
 
-.non-game, .board-container{
-  height: auto;
-}
-.board-container {
-  display: flex;
-  flex-wrap: wrap;
-
-  .left-board {
-    background-color: white;
-    width: 100%;
-    padding: 50px 50px;
-    text-align: left;
-    order: 2;
-    display: block;
+  .available-game-container {
+    margin: 10px auto;
+    width: 90%;
   }
 
-  .right-board {
-    width: 100%;
-    display: block;
+  .non-game, .board-container{
+    height: auto;
+  }
+  .board-container {
+    display: flex;
+    flex-wrap: wrap;
 
-    .how-to-play {
-      height: 520px;
-      width: 420px;
-      margin: 0 auto;
-      border: solid 10px white;
+    .left-board {
+      background-color: white;
+      width: 100%;
+      padding: 50px 50px;
+      text-align: left;
+      order: 2;
+      display: block;
+    }
+
+    .right-board {
+      width: 100%;
+      display: block;
+
+      .how-to-play {
+        height: 520px;
+        width: 100%;
+        margin: 0 auto;
+        border: solid 10px white;
+      }
     }
   }
-}
 }
