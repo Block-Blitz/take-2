@@ -1,6 +1,6 @@
 # Block Blitz
 
-Block Blitz a puzzle game allowing you to play competitively or solo. Rearrange the puzzle pieces to complete the images. When playing competitlively winning against your opponent will increase your stats.
+Block Blitz a puzzle game allowing you to play competitively or solo. Rearrange the puzzle pieces to complete the images. When playing competitively winning against your opponent will increase your stats and help you climb the leaderboard. Block Blitz was created as the final project in the Lighthouse Labs Web Developement Bootcamp.
 
 ## Contributors
 - Mark Zsombor
