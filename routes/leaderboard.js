@@ -35,7 +35,6 @@ function getLeaderboard() {
     .orderBy('wins', 'desc')
     .limit(5)
     .then((data) => {
-      console.log('leaderboard data', data);
       return data;
     });
 }

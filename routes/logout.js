@@ -8,7 +8,6 @@ module.exports = () => {
   });
 
   router.post('/', (req, res) => {
-    console.log('from the logout post');
     req.session.user_id = null;
     res.status(200).send({success: true});
   });

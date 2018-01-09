@@ -22,21 +22,12 @@ $.ajax({
   method: "GET",
   url: "api/leaderboard"
   }).done((data) => {
-    console.log('leadboard data', data);
     for(let user of data) {
       $('.leaderboard-list').append(`<div class="leaderboard-entry"><div>${user.name}</div><div> ${user.wins} wins</div></div>`);
     }
 });
 
 // Socket.io logic
-
-/*
- * Console logs when the user connects to a socket
- * Can be removed before going live
- */
-socket.on('connection', function() {
-  console.log('Client connected to socket', userData.name);
-});
 
 /*
  * When the client recieves a start game notification from the server
@@ -98,7 +89,6 @@ socket.on('existing-game', function() {
  */
 $(window).on("unload", function(e) {
   //works on closing window, not refresh
-  console.log('leaving page');
     socket.emit('leaving-page', 'user leaving page');
 });
 
@@ -109,11 +99,10 @@ $('.shuffle-button').on('click', function() {
 });
 
 $('#make-game').on('click', function() {
+  //If user already has a game open do nothing
   if (inQueue) {
-    console.log("Already in Queue");
     return;
   }
-  console.log(userData.name, 'wants to join a room');
   socket.emit('make-game', { player: userData });
   inQueue = true;
   displayButtonsJoinQueue();
@@ -121,11 +110,10 @@ $('#make-game').on('click', function() {
 });
 
 $('#join-queue').on('click', function() {
+  //If user already has a game open do nothing
   if (inQueue) {
-    console.log("Already in Queue");
     return;
   }
-  console.log(userData.name, 'wants to join a room');
   socket.emit('join-queue', { player: userData });
   inQueue = true;
   displayButtonsJoinQueue();
@@ -133,21 +121,17 @@ $('#join-queue').on('click', function() {
 });
 
 $('#leave-queue').on('click', function() {
-  console.log(userData.name, 'left the queue');
   socket.emit('leave-queue', currentRoom.roomName);
   currentRoom.roomName = "";
   currentRoom.playerOne = "";
   currentRoom.playerOneId = "";
-  console.log("current room:", currentRoom);
   inQueue = false;
   displayButtonsDefault();
 });
 
 $('#play-solo').on('click', function() {
-  console.log('Started a single player game');
   currentRoom.pictureId = Math.ceil(Math.random() * 41);
   socket.emit('playing-solo', userData);
-  console.log('loading picture', currentRoom.pictureId);
   if ($(window).width() <= 500) {
     $('.tile').css("background-image", `url('public/images/puzzle-pics/picture-${currentRoom.pictureId}-small.jpg')`);
   } else {
