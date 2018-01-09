@@ -83,6 +83,10 @@ socket.on('existing-game', function() {
     displayButtonsJoinQueue();
 });
 
+socket.on('refresh-page', function() {
+  window.location.reload();
+});
+
 /*
  * Announces that user is going offline, so they can be removed from the
  * active player list and removes their active games if any
