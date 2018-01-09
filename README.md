@@ -10,7 +10,7 @@ Block Blitz a puzzle game allowing you to play competitively or solo. Rearrange 
 
 ## Getting Started
 
-  These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+  These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. Visit [blockblitz.live](http:blockblitz.live) to see the deployed app.
 
   ## *Clone or download project*
 
@@ -19,20 +19,14 @@ Block Blitz a puzzle game allowing you to play competitively or solo. Rearrange 
 
    click `Clone or Download` at the top of this page
 
-  ### or
+  #### *Via SSH*
 
 
-  ### *SSH*
-
-
-   In your command line add the next line
-
-
-   `git clone git@github.com:Block-Blitz/take-2.git <dir_name>`
+   In your command line run `git clone git@github.com:Block-Blitz/take-2.git <dir_name>`
    
   ### *Install Dependancies*
   
-   In the program directory type `npm install` 
+   In the program directory run `npm install` 
    
   ### *Set up database*
 
@@ -44,7 +38,7 @@ Block Blitz a puzzle game allowing you to play competitively or solo. Rearrange 
 
    Run migrations `knex migrate:latest`
    
-  ### Start server
+  ### *Start server*
   
    Type `npm start` in your command line.
 
