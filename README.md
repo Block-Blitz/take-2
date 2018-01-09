@@ -1,5 +1,7 @@
 # Block Blitz
 
+Block Blitz a puzzle game allowing you to play competitively or solo. Rearrange the puzzle pieces to complete the images. When playing competitlively winning against your opponent will increase your stats.
+
 ## Contributors
 - Mark Zsombor
 - Kelsey Cooper
