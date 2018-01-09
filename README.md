@@ -31,8 +31,6 @@
 
 
 
-
-
 ## Dependencies
 
   - bcrypt
@@ -54,4 +52,8 @@
   - socket.io-client
   - uuid
   - swearjar
+
+
+## Images from the Application
+
 
