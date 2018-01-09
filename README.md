@@ -24,7 +24,7 @@
 
   ### or
 
-  ## *SSH*
+  ### *SSH*
 
 
    In your command line add the next line
@@ -32,7 +32,7 @@
 
    `git clone git@github.com:Block-Blitz/take-2.git`
 
-  ## *Set up database*
+  ### *Set up database*
 
 
    Then add this next line
@@ -40,7 +40,7 @@
 
    `knex migrate:latest`
 
-  ## *Open application in your browser*
+  ### *Open application in your browser*
 
 
    `localhost:8080`
