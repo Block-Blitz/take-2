@@ -56,12 +56,23 @@
 
 ## Images from the Application
 
+Homepage
 !["Screenshot of homepage"](https://github.com/Block-Blitz/take-2/blob/master/public/images/read%20me%20screenshots/homepage.png?raw=true)
 
+Login page
 !["Screenshot of login_page"](https://github.com/Block-Blitz/take-2/blob/master/public/images/read%20me%20screenshots/login_page.png?raw=true)
 
+Register page
+!["Screenshot of register_page"](https://github.com/Block-Blitz/take-2/blob/master/public/images/read%20me%20screenshots/register_page.png?raw=true)
+
+User dashboard
+!["Screenshot of user_dashboard"](https://github.com/Block-Blitz/take-2/blob/master/public/images/read%20me%20screenshots/user_dashboard.png?raw=true)
+
+Game play view
 !["Screenshot of game_play_view"](https://github.com/Block-Blitz/take-2/blob/master/public/images/read%20me%20screenshots/game_play_view.png?raw=true)
 
+Game winner view
 !["Screenshot of game_winner_view"](https://github.com/Block-Blitz/take-2/blob/master/public/images/read%20me%20screenshots/game_winner_view.png?raw=true)
 
+Game loser view
 !["Screenshot of game_loser"](https://github.com/Block-Blitz/take-2/blob/master/public/images/read%20me%20screenshots/game_loser_view.png?raw=true)
