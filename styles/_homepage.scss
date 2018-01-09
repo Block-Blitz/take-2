@@ -120,7 +120,8 @@
 }
 
 .non-game,
-.board-container{
+.board-container,
+.vertical-center{
   @media screen and (min-width: $breakpoint-medium-up) {
      display: flex;
      flex-grow: 2;
