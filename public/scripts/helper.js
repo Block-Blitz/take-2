@@ -54,6 +54,7 @@ function win() {
         }
       });
     }
+    didWin = false;
   }
   showDialog();
 }
