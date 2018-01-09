@@ -13,21 +13,39 @@
   *Clone or download project*
 
   *Download*
+
+
    click `Clone or Download` at the top of this page
+
+
    click `Download Zip`
+
+
 
   ### or
 
   *SSH*
+
+
    In your command line add the next line
+
+
    `git clone git@github.com:Block-Blitz/take-2.git`
 
   *Set up database*
+
+
    Then add this next line
+
+
    `knex migrate:latest`
 
   *Open application in your browser*
+
+
    `localhost:8080`
+
+
 
 
 
