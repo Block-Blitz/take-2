@@ -135,7 +135,13 @@ function createGameList(data) {
   $('.games-opened').append('<div class="open-games"></div>');
   //populate new div
   for (let game of data) {
-    $('.open-games').append(`<div class="available-game-container"><div class="available-game-left"><div data=${game.id} class="available-game"><p>Game available against <strong>${game.playerOne}</strong></p></div></div><div class="available-game-right"><button class="join-game-button" data=${game.id}>Join</button></div></div></div>`);
+     console.log("user", userData.name);
+     console.log("player one:", game.playerOne)
+    if (userData.name === game.playerOne) {
+      $('.open-games').append(`<div class="available-game-container"><div class="available-game-left"><div data=${game.id} class="available-game"><p>Waiting for an opponent to join your game</p></div></div></div></div>`);
+    } else {
+      $('.open-games').append(`<div class="available-game-container"><div class="available-game-left"><div data=${game.id} class="available-game"><p>Game available against <strong>${game.playerOne}</strong></p></div></div><div class="available-game-right"><button class="join-game-button" data=${game.id}>Join</button></div></div></div>`);
+    }
     $(document).find('.join-game-button').on('click', function(){
         socket.emit( 'join-game', {id: game.id, user: userData});
     });
