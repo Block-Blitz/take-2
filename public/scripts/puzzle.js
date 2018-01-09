@@ -20,7 +20,6 @@ var dialog = document.querySelector('.dialog');
 
 var orders = [
   'abcdefghijklm',
-  // 'fmgdbalkjihec', //remove later
   'ecdibmhfajkgl',
   'ilckfgdebhjam'
 ];
@@ -53,7 +52,6 @@ function shuffleTiles() {
 }
 
 function randomLayout() {
-  console.log('ran randomLayout function');
   var orderIndex = Math.floor(Math.random() * orders.length);
   var order = orders[orderIndex];
   pckry.items = order.split('').map( function( attr ) {
@@ -67,6 +65,7 @@ function randomLayout() {
     }, i * 34 );
   });
 }
+
 /*
  * Loads the dialog box
  */
