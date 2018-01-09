@@ -83,8 +83,15 @@ socket.on('existing-game', function() {
     displayButtonsJoinQueue();
 });
 
+/*
+ * Should force a page refresh
+ */
 socket.on('refresh-page', function() {
   window.location.reload();
+});
+
+socket.on('user-data', function(data) {
+  console.log('current socket data', data);
 });
 
 /*
