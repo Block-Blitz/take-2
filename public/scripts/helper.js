@@ -162,13 +162,17 @@ function createUserList(arrayOfPlayers) {
   //create a player-list div
   $('.online-players').append('<div class="player-list"></div>');
   //cycle through array and make list
+  let allPlayers = [];
   for (let player of arrayOfPlayers) {
     console.log('each player', player);
-    $('.player-list').append(`<div class="player player-${player.userId}"><span class="player-name">${player.userName}</span></div>`);
-    if (player.inGame){
-      $(`.player-${player.userId}`).append('<span class="ingame">Playing</span>');
-    } else {
-      $(`.player-${player.userId}`).append(`<span> ${player.wins} wins</span>`)
+    if(!allPlayers.includes(player.userId)) {
+      allPlayers.push(player.userId);
+      $('.player-list').append(`<div class="player player-${player.userId}"><span class="player-name">${player.userName}</span></div>`);
+      if (player.inGame){
+        $(`.player-${player.userId}`).append('<span class="ingame">Playing</span>');
+      } else {
+        $(`.player-${player.userId}`).append(`<span> ${player.wins} wins</span>`)
+      }
     }
   }
 }
