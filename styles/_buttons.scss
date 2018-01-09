@@ -127,12 +127,15 @@ body {
   outline: none;
 }
 
+#facebookRegisterForm {
+  padding-bottom: 30px;
+}
 .inputButton-facebook {
   position: relative;
   width: 75%;
   height: 50px;
   display: block;
-  margin: 30px auto 30px;
+  margin: 30px auto 0;
   color: white;
   background-color: $facebook-color;
   border-radius: 10px;
