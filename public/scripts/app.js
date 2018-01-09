@@ -146,6 +146,7 @@ $('#leave-queue').on('click', function() {
 $('#play-solo').on('click', function() {
   console.log('Started a single player game');
   currentRoom.pictureId = Math.ceil(Math.random() * 41);
+  socket.emit('playing-solo', userData);
   console.log('loading picture', currentRoom.pictureId);
   if ($(window).width() <= 500) {
     $('.tile').css("background-image", `url('public/images/puzzle-pics/picture-${currentRoom.pictureId}-small.jpg')`);
