@@ -34,7 +34,6 @@ footer {
     align-items: center;
     align-content: center;
     flex-wrap: wrap;
-    padding-bottom: 0;
     height: auto;
   }
   .footer-about {
@@ -42,7 +41,7 @@ footer {
     max-width: 25.5rem;
     font-size: 0.875em;
     color: white;
-    // margin-right: $global-margin;
+    text-align: center;
   }
   .footer-logo {
     display: none;
