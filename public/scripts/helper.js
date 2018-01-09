@@ -50,11 +50,12 @@ function win() {
         method: 'POST',
         data: results,
         success: function () {
-          didWin = false;
+          console.log('Saved result to database');
         }
       });
     }
   }
+  didWin = false;
   showDialog();
 }
 
