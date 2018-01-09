@@ -28,7 +28,6 @@ module.exports = () => {
     const email = req.body.email;
     const password = req.body.password;
     if (!req.body.email || !req.body.password) {
-      console.log('CONSOLE!');
       req.flash('error', 'Both email and password are required');
       res.status(404).send({success: false});
       return;
@@ -65,7 +64,6 @@ module.exports = () => {
 
     helpers.facebookCheckEmailInDB(email)
       .then(exists => {
-        console.log(exists, 'i am the return from the facebookcheckemail');
         if (exists) {
           req.session.user_id = exists;
           res.status(200).send({success: true});

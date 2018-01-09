@@ -14,12 +14,9 @@ module.exports = () => {
 
   // Gets the user data for logged in user
   router.get('/', (req, res) => {
-     if (!req.session.user_id) {
-    // The user is not logged in
-    console.log('not logged in');
-    res.json({});
+    if (!req.session.user_id) {
+      res.json({});
     } else {
-      console.log(req.session.user_id, 'is logged in');
       let userInfo = {};
       getUserInfo(req.session.user_id).then((data) => {
         userInfo.id = data.id;
@@ -28,16 +25,13 @@ module.exports = () => {
         if(!data.wins) {
           userInfo.wins = 0;
         }
-        console.log('user info in callback', userInfo);
         return;
       }).then(() => {
         calculateLosses(req.session.user_id).then((data) => {
-          console.log('this is losses', data);
           userInfo.losses = data;
           if (!data) {
             userInfo.losses = 0;
           }
-          console.log('user data immediately before sending', userInfo);
           return res.json(userInfo);
         });
       });
