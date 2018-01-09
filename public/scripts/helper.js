@@ -138,17 +138,30 @@ function createGameList(data) {
      console.log("user", userData.name);
      console.log("player one:", game.playerOne)
     if (userData.name === game.playerOne) {
-      $('.open-games').append(`<div class="available-game-container"><div class="available-game-left"><div data=${game.id} class="available-game"><p>Waiting for an opponent to join your game</p></div></div></div></div>`);
+      $('.open-games').append(`<div class="available-game-container"><div class="available-game-left"><div data=${game.id} class="available-game"><p>Waiting for an opponent </p></div></div><div class="available-game-right"><button class="cancel-game-button" data=${game.id}>Cancel</button></div></div>`);
+      $(document).find('.cancel-game-button').on('click', function(){
+        socket.emit('leave-queue', currentRoom.roomName);
+        currentRoom.roomName = "";
+        currentRoom.playerOne = "";
+        currentRoom.playerOneId = "";
+        inQueue = false;
+        displayButtonsDefault();
+      });
     } else {
       $('.open-games').append(`<div class="available-game-container"><div class="available-game-left"><div data=${game.id} class="available-game"><p>Game available against <strong>${game.playerOne}</strong></p></div></div><div class="available-game-right"><button class="join-game-button" data=${game.id}>Join</button></div></div></div>`);
+      $(document).find('.join-game-button').on('click', function(){
+          socket.emit( 'join-game', {id: game.id, user: userData});
+      });
     }
-    $(document).find('.join-game-button').on('click', function(){
-        socket.emit( 'join-game', {id: game.id, user: userData});
-    });
   }
   //Shows user that there are currently no open games
   if(!data.length) {
-    $('.open-games').append('<div class="available-game-container"><p>Currently No Open Games</p></div>');
+    $('.open-games').append('<div class="available-game-container"><div class="available-game-left"><div class="available-game"><p>Currently no open games</p></div></div><div class="available-game-right"><button class="create-game-button">Create</button></div></div>');
+    $(document).find('.create-game-button').on('click', function(){
+      socket.emit('make-game', { player: userData });
+      inQueue = true;
+      displayButtonsJoinQueue();
+    });
   }
 }
 
