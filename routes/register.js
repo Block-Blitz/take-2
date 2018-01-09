@@ -76,8 +76,6 @@ module.exports = () => {
   router.post('/facebook', (req, res) => {
     const email = req.body.email;
     const name = req.body.name;
-    console.log(req.body.name + 'I AM THE PLAYER NAME');
-    console.log(req.body.email + 'I am the email recieved from the server');
     if (!req.body.name) {
       req.flash('facebook-error', 'Must enter name to register');
       res.status(404).send({success: false});
@@ -91,11 +89,9 @@ module.exports = () => {
 
     helpers.checkNameInDB(name)
       .then(exists => {
-        console.log(exists + ' I am after the check name function');
         if (!exists) {
           helpers.facebookCheckEmailInDB(email)
             .then(exists => {
-              console.log(exists + ' I am after the check email function');
               if (!exists) {
                 helpers.facebookRegisterUser(name, email)
                   .then(user_id => {

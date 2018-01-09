@@ -14,9 +14,7 @@ module.exports = () => {
 
   // Saves the Results of a Game
   router.post('/', (req, res) => {
-    console.log('input to game log post', req.body);
     saveGameResult(req.body).then(() => {
-      console.log('results saved');
       return;
     });
   });
