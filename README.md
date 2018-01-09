@@ -10,9 +10,9 @@
 
   These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-  *Clone or download project*
+  ## *Clone or download project*
 
-  *Download*
+  ## *Download*
 
 
    click `Clone or Download` at the top of this page
@@ -24,7 +24,7 @@
 
   ### or
 
-  *SSH*
+  ## *SSH*
 
 
    In your command line add the next line
@@ -32,7 +32,7 @@
 
    `git clone git@github.com:Block-Blitz/take-2.git`
 
-  *Set up database*
+  ## *Set up database*
 
 
    Then add this next line
@@ -40,7 +40,7 @@
 
    `knex migrate:latest`
 
-  *Open application in your browser*
+  ## *Open application in your browser*
 
 
    `localhost:8080`
