@@ -1,25 +1,23 @@
 # Block Blitz
 
-Block Blitz a puzzle game allowing you to play competitively or solo. Rearrange the puzzle pieces to complete the images. When playing competitively winning against your opponent will increase your stats and help you climb the leaderboard. Block Blitz was created as the final project in the Lighthouse Labs Web Developement Bootcamp.
+Block Blitz a puzzle game allowing you to play competitively or solo. Rearrange the puzzle pieces to complete the images. When playing competitively winning against your opponent will increase your stats and help you climb the leaderboard. 
+
+Block Blitz was created as the final project in the Lighthouse Labs Web Developement Bootcamp. Block Blitz runs on an Express NodeJS server utilizing Socket.io to handle realtime communication with the client. The front-end of the app was built using EJS, jQuery and Sass and the puzzle uses Packery and Draggabilly modules. A PostgreSQL database was utilized through KnexJS middleware.
 
 ## Contributors
 - Mark Zsombor
-- Kelsey Cooper
-- Catherine Hrynuik
 - Reid Naaykens
+- Catherine Hrynuik
+- Kelsey Cooper
+
 
 ## Getting Started
 
   These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. Visit [blockblitz.live](http:blockblitz.live) to see the deployed app.
 
-  ## *Clone or download project*
+  ### *Clone or download project*
 
-  ### *Download*
-
-
-   click `Clone or Download` at the top of this page
-
-  #### *Via SSH*
+   #### *Via SSH*
 
 
    In your command line run `git clone git@github.com:Block-Blitz/take-2.git <dir_name>`
