@@ -33,21 +33,29 @@ body {
   width: 40%;
 }
 
-.join-game-button {
-  background-color: $join-game-color;
+.create-game-button,
+.cancel-game-button,
+.join-game-button  {
   border: none;
   border-radius: 10px;
   color: white;
   position: relative;
   letter-spacing: 1px;
-  text-transform: uppercase;
-  padding: 8px 20px 5px 20px;
+  padding: 8px 10px 5px;
   margin-bottom: 5px;
   cursor: pointer;
-  box-shadow: 0 5px 0 $join-game-accent-color;
 
   &:hover {
     top: 2px;
+  }
+}
+
+.join-game-button {
+  background-color: $join-game-color;
+  padding: 8px 20px 5px 20px;
+  box-shadow: 0 5px 0 $join-game-accent-color;
+
+  &:hover {
     background-color: $join-game-hover-color;
     box-shadow: 0 3px 0 $join-game-accent-color;
   }
@@ -55,19 +63,9 @@ body {
 
 .create-game-button {
   background-color: $create-game-color;
-  border: none;
-  border-radius: 10px;
-  color: white;
-  position: relative;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  padding: 8px 10px 5px;
-  margin-bottom: 5px;
-  cursor: pointer;
   box-shadow: 0 5px 0 $create-game-accent-color;
 
   &:hover {
-    top: 2px;
     background-color: $create-game-hover-color;
     box-shadow: 0 3px 0 $create-game-accent-color;
   }
@@ -75,19 +73,9 @@ body {
 
 .cancel-game-button {
   background-color: $cancel-game-color;
-  border: none;
-  border-radius: 10px;
-  color: white;
-  position: relative;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  padding: 8px 10px 5px;
-  margin-bottom: 5px;
-  cursor: pointer;
   box-shadow: 0 5px 0 $cancel-game-accent-color;
 
   &:hover {
-    top: 2px;
     background-color: $cancel-game-hover-color;
     box-shadow: 0 3px 0 $cancel-game-accent-color;
   }

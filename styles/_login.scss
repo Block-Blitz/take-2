@@ -20,6 +20,12 @@
   max-width: $container-width;
   padding-top:5px;
 
+  @media screen and (min-width: $breakpoint-medium-up) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
   h4 {
     margin-top: 20px;
     margin-bottom: 40px;
