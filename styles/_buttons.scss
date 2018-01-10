@@ -14,6 +14,7 @@ body {
   border: none;
   border-radius: 10px;
   box-shadow: 0 5px 0 $button-accent-color;
+  cursor: pointer;
 
   &:hover {
     top: 2px;
