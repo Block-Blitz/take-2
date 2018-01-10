@@ -25,18 +25,14 @@ let currentRoom = {
 function win() {
   if (didWin) {
     document.querySelector('.dialog__text').innerHTML = 'Nice work, you won!';
-
+    const results = {};
     if (currentRoom.playerOneId === userData.id) {
-      var results = {
-        winner: currentRoom.playerOneId,
-        loser: currentRoom.playerTwoId
-      };
+      results.winner = currentRoom.playerOneId;
+      results.loser = currentRoom.playerTwoId;
     }
     else {
-      var results = {
-        winner: currentRoom.playerTwoId,
-        loser: currentRoom.playerOneId
-      };
+      results.winner = currentRoom.playerTwoId;
+      results.loser = currentRoom.playerOneId;
     }
     // Informs the server that the puzzle is complete
     socket.emit('game-over', {
