@@ -137,6 +137,7 @@ function createGameList(data) {
   $('.games-opened').append('<div class="open-games"></div>');
   // populate new div
   for (let game of data) {
+    //Users own game shows differently in list, with a cancel game option
     if (userData.name === game.playerOne) {
       $('.open-games').append(`<div class="available-game-container"><div class="available-game-left"><div data=${game.id} class="available-game"><p>Waiting for an opponent </p></div></div><div class="available-game-right"><button class="cancel-game-button" data=${game.id}>Cancel</button></div></div>`);
       $(document).find('.cancel-game-button').on('click', function(){
@@ -149,7 +150,7 @@ function createGameList(data) {
       });
     }
     else {
-      $('.open-games').append(`<div class="available-game-container"><div class="available-game-left"><div data=${game.id} class="available-game"><p>Game available against <strong>${game.playerOne}</strong></p></div></div><div class="available-game-right"><button class="join-game-button" data=${game.id}>Join</button></div></div></div>`);
+      $('.open-games').append(`<div class="available-game-container"><div class="available-game-left"><div data=${game.id} class="available-game"><p><strong>${game.playerOne}</strong> is looking for a challenge!</p></div></div><div class="available-game-right"><button class="join-game-button" data=${game.id}>Join</button></div></div></div>`);
       $(document).find('.join-game-button').on('click', function(){
         socket.emit('join-game', {id: game.id, user: userData});
       });
