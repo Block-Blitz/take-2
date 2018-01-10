@@ -1,6 +1,6 @@
 # Block Blitz
 
-Block Blitz a puzzle game allowing you to play competitively or solo. Rearrange the puzzle pieces to complete the images. When playing competitlively winning against your opponent will increase your stats.
+Block Blitz a puzzle game allowing you to play competitively or solo. Rearrange the puzzle pieces to complete the images. When playing competitively winning against your opponent will increase your stats and help you climb the leaderboard. Block Blitz was created as the final project in the Lighthouse Labs Web Developement Bootcamp.
 
 ## Contributors
 - Mark Zsombor
@@ -10,37 +10,37 @@ Block Blitz a puzzle game allowing you to play competitively or solo. Rearrange 
 
 ## Getting Started
 
-  These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+  These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. Visit [blockblitz.live](http:blockblitz.live) to see the deployed app.
 
   ## *Clone or download project*
 
-  ## *Download*
+  ### *Download*
 
 
    click `Clone or Download` at the top of this page
 
-
-   click `Download Zip`
-
+  #### *Via SSH*
 
 
-  ### or
-
-  ### *SSH*
-
-
-   In your command line add the next line
-
-
-   `git clone git@github.com:Block-Blitz/take-2.git`
-
+   In your command line run `git clone git@github.com:Block-Blitz/take-2.git <dir_name>`
+   
+  ### *Install Dependancies*
+  
+   In the program directory run `npm install` 
+   
   ### *Set up database*
 
+   Create a `.env` file by using `.env.example` as a reference: `cp .env.example .env`
+   
+   Create a Postgres database `createdb <db_name>`
+   
+   Update the `.env` file with database name.
 
-   Then add this next line
-
-
-   `knex migrate:latest`
+   Run migrations `knex migrate:latest`
+   
+  ### *Start server*
+  
+   Type `npm start` in your command line.
 
   ### *Open application in your browser*
 
@@ -59,6 +59,7 @@ Block Blitz a puzzle game allowing you to play competitively or solo. Rearrange 
   - connect-flash
   - cookie-session
   - dotenv
+  - draggabilly
   - ejs
   - express
   - jquery
@@ -67,6 +68,7 @@ Block Blitz a puzzle game allowing you to play competitively or solo. Rearrange 
   - morgan
   - node-sass
   - node-sass-middleware
+  - packery
   - pg
   - socket.io
   - socket.io-client
