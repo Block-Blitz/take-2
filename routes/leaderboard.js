@@ -24,7 +24,7 @@ module.exports = () => {
 };
 
 
-//Gets the leaderboard data from DB
+// Gets the leaderboard data from DB
 function getLeaderboard() {
   return knex
     .select('users.name', 'users.id')

@@ -40,12 +40,12 @@ app.use(knexLogger(knex));
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(sass({
- src: "./styles",
- dest:  "./public/styles",
- indentedSyntax: false,
- force: true,
- debug: true,
- outputStyle: 'expanded'
+  src: './styles',
+  dest:  './public/styles',
+  indentedSyntax: false,
+  force: true,
+  debug: true,
+  outputStyle: 'expanded'
 }));
 
 // Sets the secure cookie session

@@ -7,100 +7,98 @@
 <body>
 
   <script>
-      window.fbAsyncInit = function() {
-        FB.init({
-          appId      : '2454871588072282',
-          cookie     : true,
-          xfbml      : true,
-          version    : 'v2.11'
-        });
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '2454871588072282',
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v2.11'
+      });
 
-        FB.getLoginStatus(function(response) {
-          statusChangeCallback(response);
-        });
-      };
+      FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+      });
+    };
 
-      (function(d, s, id){
-         var js, fjs = d.getElementsByTagName(s)[0];
-         if (d.getElementById(id)) {return;}
-         js = d.createElement(s); js.id = id;
-         js.src = "https://connect.facebook.net/en_US/sdk.js";
-         fjs.parentNode.insertBefore(js, fjs);
-       }(document, 'script', 'facebook-jssdk'));
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "https://connect.facebook.net/en_US/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
 
-      function statusChangeCallback(response) {
-        if (response.status === 'connected') {
-          getUserEmail();
+    function statusChangeCallback(response) {
+      if (response.status === 'connected') {
+        getUserEmail();
 
-        } else {
-          console.log('Not authenticated');
-        }
+      } else {
+        console.log('Not authenticated');
       }
+    }
 
-      function checkLoginState() {
-        FB.getLoginStatus(function(response) {
-          statusChangeCallback(response);
-        });
-      }
+    function checkLoginState() {
+      FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+      });
+    }
 
+    function getUserEmail() {
+      FB.api('/me?fields=email', function(response) {
+        if (response && !response.error) {
+          const loginFacebookData = {
+            email: response.email
+          };
 
-      function getUserEmail() {
-        FB.api('/me?fields=email', function(response) {
-          if (response && !response.error) {
-            const loginFacebookData = {
-              email: response.email
-            };
+        $.ajax ({
+          url: '/login/facebook',
+          method: 'POST',
+          data: loginFacebookData,
+          success: function(msg){
+            location.replace('/');
+          },
+          error: function(err) {
 
-          $.ajax ({
-            url: '/login/facebook',
-            method: 'POST',
-            data: loginFacebookData,
-            success: function(msg){
-              location.replace('/');
-            },
-            error: function(err) {
-
-              FB.logout(function(response) {
-                console.log('logging out.');
-              });
-              location.reload();
-            }
-          });
+            FB.logout(function(response) {
+              console.log('logging out.');
+            });
+            location.reload();
           }
-        })
-      }
-
+        });
+        }
+      })
+    }
   </script>
   <div class="wrapper">
     <% include ./partials/_header.ejs %>
     <div class="vertical-center">
-    <div class="register-containment">
+      <div class="register-containment">
 
-      <form id="login-form">
-        <h4>Login to play Block Blitz</h4>
-      <% if (errors.length) { %>
-        <% errors.forEach((error) => { %>
-          <div class="error-message">
-          <p><%= error %></p>
-          </div>
-        <% }) %>
-      <% } %>
-        <input class="input pass" id="email" type="email" name="email" placeholder="Email" />
-        <input class="input pass" id="password" type="password" name="password" placeholder="Password"/>
-        <input type="submit"  class="inputButton" value="Login" id="login-button"/>
-      </form>
-      <form id="facebookRegisterForm">
-        <h4>Login using Facebook</h4>
-        <% if (facebook_error.length) { %>
-          <% facebook_error.forEach((error) => { %>
+        <form id="login-form">
+          <h4>Login to play Block Blitz</h4>
+          <% if (errors.length) { %>
+            <% errors.forEach((error) => { %>
             <div class="error-message">
               <p><%= error %></p>
             </div>
-          <% }) %>
-        <% } %>
-        <button class="inputButton-facebook" scope="public_profile,email">Login</button>
-      </form>
-    </div>
+            <% }) %>
+          <% } %>
+          <input class="input pass" id="email" type="email" name="email" placeholder="Email" />
+          <input class="input pass" id="password" type="password" name="password" placeholder="Password"/>
+          <input type="submit"  class="inputButton" value="Login" id="login-button"/>
+        </form>
+        <form id="facebookRegisterForm">
+          <h4>Login using Facebook</h4>
+          <% if (facebook_error.length) { %>
+            <% facebook_error.forEach((error) => { %>
+              <div class="error-message">
+                <p><%= error %></p>
+              </div>
+              <% }) %>
+            <% } %>
+          <button class="inputButton-facebook" scope="public_profile,email">Login</button>
+        </form>
+      </div>
     </div>
     <% include ./partials/_footer.ejs %>
   </div>

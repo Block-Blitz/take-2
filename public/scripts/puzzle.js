@@ -1,35 +1,35 @@
 // Logic for the Puzzle
 
-var grid = document.querySelector('.grid');
-var pckry = new Packery( grid, {
+const grid = document.querySelector('.grid');
+const pckry = new Packery(grid, {
   columnWidth: '.grid-sizer',
   itemSelector: '.tile',
   percentPosition: true,
   transitionDuration: '0.3s'
 });
 
-pckry.getItemElements().forEach( function( itemElem ) {
-  var draggie = new Draggabilly( itemElem );
-  pckry.bindDraggabillyEvents( draggie );
+pckry.getItemElements().forEach(function(itemElem) {
+  const draggie = new Draggabilly(itemElem);
+  pckry.bindDraggabillyEvents(draggie);
 });
 
 // map items by their data-tile
-var mappedItems = {};
+const mappedItems = {};
 
-var dialog = document.querySelector('.dialog');
+const dialog = document.querySelector('.dialog');
 
-var orders = [
+const orders = [
   'abcdefghijklm',
   'ecdibmhfajkgl',
   'ilckfgdebhjam'
 ];
 
-var didWin = true;
-var orderIndex = 0;
+let didWin = true;
+let orderIndex = 0;
 
-pckry.items.forEach( function( item ) {
-  var attr = item.element.getAttribute('data-tile');
-  mappedItems[ attr ] = item;
+pckry.items.forEach(function(item) {
+  const attr = item.element.getAttribute('data-tile');
+  mappedItems[attr] = item;
 });
 
 /*
@@ -38,31 +38,31 @@ pckry.items.forEach( function( item ) {
 function shuffleTiles() {
   // shuffle items
   orderIndex++;
-  var order = orders[ orderIndex % 3 ];
-  pckry.items = order.split('').map( function( attr ) {
-    return mappedItems[ attr ];
+  const order = orders[orderIndex % 3];
+  pckry.items = order.split('').map(function(attr) {
+    return mappedItems[attr];
   });
   // stagger transition
   pckry._resetLayout();
-  pckry.items.forEach( function( item, i ) {
-    setTimeout( function() {
-      pckry.layoutItems( [ item ] );
-    }, i * 34 );
+  pckry.items.forEach(function(item, i) {
+    setTimeout(function() {
+      pckry.layoutItems([item]);
+    }, i * 34);
   });
 }
 
 function randomLayout() {
-  var orderIndex = Math.floor(Math.random() * orders.length);
-  var order = orders[orderIndex];
-  pckry.items = order.split('').map( function( attr ) {
-    return mappedItems[ attr ];
+  const orderIndex = Math.floor(Math.random() * orders.length);
+  const order = orders[orderIndex];
+  pckry.items = order.split('').map(function(attr) {
+    return mappedItems[attr];
   });
   // stagger transition
   pckry._resetLayout();
-  pckry.items.forEach( function( item, i ) {
-    setTimeout( function() {
-      pckry.layoutItems( [ item ] );
-    }, i * 34 );
+  pckry.items.forEach(function(item, i) {
+    setTimeout(function() {
+      pckry.layoutItems([item]);
+    }, i * 34);
   });
 }
 
@@ -78,11 +78,11 @@ function showDialog() {
  * If yes, loads the win function
  *500 for large screen 375 for small
  */
-pckry.on( 'dragItemPositioned', function() {
-  var order = pckry.items.map( function( item ) {
+pckry.on('dragItemPositioned', function() {
+  const order = pckry.items.map(function(item) {
     return item.element.getAttribute('data-tile');
   }).join('');
-  if ( order === 'fmgdbalkjihce' && ( pckry.maxY === 500 || pckry.maxY === 375 )) {
+  if (order === 'fmgdbalkjihce' && (pckry.maxY === 500 || pckry.maxY === 375)) {
     win();
   }
 });

@@ -22,6 +22,7 @@ $(document).ready(function(){
       }
     });
   }
+
   $('.logout-button').on('click', function(e){
     e.preventDefault();
     $.ajax ({
@@ -33,5 +34,4 @@ $(document).ready(function(){
       }
     });
   });
-
 });

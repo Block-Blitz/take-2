@@ -5,10 +5,6 @@ const express = require('express');
 const router = express.Router();
 const knexConfig = require('../knexfile');
 const knex = require('knex')(knexConfig[ENV]);
-const morgan = require('morgan');
-const knexLogger = require('knex-logger');
-
-const helpers = require('../lib/helpers.js');
 
 module.exports = () => {
 
@@ -16,8 +12,9 @@ module.exports = () => {
   router.get('/', (req, res) => {
     if (!req.session.user_id) {
       res.json({});
-    } else {
-      let userInfo = {};
+    }
+    else {
+      const userInfo = {};
       getUserInfo(req.session.user_id).then((data) => {
         userInfo.id = data.id;
         userInfo.name = data.name;
@@ -70,9 +67,9 @@ function getUserInfo(id) {
  */
 function calculateLosses(id) {
   return knex('games')
-  .count('loser')
-  .where('loser', id)
-  .then((losses) =>{
-    return losses[0].count;
-  });
+    .count('loser')
+    .where('loser', id)
+    .then((losses) =>{
+      return losses[0].count;
+    });
 }
