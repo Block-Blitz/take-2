@@ -1,4 +1,4 @@
-var socket = io.connect('http://localhost:8080');
+const socket = io.connect('http://localhost:8080');
 
 /*
  *Gets the data for the current user from the database
@@ -7,10 +7,10 @@ var socket = io.connect('http://localhost:8080');
  */
 
 $.ajax({
-  method: "GET",
-  url: "api/user_data"
-  }).done((user) => {
-    storeUserData(user);
+  method: 'GET',
+  url: 'api/user_data'
+}).done((user) => {
+  storeUserData(user);
 });
 
 /*
@@ -19,12 +19,12 @@ $.ajax({
  *Generates leaderboard table
  */
 $.ajax({
-  method: "GET",
-  url: "api/leaderboard"
-  }).done((data) => {
-    for(let user of data) {
-      $('.leaderboard-list').append(`<div class="leaderboard-entry"><div>${user.name}</div><div> ${user.wins} wins</div></div>`);
-    }
+  method: 'GET',
+  url: 'api/leaderboard'
+}).done((data) => {
+  for(const user of data) {
+    $('.leaderboard-list').append(`<div class='leaderboard-entry'><div>${user.name}</div><div> ${user.wins} wins</div></div>`);
+  }
 });
 
 // Socket.io logic
@@ -80,7 +80,7 @@ socket.on('list-players', function(data) {
  * reconnects them to the game
  */
 socket.on('existing-game', function() {
-    displayButtonsJoinQueue();
+  displayButtonsJoinQueue();
 });
 
 /*
@@ -94,9 +94,9 @@ socket.on('refresh-page', function() {
  * Announces that user is going offline, so they can be removed from the
  * active player list and removes their active games if any
  */
-$(window).on("unload", function(e) {
-  //works on closing window, not refresh
-    socket.emit('leaving-page', 'user leaving page');
+$(window).on('unload', function(e) {
+  // works on closing window, not refresh
+  socket.emit('leaving-page', 'user leaving page');
 });
 
 // jQuery for button functionality
@@ -106,22 +106,22 @@ $('.shuffle-button').on('click', function() {
 });
 
 $('#make-game').on('click', function() {
-  //If user already has a game open do nothing
+  // If user already has a game open do nothing
   if (inQueue) {
     return;
   }
-  socket.emit('make-game', { player: userData });
+  socket.emit('make-game', {player: userData});
   inQueue = true;
   displayButtonsJoinQueue();
 
 });
 
 $('#join-queue').on('click', function() {
-  //If user already has a game open do nothing
+  // If user already has a game open do nothing
   if (inQueue) {
     return;
   }
-  socket.emit('join-queue', { player: userData });
+  socket.emit('join-queue', {player: userData});
   inQueue = true;
   displayButtonsJoinQueue();
 
@@ -129,9 +129,9 @@ $('#join-queue').on('click', function() {
 
 $('#leave-queue').on('click', function() {
   socket.emit('leave-queue', currentRoom.roomName);
-  currentRoom.roomName = "";
-  currentRoom.playerOne = "";
-  currentRoom.playerOneId = "";
+  currentRoom.roomName = '';
+  currentRoom.playerOne = '';
+  currentRoom.playerOneId = '';
   inQueue = false;
   displayButtonsDefault();
 });
@@ -140,12 +140,13 @@ $('#play-solo').on('click', function() {
   currentRoom.pictureId = Math.ceil(Math.random() * 41);
   socket.emit('playing-solo', userData);
   if ($(window).width() <= 500) {
-    $('.tile').css("background-image", `url('public/images/puzzle-pics/picture-${currentRoom.pictureId}-small.jpg')`);
-  } else {
-    $('.tile').css("background-image", `url('public/images/puzzle-pics/picture-${currentRoom.pictureId}-big.jpg')`);
+    $('.tile').css('background-image', `url('public/images/puzzle-pics/picture-${currentRoom.pictureId}-small.jpg')`);
   }
-  $(".game").toggleClass("visible");
-  $(".non-game").toggleClass("hidden");
+  else {
+    $('.tile').css('background-image', `url('public/images/puzzle-pics/picture-${currentRoom.pictureId}-big.jpg')`);
+  }
+  $('.game').toggleClass('visible');
+  $('.non-game').toggleClass('hidden');
   randomLayout();
 });
 

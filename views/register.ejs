@@ -6,45 +6,45 @@
 </head>
 
 <body>
-    <script>
-      window.fbAsyncInit = function() {
-        FB.init({
-          appId      : '2454871588072282',
-          cookie     : true,
-          xfbml      : true,
-          version    : 'v2.11'
-        });
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '2454871588072282',
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v2.11'
+      });
 
-        FB.getLoginStatus(function(response) {
-          statusChangeCallback(response);
-        });
-      };
+      FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+      });
+    };
 
-      (function(d, s, id){
-         var js, fjs = d.getElementsByTagName(s)[0];
-         if (d.getElementById(id)) {return;}
-         js = d.createElement(s); js.id = id;
-         js.src = "https://connect.facebook.net/en_US/sdk.js";
-         fjs.parentNode.insertBefore(js, fjs);
-       }(document, 'script', 'facebook-jssdk'));
+    (function(d, s, id){
+       var js, fjs = d.getElementsByTagName(s)[0];
+       if (d.getElementById(id)) {return;}
+       js = d.createElement(s); js.id = id;
+       js.src = "https://connect.facebook.net/en_US/sdk.js";
+       fjs.parentNode.insertBefore(js, fjs);
+     }(document, 'script', 'facebook-jssdk'));
 
-      function statusChangeCallback(response) {
-        if (response.status === 'connected') {
-          getUserEmail();
-        } else {
-          console.log('Not authenticated');
-        }
+    function statusChangeCallback(response) {
+      if (response.status === 'connected') {
+        getUserEmail();
+      } else {
+        console.log('Not authenticated');
       }
+    }
 
-      function checkLoginState() {
-        FB.getLoginStatus(function(response) {
-          statusChangeCallback(response);
-        });
-      }
+    function checkLoginState() {
+      FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+      });
+    }
 
-      function getUserEmail() {
-        FB.api('/me?fields=email', function(response) {
-          if (response && !response.error) {
+    function getUserEmail() {
+      FB.api('/me?fields=email', function(response) {
+        if (response && !response.error) {
           const name = $('#facebook-register-name').val();
           registerFacebookData = {
             name: name,
@@ -102,8 +102,8 @@
       </div>
     </div>
 
-   <% include ./partials/_footer.ejs %>
- </div>
+  <% include ./partials/_footer.ejs %>
+  </div>
 
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js" type="text/javascript"></script>
   <script type="text/javascript" src="../public/scripts/functionality.js"></script>
