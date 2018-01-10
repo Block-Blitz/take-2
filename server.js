@@ -30,7 +30,9 @@ const userDataRoutes = require('./routes/user_data');
 const gameLogRoutes = require('./routes/game_log');
 const leaderboardRoutes = require('./routes/leaderboard');
 
-server.listen(PORT);
+server.listen(PORT, () => {
+  console.log(`Block Blitz is listening on port ${PORT}`);
+});
 
 app.set('view engine', 'ejs');
 app.use(morgan('dev'));
