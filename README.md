@@ -2,7 +2,7 @@
 
 Block Blitz a puzzle game allowing you to play competitively or solo. Rearrange the puzzle pieces to complete the images. When playing competitively winning against your opponent will increase your stats and help you climb the leaderboard.
 
-Block Blitz was created as the final project in the Lighthouse Labs Web Developement Bootcamp. Block Blitz runs on an Express NodeJS server utilizing Socket.io to handle realtime communication with the client. The front-end of the app was built using EJS, jQuery and Sass and the puzzle uses Packery and Draggabilly modules. A PostgreSQL database was utilized through KnexJS middleware.
+Block Blitz was created as the final project in the Lighthouse Labs Web Developement Bootcamp. Block Blitz runs on an Express NodeJS server. The client side of the app was built using EJS, jQuery and Sass and the puzzle uses Packery and Draggabilly modules. Socket.io handles realtime communication between server and client which allows for our lobby and matchmaking. A PostgreSQL database was utilized through KnexJS middleware.
 
 ## Contributors
 - Mark Zsombor
