@@ -1,6 +1,6 @@
 # Block Blitz
 
-Block Blitz a puzzle game allowing you to play competitively or solo. Rearrange the puzzle pieces to complete the images. When playing competitively winning against your opponent will increase your stats and help you climb the leaderboard. 
+Block Blitz a puzzle game allowing you to play competitively or solo. Rearrange the puzzle pieces to complete the images. When playing competitively winning against your opponent will increase your stats and help you climb the leaderboard.
 
 Block Blitz was created as the final project in the Lighthouse Labs Web Developement Bootcamp. Block Blitz runs on an Express NodeJS server utilizing Socket.io to handle realtime communication with the client. The front-end of the app was built using EJS, jQuery and Sass and the puzzle uses Packery and Draggabilly modules. A PostgreSQL database was utilized through KnexJS middleware.
 
@@ -21,23 +21,23 @@ Block Blitz was created as the final project in the Lighthouse Labs Web Develope
 
 
    In your command line run `git clone git@github.com:Block-Blitz/take-2.git <dir_name>`
-   
+
   ### *Install Dependancies*
-  
-   In the program directory run `npm install` 
-   
+
+   In the program directory run `npm install`
+
   ### *Set up database*
 
    Create a `.env` file by using `.env.example` as a reference: `cp .env.example .env`
-   
+
    Create a Postgres database `createdb <db_name>`
-   
+
    Update the `.env` file with database name.
 
    Run migrations `knex migrate:latest`
-   
+
   ### *Start server*
-  
+
    Type `npm start` in your command line.
 
   ### *Open application in your browser*
@@ -53,7 +53,6 @@ Block Blitz was created as the final project in the Lighthouse Labs Web Develope
 
   - bcrypt
   - body-parser
-  - concurrently
   - connect-flash
   - cookie-session
   - dotenv
@@ -67,7 +66,6 @@ Block Blitz was created as the final project in the Lighthouse Labs Web Develope
   - node-sass
   - node-sass-middleware
   - packery
-  - pg
   - socket.io
   - socket.io-client
   - uuid
