@@ -1,22 +1,8 @@
-
-// .register-center, .register-containment{
-//   height:100%;
-// }
-
-.vertical-center {
-  // display: flex;
-  // align-items: center;
-  // background-color: #fff;
-  // height: calc(100% - 170px);
-  // width: 70%;
-  // margin: auto;
-}
-
 .register-containment {
   min-width: 300px;
   width: 100%;
   margin: 0 auto;
-  background-color: #fff;
+  background-color: $white;
   max-width: $container-width;
   padding-top:5px;
 
@@ -40,7 +26,7 @@
   padding: 0 15px;
   border: none;
   border-bottom: 2px solid #ebebeb;
-  //keeps corners from rounding on ios
+  // keeps corners from rounding on ios
   border-radius: 0;
 }
 .input:focus {
@@ -55,11 +41,11 @@
 }
 
 .pass:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 1000px white inset;
+  -webkit-box-shadow: 0 0 0 1000px $white inset;
 }
 
 .error-message {
-  background-color: #ffbac6;
+  background-color: $error-color;
   padding: 3px;
   margin-bottom: 15px;
 }

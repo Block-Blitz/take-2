@@ -1,8 +1,10 @@
 $green: #6e9098;
 $orange: #CD6554;
-
 $primary-color: $green;
 $secondary-color: $orange;
+$white: #fff;
+$darkgrey: #333;
+$error-color: #ffbac6;
 
 // Formatting
 $container-width: 64rem;
@@ -52,7 +54,7 @@ $facebook-color: #3D5A96;
 $facebook-hover: #30466D;
 $facebook-accent: #1F2D42;
 
-///breakpoints
+// Breakpoints
 
 $breakpoint-medium: 680px;
 $breakpoint-medium-up: $breakpoint-medium + 1px;

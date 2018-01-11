@@ -24,7 +24,6 @@ header {
   width: 100%;
   padding-top: $global-padding / 2;
   padding-bottom: $global-padding / 2;
-
 }
 
 .logo a {
@@ -149,7 +148,7 @@ header .icon{
     width: 100%;
     padding: 15px 0;
     font-size: 1.2rem;
-    color: #fff;
+    color: $white;
   }
 }
 
