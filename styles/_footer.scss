@@ -18,29 +18,21 @@ footer {
 }
 
 .footer-about {
-    max-width: 30.5rem;
-    font-size: 0.875em;
-    color: white;
-    flex: 1;
-    padding: 15px 15px;
-    margin: 0;
+  max-width: 30.5rem;
+  font-size: 0.875em;
+  color: $white;
+  flex: 1;
+  padding: 15px 15px;
+  margin: 0;
 }
 
 @media screen and (max-width: $breakpoint-medium) {
   .footer-group {
-    display: flex;
-    justify-content: space-between;
-    text-align: left;
-    align-items: center;
-    align-content: center;
-    flex-wrap: wrap;
     height: auto;
   }
   .footer-about {
     order: 2;
     max-width: 25.5rem;
-    font-size: 0.875em;
-    color: white;
     text-align: center;
   }
   .footer-logo {
