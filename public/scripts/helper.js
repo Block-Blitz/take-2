@@ -18,6 +18,24 @@ let currentRoom = {
 };
 
 /*
+ *Gets the data for the leaderboard from the database
+ *Emits the data to the server
+ *Generates leaderboard table
+ */
+function generateLeaderboard() {
+  $.ajax({
+    method: 'GET',
+    url: 'api/leaderboard'
+  }).done((data) => {
+    $('.leaderboard-container').remove();
+    $('.leaderboard-list').append('<div class="leaderboard-container"></div>');
+    for(const user of data) {
+      $('.leaderboard-container').append(`<div class='leaderboard-entry'><div>${user.name}</div><div> ${user.wins} wins</div></div>`);
+    }
+  });
+}
+
+/*
  * If user is first to complete the puzzle this saves
  * the game result to the DB and informs the other player
  * as well as showing the winner a gameover msg

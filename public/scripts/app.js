@@ -13,19 +13,7 @@ $.ajax({
   storeUserData(user);
 });
 
-/*
- *Gets the data for the leaderboard from the database
- *Emits the data to the server
- *Generates leaderboard table
- */
-$.ajax({
-  method: 'GET',
-  url: 'api/leaderboard'
-}).done((data) => {
-  for(const user of data) {
-    $('.leaderboard-list').append(`<div class='leaderboard-entry'><div>${user.name}</div><div> ${user.wins} wins</div></div>`);
-  }
-});
+generateLeaderboard();
 
 // Socket.io logic
 
@@ -88,6 +76,13 @@ socket.on('existing-game', function() {
  */
 socket.on('refresh-page', function() {
   window.location.reload();
+});
+
+/*
+ * Should force a page refresh
+ */
+socket.on('refresh-leaderboard', function() {
+  generateLeaderboard();
 });
 
 /*
